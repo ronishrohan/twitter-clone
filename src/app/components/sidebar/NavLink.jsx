@@ -15,8 +15,8 @@ function NavLink({children,icon,...others}) {
     }
   }, [pathname])
   return (
-    <Link {...others} className='relative font-medium flex text-2xl gap-4 p-4 items-center border-y border-transparent  hover:border-grays-200 hover:bg-grays-100 transition-all'>
-        <span className={(isActive ? "text-white transition-colors" : "text-text-900")}>{icon}</span>
+    <Link {...others} className='relative font-medium flex text-2xl gap-4 p-4 items-center justify-center lg:justify-normal border-y border-transparent  hover:border-grays-200 hover:bg-grays-100 transition-all'>
+        <span className={(isActive ? "text-white transition-colors text-lg" : "text-text-900 text-lg")}>{icon}</span>
         <span className={(isActive ? "font-bold " : "font-normal ")+"transition-all hidden lg:block"}>{children}</span>
     </Link>
   )

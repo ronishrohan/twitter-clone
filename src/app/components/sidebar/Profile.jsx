@@ -10,13 +10,13 @@ function Profile() {
         className="h-full rounded-full"
         alt="your profile picture"
       />
-      <div className="flex flex-col ml-4 text-lg h-full justify-between items-start leading-3">
+      <div className="hidden lg:flex flex-col ml-4 text-lg h-full justify-between items-start leading-3">
         <span className="font-bold">Ronish Rohan</span>
         <span className="font-semibold text-text-400 text-base ">
           @ronishrohan
         </span>
       </div>
-      <span className="ml-auto text-lg">{icons.ellipsis}</span>
+      <span className="ml-auto text-lg hidden lg:block">{icons.ellipsis}</span>
     </button>
   );
 }
