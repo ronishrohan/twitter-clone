@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ["Roboto Flex Variable"]
+      },
       colors: {
         accent: {
           100: "#0f4e78",

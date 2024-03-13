@@ -10,7 +10,7 @@ function Button({active,children}){
 function TopBar() {
   return (
 
-    <div className='sticky top-0 w-full border-b z-50 border-grays-200 min-h-14 flex text-text-900'>
+    <div className='sticky top-0 w-full border-b z-50 border-grays-200 backdrop-blur-lg h-14 flex text-text-900'>
         <Button active={true}>For You</Button>
         <Button active={false}>Following</Button>
     </div>
