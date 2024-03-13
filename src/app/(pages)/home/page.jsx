@@ -1,12 +1,12 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+import TopBar from './components/TopBar'
 import Main from '@/app/components/Main'
+
 
 function page() {
   return<>
-  <Main>
-    <div>test</div>
-  </Main>
+  <main className='size-full h-[500vh]'>
+    <TopBar></TopBar>
+  </main>
   </>
 }
 

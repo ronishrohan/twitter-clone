@@ -4,15 +4,21 @@ import { icons } from "@/app/util/icons";
 import NavLink from "./NavLink";
 import Profile from "./Profile";
 import { motion } from "framer-motion";
+import { forwardRef } from "react";
 
-function Sidebar() {
+const Sidebar = forwardRef((props,ref) => {
   return (
-    <header id="sidebar" className="h-full lg:min-w-72 text-2xl border-r fixed z-20 bg-background border-r-grays-200 flex flex-col">
+    <header
+      ref={ref}
+      id="sidebar"
+      className="h-full lg:min-w-72 text-2xl border-r fixed z-20 bg-background border-r-grays-200 flex flex-col"
+    >
       <Link
         href="/home"
-        className="text-4xl  font-medium w-full items-center hidden lg:flex lg:justify-normal justify-center border-b border-transparent p-4 hover:border-grays-200 hover:bg-grays-100 transition-all"
+        className="overflow-hidden relative text-4xl  font-medium w-full items-center hidden lg:flex lg:justify-normal justify-center border-b border-transparent p-4 hover:border-grays-200 hover:bg-grays-100 transition-all"
       >
         <span>waffle</span>
+        <div className="absolute left-0 opacity-50 blur-3xl w-1/2 h-16 bg-accent-900"></div>
       </Link>
       <div className="flex flex-col">
         <NavLink href="/home" title="Home" icon={icons.home}>
@@ -29,7 +35,10 @@ function Sidebar() {
         </NavLink>
       </div>
       <div className="flex flex-col mt-auto">
-        <button title="Post" className="filter hover:brightness-110 transition-all  h-14 bg-gradient-to-r from-accent-800 to-blue-600 m-4  text-white font-bold rounded-full text-lg">
+        <button
+          title="Post"
+          className="filter hover:brightness-110 transition-all  h-14 bg-gradient-to-r from-accent-800 to-blue-600 m-4  text-white font-bold rounded-full text-lg"
+        >
           <span className="hidden lg:block">Post</span>
           <span className="lg:hidden block">{icons.plus}</span>
         </button>
@@ -37,6 +46,6 @@ function Sidebar() {
       </div>
     </header>
   );
-}
+});
 
 export default Sidebar;

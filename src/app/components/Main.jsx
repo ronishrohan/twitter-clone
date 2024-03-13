@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 function Main({ children }) {
   const [m, setM] = useState(0);
@@ -12,13 +12,14 @@ function Main({ children }) {
       setW(width - (rrect[0].width + lrect[0]?.width))
       setM(rrect[0].width);
     }
+    setTimeout(setMargin, 0);
     setMargin();
     window.addEventListener("resize", setMargin);
     return () => window.removeEventListener("resize", setMargin);
   }, []);
   return (
     <main>
-      <section style={{ marginLeft: m, width: w }} className="h-[500vh]">
+      <section style={{ marginLeft: m, width: w }} className="h-[500vh] relative">
         {children}
       </section>
     </main>
