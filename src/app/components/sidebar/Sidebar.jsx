@@ -18,8 +18,8 @@ function Sidebar() {
         <NavLink href="/home" icon={icons.home}>
           Home
         </NavLink>
-        <NavLink href="/search" icon={icons.search}>
-          Search
+        <NavLink href="/explore" icon={icons.search}>
+          Explore
         </NavLink>
         <NavLink href="/messages" icon={icons.messages}>
           Messages

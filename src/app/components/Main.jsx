@@ -3,10 +3,15 @@ import React, { useEffect, useState } from "react";
 
 function Main({ children }) {
   const [m, setM] = useState(0);
+  const [w, setW] = useState(0);
   useEffect(() => {
     function setMargin() {
-      const rect = document.getElementById("sidebar").getClientRects();
-      setM(rect[0].width);
+      const rrect = document.getElementById("sidebar").getClientRects();
+      const lrect = document.getElementById("quickaccess").getClientRects();
+      const width = document.documentElement.clientWidth;
+      console.log(width - (rrect[0].width + lrect[0]?.width))
+      setW(width - (rrect[0].width + lrect[0]?.width))
+      setM(rrect[0].width);
     }
     setMargin();
     window.addEventListener("resize", setMargin);
@@ -14,7 +19,7 @@ function Main({ children }) {
   }, []);
   return (
     <main>
-      <section style={{ marginLeft: m }} className="h-[500vh]">
+      <section style={{ marginLeft: m, width: w }} className="h-[500vh]">
         {children}
       </section>
     </main>
