@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  font-family: "Roboto Flex Variable";
+@font-face {
+  font-family: "Overused Grotesk";
+  src: url("/fonts/OverusedGrotesk.woff2");
 }
+body{
+  font-family: "Overused Grotesk";
+}
+
+body,html{
+  height: 100%;
+}
+
+
