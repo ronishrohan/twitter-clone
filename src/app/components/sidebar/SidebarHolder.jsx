@@ -1,19 +1,26 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 
 function SidebarHolder() {
-  const sidebar = useRef();
-  const [w, setW] = useState();
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setW(sidebar.current.clientWidth);
-    });
-  }, []);
+    const [width, setWidth] = useState(300);
+    useEffect(() => {
+        function changeWidth(){
+            
+            if(window.innerWidth < 1024){
+                setWidth(80)
+            }
+            else{
+                setWidth(300)
+            }
+        }
+        window.addEventListener("resize", changeWidth);
+        return () => window.removeEventListener("resize", changeWidth)
+    }, [])
 
   return (
-    <div className="relative">
-      <Sidebar ref={sidebar}></Sidebar>
+    <div  style={{width: width}} className="relative  shrink-0 transition-all">
+      <Sidebar width={width}></Sidebar>
     </div>
   );
 }

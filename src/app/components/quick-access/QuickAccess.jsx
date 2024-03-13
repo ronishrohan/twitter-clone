@@ -2,10 +2,10 @@
 import { icons } from "@/app/util/icons";
 import React, { useState } from "react";
 
-function QuickAccess() {
+function QuickAccess({width}) {
   const [isFocused, setFocus] = useState(false);
   return (
-    <div id="quickaccess" className="fixed flex right-0 w-0  h-full lg:w-96 border-l border-grays-200">
+    <div style={{width: width}} id="quickaccess" className="fixed flex right-0  h-full border-l border-grays-200 transition-all">
       <div className="w-full flex items-center h-12 m-4">
         <span className={`absolute mx-4 pointer-events-none transition-all ${isFocused ? "text-accent-900" : "text-grays-300"}`}>{icons.search}</span>
         <input

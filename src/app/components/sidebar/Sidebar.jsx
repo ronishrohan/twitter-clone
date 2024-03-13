@@ -6,12 +6,12 @@ import Profile from "./Profile";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
 
-const Sidebar = forwardRef((props,ref) => {
+const Sidebar = ({width}) => {
   return (
     <header
-      ref={ref}
+      style={{width: width}}
       id="sidebar"
-      className="h-full lg:min-w-72 text-2xl border-r fixed z-20 bg-background border-r-grays-200 flex flex-col"
+      className="h-full fixed top-0 text-2xl border-r transition-all  z-20 bg-background border-r-grays-200 flex flex-col"
     >
       <Link
         href="/home"
@@ -46,6 +46,6 @@ const Sidebar = forwardRef((props,ref) => {
       </div>
     </header>
   );
-});
+};
 
 export default Sidebar;
