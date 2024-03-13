@@ -5,8 +5,9 @@ import "@fontsource-variable/roboto-flex";
 import "@fortawesome/fontawesome-svg-core/styles.css"
 
 export const metadata = {
-  title: "Twitter",
-  description: "twitter clone",
+  title: "waffle",
+  description: "waffling",
+  
 };
 
 export default function RootLayout({ children }) {

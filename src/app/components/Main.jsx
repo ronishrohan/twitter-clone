@@ -9,7 +9,6 @@ function Main({ children }) {
       const rrect = document.getElementById("sidebar").getClientRects();
       const lrect = document.getElementById("quickaccess").getClientRects();
       const width = document.documentElement.clientWidth;
-      console.log(width - (rrect[0].width + lrect[0]?.width))
       setW(width - (rrect[0].width + lrect[0]?.width))
       setM(rrect[0].width);
     }
