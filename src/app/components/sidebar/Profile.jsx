@@ -4,7 +4,7 @@ import { icons } from "@/app/util/icons";
 
 function Profile() {
   return (
-    <button className="h-[75px] w-full p-4 flex items-center border-t border-transparent transition-all hover:border-grays-200 hover:bg-grays-100">
+    <button className="overflow-hidden h-[75px] w-full p-4 flex items-center border-t border-transparent transition-all hover:border-grays-200 hover:bg-grays-100">
       <img
         src="https://pbs.twimg.com/profile_images/1487114760826986498/9DiToHc0_normal.jpg"
         className="h-full rounded-full"

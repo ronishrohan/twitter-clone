@@ -14,6 +14,7 @@ function QuickAccessHolder() {
                 setWidth(400)
             }
         }
+        changeWidth()
         window.addEventListener("resize", changeWidth);
         return () => window.removeEventListener("resize", changeWidth)
     }, [])

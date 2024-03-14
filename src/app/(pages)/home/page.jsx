@@ -4,7 +4,7 @@ import CreatePost from './components/CreatePost'
 
 function page() {
   return<>
-  <main className='size-full h-[500vh]'>
+  <main className='size-full overflow-hidden h-[500vh]'>
     <TopBar></TopBar>
     <section className='font-roboto' >
       <CreatePost></CreatePost>

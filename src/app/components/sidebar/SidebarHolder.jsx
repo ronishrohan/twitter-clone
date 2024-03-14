@@ -14,6 +14,7 @@ function SidebarHolder() {
                 setWidth(300)
             }
         }
+        changeWidth()
         window.addEventListener("resize", changeWidth);
         return () => window.removeEventListener("resize", changeWidth)
     }, [])

@@ -1,21 +1,38 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { icons } from "@/app/util/icons";
+
+const Button = ({ icon, ...others }) => {
+  return (
+    <>
+      <button
+        {...others}
+        className="grid h-full aspect-square place-items-center text-xl hover:bg-grays-100 rounded-lg"
+      >
+        {icon}
+      </button>
+    </>
+  );
+};
 
 const CreatePost = () => {
   const content = useRef();
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
   const [show, setShow] = useState(false);
   return (
-    <div className="overflow-hidden relative border-b border-grays-200 min-h-36 flex flex-col">
-      <div className="p-4 flex">
+    <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
+      <div className="p-4 flex mb-14">
         <img
           src="https://pbs.twimg.com/profile_images/1487114760826986498/9DiToHc0_normal.jpg"
           alt="your pfp"
           className="rounded-full size-12"
         />
-        <textarea
+        {/* <textarea
+          style={{ height: height }}
           onChange={(e) => {
-            if (e.target.value.length > 0) {
+            setHeight(content.current.scrollHeight);
+            if (e.target.value.length > 0 && e.target.value.trim() != "") {
               setShow(true);
             } else {
               setShow(false);
@@ -25,11 +42,49 @@ const CreatePost = () => {
           name="content"
           spellCheck="false"
           placeholder="what do you want to waffle about"
-          className="placeholder:font-thin ml-4 h-14 w-full text-2xl  outline-none bg-background resize-none "
+           
           id=""
           cols="30"
           rows="10"
-        ></textarea>
+        ></textarea> */}
+        <div
+          onFocus={() => {
+            content.current.focus();
+
+          }}
+          onClick={() => {
+            
+            content.current.focus();
+          }}
+
+          onInput={(e) => {
+            if (content.current.textContent.length > 0) {
+              setShowPlaceholder(false);
+            }
+            else{
+              setShowPlaceholder(true);
+            }
+            if (
+              e.target.textContent.length > 0 &&
+              e.target.textContent.trim() != ""
+            ) {
+              setShow(true);
+            } else {
+              setShow(false);
+            }
+          }}
+          className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-fit text-2xl  outline-none bg-background resize-none "
+        >
+          <span ref={content} contentEditable className="outline-none"></span>
+          {showPlaceholder && (
+            <span
+              contentEditable="false"
+              className="top-0 left-0 absolute pointer-events-none select-none text-grays-300"
+            >
+              What's on your mind for today
+            </span>
+          )}
+        </div>
       </div>
       <AnimatePresence>
         {show && (
@@ -37,11 +92,20 @@ const CreatePost = () => {
             initial={{ y: "100%" }}
             animate={{ y: "0%" }}
             exit={{ y: "100%" }}
-            transition={{ type: "tween",ease: "circInOut", duration: 0.8, damping: 10 }}
-            className="absolute w-full h-12 bottom-0 overflow-hidden flex "
+            transition={{
+              type: "tween",
+              ease: "circInOut",
+              duration: 0.8,
+              damping: 10,
+            }}
+            className="absolute w-full h-14 bottom-0 overflow-hidden flex shrink-0"
           >
-            <div className="size-32 z-10 pointer-events-none bg-accent-900 scale-150 opacity-50 right-0 absolute blur-3xl" ></div>
-            <button className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-full">
+            <div className="size-32 z-10 pointer-events-none bg-accent-900 scale-150 opacity-45 right-0 absolute blur-3xl"></div>
+            <div className="flex text-accent-900 size-full items-center p-2">
+              <Button title="Media" icon={icons.media}></Button>
+            </div>
+
+            <button className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800">
               Post
             </button>
           </motion.div>
