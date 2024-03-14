@@ -81,7 +81,7 @@ const CreatePost = () => {
               contentEditable="false"
               className="top-0 left-0 absolute pointer-events-none select-none text-grays-300"
             >
-              What's on your mind for today
+              its your time to <span className="italic font-medium">waffle</span>
             </span>
           )}
         </div>
