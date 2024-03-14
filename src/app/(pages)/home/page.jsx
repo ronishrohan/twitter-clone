@@ -34,7 +34,7 @@ function page() {
             in Next.js purgatory forever?`}
           </Post>
           <Post>
-            Next.js, oh Next.js, where do I even begin? It's like attempting to
+            {`Next.js, oh Next.js, where do I even begin? It's like attempting to
             unravel a Gordian knot armed with nothing but a toothpick. I've
             delved deep into its documentation, hoping to unlock its mysteries,
             only to find myself drowning in a sea of arcane terminology and
@@ -43,7 +43,7 @@ function page() {
             complexity and confusion. And don't even get me started on the
             endless rabbit holes of debugging – each one more tortuous than the
             last. Is there a method to this madness, or am I condemned to wander
-            these labyrinthine corridors forevermore?
+            these labyrinthine corridors forevermore?`}
           </Post>
           <Post>
             {`Next.js, Next.js, wherefore art thou Next.js? It's like
