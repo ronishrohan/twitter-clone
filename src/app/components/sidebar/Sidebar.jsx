@@ -15,9 +15,9 @@ const Sidebar = ({ width }) => {
     >
       <Link
         href="/home"
-        className="overflow-hidden relative text-4xl  font-medium w-full items-center hidden lg:flex lg:justify-normal justify-center border-b border-transparent p-4 hover:border-grays-200 hover:bg-grays-100 transition-all"
+        className="overflow-hidden relative text-4xl text-white  font-medium w-full items-center hidden lg:flex lg:justify-normal justify-center border-b border-transparent p-4 hover:border-grays-200 hover:bg-grays-100 transition-all"
       >
-        <span style={{ fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss09 1"' }}>waffle</span>
+        <span id="logo" className="font-overused">waffle</span>
         <div className="absolute left-0 opacity-50 blur-3xl w-1/2 h-16 bg-accent-900"></div>
       </Link>
       <div className="flex flex-col">
