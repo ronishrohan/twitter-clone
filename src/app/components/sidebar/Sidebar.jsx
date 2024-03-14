@@ -40,7 +40,7 @@ const Sidebar = ({ width }) => {
       <div className="flex flex-col mt-auto">
         <button
           title="Post"
-          className="filter hover:brightness-110 transition-all  h-14 bg-gradient-to-r from-accent-800 to-blue-600 m-4  text-white font-bold rounded-full text-lg"
+          className="filter hover:brightness-110 transition-all  h-14 bg-gradient-to-r from-accent-800 to-blue-600 m-4  text-white font-bold rounded-2xl text-lg"
         >
           <span className="hidden lg:block">Post</span>
           <span className="lg:hidden block">{icons.plus}</span>

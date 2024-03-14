@@ -1,5 +1,6 @@
 import TopBar from './components/TopBar'
 import CreatePost from './components/CreatePost'
+import Post from './components/Post'
 
 
 function page() {
@@ -8,6 +9,7 @@ function page() {
     <TopBar></TopBar>
     <section className='font-roboto' >
       <CreatePost></CreatePost>
+      <Post></Post>
     </section>
   </main>
   </>

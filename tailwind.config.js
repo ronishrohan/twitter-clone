@@ -9,10 +9,20 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto Flex Variable"]
+        roboto: ["Roboto Flex Variable"],
+        overused : ["Overused Grotesk"]
       },
       colors: {
+        green_hover: {
+          100: "#071a14",
+          200:  "#00ba7c"
+        },
+        heart_pink: {
+          100: "#200914",
+          200: "#f91880",
+        },
         accent: {
+          200: "#0a171f",
           100: "#0f4e78",
           800: "#1a8cd8",
           900: "#1d9bf0",
