@@ -27,7 +27,12 @@ const AiPage = () => {
   return (
     <main className="size-full flex flex-col items-center overflow-clip">
       <div className="relative h-14 w-full border-b border-grays-200 overflow-hidden flex items-center p-4 shrink-0">
-        <div className="absolute z-10 bg-accent-900 size-8 w-1/2 blur-3xl opacity-85"></div>
+        <motion.div
+          initial={{ opacity: 0, x: "-100%" }}
+          animate={{ opacity: 0.85, x: "0%" }}
+          transition={{ type: "spring", damping: 20 }}
+          className="absolute z-10 bg-accent-900 size-8 w-1/2 blur-3xl"
+        ></motion.div>
         <span className="text-2xl font-medium z-20 gap-2 flex">
           Let{" "}
           <span className="font-bold text-heart_pink-200 flex items-center">
@@ -40,21 +45,20 @@ const AiPage = () => {
         </span>
       </div>
       <div className="relative size-full flex justify-center flex-col">
-        
         <AnimatePresence>
-        {pending && (
-          <motion.div
-            key="loading"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{type: "spring", damping: 20}}
-            className="absolute bg-background rounded-xl border-2 border-grays-200 top-0 right-0 m-2 p-2 px-4 flex gap-2 justify-center items-center"
-          >
-            <div className="animate-spin">{icons.spinner}</div>
-            <div className="">generating please wait</div>
-          </motion.div>
-        )}
+          {pending && (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", damping: 20 }}
+              className="absolute bg-background rounded-xl border-2 border-grays-200 top-0 right-0 m-2 p-2 px-4 flex gap-2 justify-center items-center"
+            >
+              <div className="animate-spin">{icons.spinner}</div>
+              <div className="">generating please wait</div>
+            </motion.div>
+          )}
           {response && (
             <PostPreview content={response} key={"post-preview"}></PostPreview>
           )}
