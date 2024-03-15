@@ -1,11 +1,20 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+const generationConfig = {
+  stopSequences: ["red"],
+  maxOutputTokens: 200,
+  temperature: 0.9,
+  topP: 0.1,
+  topK: 16,
+};
+
 export async function POST(req) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
     const model = genAI.getGenerativeModel({
       model: "gemini-pro",
+      generationConfig: generationConfig
     });
     const data = await req.json();
 

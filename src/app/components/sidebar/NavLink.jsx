@@ -21,7 +21,7 @@ function NavLink({ children, icon, ...others }) {
     >
       <AnimatePresence>
         {isActive && (
-          <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} className="size-1/2 absolute bg-accent-900 -z-10 blur-3xl pointer-events-none right-0 bottom-0 scale-150"></motion.div>
+          <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.1}} className="size-1/2 absolute bg-accent-900 -z-10 blur-3xl pointer-events-none right-0 bottom-0 scale-150"></motion.div>
         )}
       </AnimatePresence>
       <span
