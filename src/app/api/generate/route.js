@@ -2,16 +2,16 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 
-export async function GET(req){
+export async function POST(req){
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_SECRET)
 
     const model = genAI.getGenerativeModel({model: "gemini-pro"})
-    const body = await req.body;
+    const data = await req.json()
 
-    const result = await model.generateContent("Write numbers from 1-10")
+    const result = await model.generateContent(data.query)
     const response = await result.response;
     const text = response.text();
     console.log(text)
-    return Response.json({status: "ok"})
+    return Response.json({status: 201, response: text})
     
 }
