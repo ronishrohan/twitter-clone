@@ -82,7 +82,7 @@ function QueryInput({ handleSubmit, done, pending }) {
             ref={generateButton}
             disabled={pending}
             title="create post"
-            className=" shrink-0 mt-auto h-14 disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_svg]:disabled:animate-pulse  hover:bg-heart_pink-200 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
+            className=" shrink-0 mt-auto h-14 text-accent-900 hover:text-white transition-colors disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_svg]:disabled:animate-pulse  hover:bg-heart_pink-200 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
           >
             {icons.plane} Post
           </motion.button>
