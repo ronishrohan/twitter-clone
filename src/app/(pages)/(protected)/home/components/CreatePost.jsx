@@ -75,7 +75,7 @@ const CreatePost = () => {
           }}
           className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-fit text-2xl  outline-none bg-background resize-none "
         >
-          <span ref={content} suppressContentEditableWarning contentEditable className="outline-none"></span>
+          <span ref={content} suppressContentEditableWarning={true} contentEditable className="outline-none"></span>
           {showPlaceholder && (
             <span
               contentEditable="false"

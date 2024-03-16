@@ -3,19 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 import Image from "next/image";
 import { icons } from "@/app/util/icons";
+import { signOut } from "next-auth/react";
 
 function Logout() {
   return (
     <>
       <div className="absolute overflow-hidden -top-20 left-0 h-20 w-full">
         <motion.div
+          onClick={e => e.stopPropagation()}
           initial={{ y: "100%", opacity: 1 }}
           animate={{ y: "0%", opacity: 1 }}
           exit={{y: "100%", opacity: 1}}
           transition={{ type: "spring", damping: 40, stiffness: 400 }}
           className="w-full bg-background border-t  h-full border-grays-200 flex items-center justify-center"
         >
-          <button className="text-lg size-full hover:bg-heart_pink-100">Logout</button>
+          <button onClick={() => signOut({callbackUrl: "/login"})} className="text-lg size-full hover:bg-heart_pink-100">Logout</button>
         </motion.div>
       </div>
     </>
