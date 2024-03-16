@@ -1,4 +1,4 @@
-import { faBookmark, faEnvelope, faHeart, faImage, faMessage, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faBookmark, faEnvelope, faHeart, faImage, faMessage, faPaperPlane, faUser } from "@fortawesome/free-regular-svg-icons";
 import {   faEllipsisH, faFeatherPointed, faHouse, faPlus, faRetweet, faSearch, faWandMagicSparkles, faHeart as faHeartFilled, faBookmark as faBookmarkFilled, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -19,6 +19,7 @@ export const icons = {
     heart_filled: <FontAwesomeIcon icon={faHeartFilled}></FontAwesomeIcon>,
     bookmark : <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon>,
     bookmar_filled: <FontAwesomeIcon icon={faBookmarkFilled}></FontAwesomeIcon>,
-    spinner: <FontAwesomeIcon icon={faSpinner}></FontAwesomeIcon>
+    spinner: <FontAwesomeIcon icon={faSpinner}></FontAwesomeIcon>,
+    plane: <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
 
 }

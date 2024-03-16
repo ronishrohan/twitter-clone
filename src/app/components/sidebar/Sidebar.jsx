@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { icons } from "@/app/util/icons";
+import { icons } from "@/app/utils/icons";
 import NavLink from "./NavLink";
 import Profile from "./Profile";
 import { motion } from "framer-motion";

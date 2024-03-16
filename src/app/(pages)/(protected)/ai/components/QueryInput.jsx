@@ -1,7 +1,8 @@
 "use client";
 import { useRef, useState } from "react";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { icons } from "@/app/utils/icons";
 
 const gemini = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -39,20 +40,20 @@ function QueryInput({ handleSubmit, done, pending }) {
         done && " px-4 pb-4"
       }`}
     >
-      {done && <div className="absolute size-20 w-1/2 opacity-10 -z-10 right-0 scale-150 bg-heart_pink-200 blur-3xl" ></div>}
+      {done && (
+        <div className="absolute size-20 w-1/2 opacity-10 -z-10 right-0 scale-150 bg-heart_pink-200 blur-3xl"></div>
+      )}
       {!done && <span className="text-xl">Enter a topic to write about</span>}
       <div className="flex gap-2 h-full pt-4">
         <div
           onClick={() => query.current.focus()}
           onBlur={() => query.current.blur()}
-          
           className="overflow-hidden relative cursor-text flex items-center resize-none w-full p-4 bg-grays-100 rounded-2xl outline-none focus-within:bg-background focus-within:border-heart_pink-200 border border-transparent"
         >
           <input
             ref={query}
             onKeyDown={(e) => {
-              console.log(e.key)
-              if(e.key == "Enter"){
+              if (e.key == "Enter") {
                 generateButton.current.click();
               }
             }}
@@ -62,6 +63,7 @@ function QueryInput({ handleSubmit, done, pending }) {
             className="outline-none overflow-hidden whitespace-nowrap w-full text-wrap bg-transparent"
           ></input>
         </div>
+
         <button
           ref={generateButton}
           disabled={pending}
@@ -71,6 +73,20 @@ function QueryInput({ handleSubmit, done, pending }) {
         >
           {gemini}
         </button>
+
+        {done && (
+          <motion.button
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{ delay: 0, type: "spring", damping: 30 }}
+            ref={generateButton}
+            disabled={pending}
+            title="create post"
+            className=" shrink-0 mt-auto h-14 disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_svg]:disabled:animate-pulse  hover:bg-heart_pink-200 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
+          >
+            {icons.plane} Post
+          </motion.button>
+        )}
       </div>
     </motion.div>
   );

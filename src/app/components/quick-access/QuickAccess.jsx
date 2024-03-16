@@ -1,5 +1,5 @@
 "use client"
-import { icons } from "@/app/util/icons";
+import { icons } from "@/app/utils/icons";
 import React, { useState } from "react";
 
 function QuickAccess({width}) {

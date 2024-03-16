@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { icons } from "@/app/util/icons";
+import { icons } from "@/app/utils/icons";
+import { useSession } from "next-auth/react";
 
 const Button = ({ icon, ...others }) => {
   return (
@@ -17,6 +18,7 @@ const Button = ({ icon, ...others }) => {
 };
 
 const CreatePost = () => {
+  const {data, status} = useSession();
   const content = useRef();
   const [showPlaceholder, setShowPlaceholder] = useState(true);
   const [show, setShow] = useState(false);
@@ -24,7 +26,7 @@ const CreatePost = () => {
     <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
       <div className="p-4 flex mb-14">
         <img
-          src="https://pbs.twimg.com/profile_images/1487114760826986498/9DiToHc0_normal.jpg"
+          src={data?.user.image}
           alt="your pfp"
           className="rounded-full size-12"
         />
@@ -75,7 +77,7 @@ const CreatePost = () => {
           }}
           className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-fit text-2xl  outline-none bg-background resize-none "
         >
-          <span ref={content} suppressContentEditableWarning={true} contentEditable className="outline-none"></span>
+          {/* <span ref={content} suppressContentEditableWarning={true} contentEditable className="outline-none"></span>
           {showPlaceholder && (
             <span
               contentEditable="false"
@@ -83,7 +85,7 @@ const CreatePost = () => {
             >
               its your time to <span className="italic font-medium">waffle</span>
             </span>
-          )}
+          )} */}
         </div>
       </div>
       <AnimatePresence>

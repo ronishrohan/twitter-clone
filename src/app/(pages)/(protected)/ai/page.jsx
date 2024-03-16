@@ -5,7 +5,7 @@ import QueryInput from "./components/QueryInput";
 import { generatePost } from "./util/generatePost";
 import PostPreview from "./components/PostPreview";
 import { AnimatePresence, motion } from "framer-motion";
-import { icons } from "@/app/util/icons";
+import { icons } from "@/app/utils/icons";
 
 const gemini = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125" x="0px" y="0px">
@@ -60,7 +60,13 @@ const AiPage = () => {
             </motion.div>
           )}
           {response && (
-            <PostPreview content={response} key={"post-preview"}></PostPreview>
+            <>
+            <div className='absolute mb-[120px] z-20 bg-gradient-to-t from-black to-transparent opacity-80 w-full bottom-0 h-12' ></div>
+              <PostPreview
+                content={response}
+                key={"post-preview"}
+              ></PostPreview>
+            </>
           )}
           <QueryInput
             pending={pending}
