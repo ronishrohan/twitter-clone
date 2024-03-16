@@ -12,18 +12,19 @@ const PostSchema = new Schema(
     },
     likes: {
       type: Number,
-      required: true,
+      default: 0
     },
     comments: {
       type: Number,
-      required: true,
+      default: 0
     },
     reposts: {
       type: Number,
-      required: true,
+      default: 0
     },
   },
   { timestamps: true }
 );
+
 
 export const Post = mongoose.models.Post || mongoose.model("Post", PostSchema);
