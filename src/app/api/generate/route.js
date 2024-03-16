@@ -14,16 +14,24 @@ export async function POST(req) {
 
     const model = genAI.getGenerativeModel({
       model: "gemini-pro",
-      generationConfig: generationConfig
+      generationConfig: generationConfig,
     });
     const data = await req.json();
 
-    const result = await model.generateContent(data.query)
+    const parts = [
+      {
+        text: `You are writing a social media post about the topic \"${data.query}\, also include markdown and hashtags"`,
+      },
+    ];
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts }],
+    });
     const response = await result.response;
     const text = response.text();
-    console.log(text)
+    console.log(text.replace("#", ">"));
 
-    return Response.json({status: 201, response: text})
+    return Response.json({ status: 201, response: text });
   } catch (error) {
     console.log(error);
     return Response.json({ status: 404 });
