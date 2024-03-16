@@ -30,7 +30,6 @@ const CreatePost = () => {
   }
   function handleChange(){
     
-    console.log(content.current.scrollHeight, content.current.clientHeight)
     if (content.current.scrollHeight > content.current.clientHeight) {
       setHeight(content.current.scrollHeight);
     }

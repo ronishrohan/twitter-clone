@@ -17,5 +17,7 @@ export async function createPost({createdBy, content}){
 }
 
 export async function getPosts(){
-
+    await connectDatabase();
+    const posts = await Post.find({});
+    return posts;
 }

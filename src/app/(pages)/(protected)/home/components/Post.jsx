@@ -59,7 +59,7 @@ function Post({children}) {
           <span className="leading-4 font-medium text-grays-300">4h</span>
         </div>
         <div className="font-roboto mt-2">
-          <Markdown>{children.toString()}</Markdown>
+          <Markdown>{children}</Markdown>
         </div>
         <section>
           <div className="w-full flex mt-auto h-12">
