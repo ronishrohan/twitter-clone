@@ -2,6 +2,7 @@
 import { icons } from "@/app/util/icons";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Markdown from "react-markdown";
 
 function Button({ icon, filled, hover,active, amount, ...others }) {
   const [enabled, setEnabled] = useState(false);
@@ -58,7 +59,7 @@ function Post({children}) {
           <span className="leading-4 font-medium text-grays-300">4h</span>
         </div>
         <div className="font-roboto mt-2">
-          {children}
+          <Markdown>{children.toString()}</Markdown>
         </div>
         <section>
           <div className="w-full flex mt-auto h-12">

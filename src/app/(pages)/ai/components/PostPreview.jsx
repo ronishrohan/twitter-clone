@@ -1,11 +1,11 @@
 "use client"
 import React from 'react'
 import {motion} from "framer-motion"
-import Post from '../../home/components/Post'
+import Markdown from 'react-markdown'
 
 function PostPreview({content}) {
   return (
-    <motion.div className='w-full p-10 absolute top-0'>
+    <motion.div className='w-full  p-10 top-0 overflow-y-scroll max-h-[calc(100%-120px)] mb-auto'>
         <div className=" flex w-full p-4 pb-2 gap-2 font-overused shrink-0">
       <img
         src="https://pbs.twimg.com/profile_images/1487114760826986498/9DiToHc0_normal.jpg"
@@ -21,7 +21,7 @@ function PostPreview({content}) {
           <span className="leading-4 font-medium text-grays-300">4h</span>
         </div>
         <div className="font-roboto mt-2">
-          {content}
+          <Markdown>{content}</Markdown>
         </div>
       </div>
     </div>

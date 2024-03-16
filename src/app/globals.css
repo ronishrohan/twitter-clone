@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  /* color-scheme: dark; */
 }
 
 @font-face {
@@ -11,9 +11,25 @@
   
   src: url("/fonts/OverusedGrotesk.woff2");
 }
-body{
-  font-family: "Overused Grotesk";
-  font-display: swap;
+
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: black; 
+}
+
+
+::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background: #dff1fd80; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 #logo{
@@ -23,6 +39,7 @@ body{
 body,html{
   height: 100%;
   font-display: swap;
+  scrollbar-width: thin;
 }
 
 

@@ -44,7 +44,7 @@ const AiPage = () => {
           write posts for you
         </span>
       </div>
-      <div className="relative size-full flex justify-center flex-col">
+      <div className="relative size-full flex justify-center flex-col overflow-hidden">
         <AnimatePresence>
           {pending && (
             <motion.div
@@ -66,7 +66,7 @@ const AiPage = () => {
             pending={pending}
             key={"query-input"}
             handleSubmit={handleSubmit}
-            done={response !== null}
+            done={response !== null || pending}
           ></QueryInput>
         </AnimatePresence>
       </div>

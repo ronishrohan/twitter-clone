@@ -35,8 +35,8 @@ function QueryInput({ handleSubmit, done, pending }) {
       variants={variants}
       initial="open"
       animate={done && "done"}
-      className={`absolute flex flex-col w-full px-10 overflow-hidden justify-center pb-10 ${
-        done && "backdrop-blur-lg"
+      className={`absolute flex flex-col w-full px-10 overflow-hidden justify-center pb-10 bg-[rgba(0,0,0,0.5)] ${
+        done && "backdrop-blur-lg "
       }`}
     >
       {done && <div className="absolute size-20 w-1/2 opacity-10 -z-10 right-0 scale-150 bg-heart_pink-200 blur-3xl" ></div>}

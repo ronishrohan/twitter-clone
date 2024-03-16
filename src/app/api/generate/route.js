@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const generationConfig = {
   stopSequences: ["red"],
-  maxOutputTokens: 200,
+  maxOutputTokens: 1000,
   temperature: 0.9,
   topP: 0.1,
   topK: 16,
