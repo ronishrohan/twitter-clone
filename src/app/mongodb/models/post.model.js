@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Mongoose, Schema } from "mongoose";
 
 const PostSchema = new Schema(
   {
@@ -12,19 +12,18 @@ const PostSchema = new Schema(
     },
     likes: {
       type: Number,
-      default: 0
+      default: 0,
     },
     comments: {
       type: Number,
-      default: 0
+      default: 0,
     },
     reposts: {
       type: Number,
-      default: 0
+      default: 0,
     },
   },
   { timestamps: true }
 );
-
 
 export const Post = mongoose.models.Post || mongoose.model("Post", PostSchema);
