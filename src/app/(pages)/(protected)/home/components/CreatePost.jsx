@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+
 
 const Button = ({ icon, ...others }) => {
   return (
@@ -18,10 +20,30 @@ const Button = ({ icon, ...others }) => {
 };
 
 const CreatePost = () => {
-  const {data, status} = useSession();
+  const { data, status } = useSession();
+  const [height, setHeight] = useState(50);
   const content = useRef();
-  const [showPlaceholder, setShowPlaceholder] = useState(true);
   const [show, setShow] = useState(false);
+  async function handleSubmit(){
+    const res = await axios.post("/api/post/create", {userId: data.id, content: content.current.value})
+    
+  }
+  function handleChange(){
+    
+    console.log(content.current.scrollHeight, content.current.clientHeight)
+    if (content.current.scrollHeight > content.current.clientHeight) {
+      setHeight(content.current.scrollHeight);
+    }
+    else if(content.current.scrollHeight == content.current.clientHeight){
+      setHeight("max-content")
+    }
+    if(content.current.value.length>0){
+      setShow(true)
+    }
+    else{
+      setShow(false)
+    }
+  }
   return (
     <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
       <div className="p-4 flex mb-14">
@@ -30,62 +52,22 @@ const CreatePost = () => {
           alt="your pfp"
           className="rounded-full size-12"
         />
-        {/* <textarea
-          style={{ height: height }}
-          onChange={(e) => {
-            setHeight(content.current.scrollHeight);
-            if (e.target.value.length > 0 && e.target.value.trim() != "") {
-              setShow(true);
-            } else {
-              setShow(false);
-            }
-          }}
-          ref={content}
-          name="content"
-          spellCheck="false"
-          placeholder="what do you want to waffle about"
-           
-          id=""
-          cols="30"
-          rows="10"
-        ></textarea> */}
         <div
           onFocus={() => {
             content.current.focus();
-
           }}
           onClick={() => {
-            
             content.current.focus();
           }}
-
-          onInput={(e) => {
-            if (content.current.textContent.length > 0) {
-              setShowPlaceholder(false);
-            }
-            else{
-              setShowPlaceholder(true);
-            }
-            if (
-              e.target.textContent.length > 0 &&
-              e.target.textContent.trim() != ""
-            ) {
-              setShow(true);
-            } else {
-              setShow(false);
-            }
-          }}
-          className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-fit text-2xl  outline-none bg-background resize-none "
+          className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none "
         >
-          {/* <span ref={content} suppressContentEditableWarning={true} contentEditable className="outline-none"></span>
-          {showPlaceholder && (
-            <span
-              contentEditable="false"
-              className="top-0 left-0 absolute pointer-events-none select-none text-grays-300"
-            >
-              its your time to <span className="italic font-medium">waffle</span>
-            </span>
-          )} */}
+          <textarea
+            style={{ height: height }}
+            ref={content}
+            placeholder="Write a post"
+            className="bg-transparent resize-none outline-none w-full "
+            onChange={() => handleChange()}
+          ></textarea>
         </div>
       </div>
       <AnimatePresence>
@@ -107,7 +89,7 @@ const CreatePost = () => {
               <Button title="Media" icon={icons.media}></Button>
             </div>
 
-            <button className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800">
+            <button onClick={handleSubmit} className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800">
               Post
             </button>
           </motion.div>
