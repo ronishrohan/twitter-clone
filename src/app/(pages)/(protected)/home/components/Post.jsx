@@ -42,7 +42,7 @@ function Button({ icon, filled, hover,active, amount, ...others }) {
   );
 }
 
-function Post({children}) {
+function Post({userId,children}) {
   return (
     <div className="border-b border-grays-200  flex w-full p-4 pb-2 gap-2 font-overused shrink-0">
       <img
@@ -50,7 +50,7 @@ function Post({children}) {
         className="rounded-full size-10"
         alt=""
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <div className="flex text-lg  align-top gap-2">
           <span className="leading-4 font-semibold">Ronish Rohan</span>
           <span className="leading-4 font-medium text-grays-300">

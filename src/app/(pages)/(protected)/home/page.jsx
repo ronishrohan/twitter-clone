@@ -12,7 +12,7 @@ async function page() {
         <section className="font-roboto">
           <TopBar></TopBar>
           <CreatePost></CreatePost>
-          {posts.map((post, index) => <Post>{post.content}</Post>)}
+          {posts.map((post, index) => <Post key={index}>{post.content}</Post>)}
           
         </section>
       </main>
