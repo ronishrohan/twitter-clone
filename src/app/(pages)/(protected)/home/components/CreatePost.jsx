@@ -1,10 +1,40 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
 
+const Circle = ({percentage}) => (
+  <>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      width={50}
+      height={50}
+      viewBox="0 0 200 200"
+      xmlSpace="preserve"
+    >
+      <circle
+        style={{
+          stroke:"#1d9bf0",
+          strokeWidth: 4,
+          strokeDasharray: 100,
+          strokeDashoffset: percentage,
+          
+          fill: "transparent",
+          fillRule: "nonzero",
+          opacity: 1,
+        }}
+        vectorEffect="non-scaling-stroke"
+        cx={100}
+        cy={100}
+        r={50}
+      />
+    </svg>
+  </>
+);
 const Button = ({ icon, ...others }) => {
   return (
     <>
@@ -20,18 +50,17 @@ const Button = ({ icon, ...others }) => {
 
 const CreatePost = () => {
   const { data, status } = useSession();
-  const [height, setHeight] = useState(50);
   const content = useRef();
   const [show, setShow] = useState(false);
+  const [perc, setPerc] = useState(0)
   async function handleSubmit() {
     await createPostAction(content.current.value);
-    content.current.value = ""
-    setHeight(50)
+    content.current.value = "";
+    
   }
   function handleChange() {
-    if (content.current.scrollHeight > content.current.clientHeight) {
-      setHeight(content.current.scrollHeight);
-    }
+    
+    setPerc(100-(content.current.value.length/5))
 
     if (content.current.value.length > 0) {
       setShow(true);
@@ -48,19 +77,13 @@ const CreatePost = () => {
           className="rounded-full size-12"
         />
         <div
-          onFocus={() => {
-            content.current.focus();
-          }}
-          onClick={() => {
-            content.current.focus();
-          }}
           className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none "
         >
           <textarea
-            style={{ height: height }}
+            maxLength={500}
             ref={content}
             placeholder="start waffling 🗣🗣🗣🗣🗣"
-            className="bg-transparent resize-none outline-none w-full "
+            className="bg-transparent resize-none overflow-y-auto max-h-44 h-28 outline-none w-full font-roboto"
             onChange={() => handleChange()}
           ></textarea>
         </div>
@@ -83,7 +106,9 @@ const CreatePost = () => {
             <div className="flex text-accent-900 size-full items-center p-2">
               <Button title="Media" icon={icons.media}></Button>
             </div>
-
+            <div className="h-full w-20 flex items-center justify-center stroke-accent-900 fill-accent-900">
+              <Circle percentage={perc} ></Circle>
+            </div>
             <button
               onClick={handleSubmit}
               className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800"

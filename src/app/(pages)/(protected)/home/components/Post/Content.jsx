@@ -2,14 +2,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 
+const defaultHeight = 240;
+
 function Content({ children }) {
   const content = useRef();
-  const [height, setHeight] = useState(200);
+  const [height, setHeight] = useState(defaultHeight);
   const [expanded, setExpanded] = useState(false);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    if(content?.current?.clientHeight < 200){
+    if(content?.current?.clientHeight < defaultHeight){
         setShow(false)
+    }
+    else{
+      setShow(true)
     }
   }, [content])
   function handleExpand() {
@@ -17,7 +22,7 @@ function Content({ children }) {
       setHeight(content.current.scrollHeight);
       setExpanded(true);
     } else {
-      setHeight(200);
+      setHeight(defaultHeight);
       setExpanded(false);
     }
   }

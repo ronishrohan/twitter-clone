@@ -15,7 +15,7 @@ async function page() {
           <CreatePost></CreatePost>
           {posts.map((post, index) => (
             <Post
-              key={index}
+              key={index+post.content}
               userId={post.createdBy}
               details={{
                 comments: post.comments,
