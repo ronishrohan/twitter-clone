@@ -25,7 +25,7 @@ async function Post({ userId, children, details }) {
           </span>
           <span className="leading-4 font-medium text-grays-300">{elapsed}</span>
         </div>
-        <Content>{children}</Content>
+        <Content key={children}>{children}</Content>
         <section>
           <div className="w-full flex mt-auto h-12">
             <Button
