@@ -44,7 +44,7 @@ async function Post({ userId, children, details }) {
               hover="hover:text-heart_pink-200 hover:bg-heart_pink-100"
               title="like"
             ></Button>
-            <button className="flex items-center justify-center h-full aspect-square shrink-0 hover:text-accent-900 hover:bg-accent-200 rounded-lg">
+            <button className="flex items-center justify-center h-full aspect-square shrink-0 text-gray-500 hover:text-accent-900 hover:bg-accent-200 rounded-lg">
               <span>{icons.bookmark}</span>
             </button>
           </div>

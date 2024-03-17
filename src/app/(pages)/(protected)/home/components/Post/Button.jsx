@@ -14,7 +14,7 @@ export function Button({ icon, filled, hover, active, amount, ...others }) {
           }
         }}
         className={`flex hover:bg-grays-100 gap-2 w-full items-center p-2 rounded-lg ${hover} ${
-          enabled && active
+          enabled ? active : "text-gray-400"
         }`}
       >
         <AnimatePresence>
