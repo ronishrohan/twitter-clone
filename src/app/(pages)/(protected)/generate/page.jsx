@@ -87,16 +87,19 @@ const AiPage = () => {
       </main>
       <QuickAccessHolder search={false}>
         <QuickAccessCard>
-          <div className="absolute w-1/2 aspect-square bg-heart_pink-200 blur-3xl opacity-10" ></div>
-          <div className="relative m-0 text-xl bg-transparent">
-            This page uses the google{" "}
-            <a
-              className="text-heart_pink-200 z-30  border-b-2 border-transparent hover:border-heart_pink-200 transition-all border-dashed "
-              href="https://ai.google.dev/docs"
-            >
-              gemini api
-            </a>{" "}
-            to generate the post content
+          <div className="absolute w-1/2 aspect-square bg-heart_pink-200 blur-3xl opacity-10"></div>
+          <div className="relative m-0  bg-transparent">
+            <h1 className="text-2xl font-semibold mb-2">Gemini</h1>
+            <span className="text-lg">
+              This page uses the google{" "}
+              <a
+                className="text-heart_pink-200 z-30  border-b-2 border-transparent hover:border-heart_pink-200 transition-all border-dashed "
+                href="https://ai.google.dev/docs"
+              >
+                gemini api
+              </a>{" "}
+              to generate the post content
+            </span>
           </div>
           <div className="absolute size-20 top-0  -z-10 bg-heart_pink-200"></div>
         </QuickAccessCard>

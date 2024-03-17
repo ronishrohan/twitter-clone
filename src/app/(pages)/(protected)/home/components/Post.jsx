@@ -4,6 +4,7 @@ import { getUserDetailsById } from "@/app/mongodb/controllers/user.controller";
 import Markdown from "react-markdown";
 import { Button } from "./Post/Button";
 import { formatDateTime } from "@/app/helpers/format.helper";
+import Content from "./Post/Content";
 
 async function Post({ userId, children, details }) {
   const data = await getUserDetailsById(userId);
@@ -24,9 +25,7 @@ async function Post({ userId, children, details }) {
           </span>
           <span className="leading-4 font-medium text-grays-300">{elapsed}</span>
         </div>
-        <div className="font-roboto mt-1 mb-4">
-          <Markdown>{children}</Markdown>
-        </div>
+        <Content>{children}</Content>
         <section>
           <div className="w-full flex mt-auto h-12">
             <Button
