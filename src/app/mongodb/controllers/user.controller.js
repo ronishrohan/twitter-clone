@@ -5,9 +5,9 @@ export async function createUser(profile) {
 
   await connectDatabase();
   const existUser = await User.findOne({ email: profile.email });
-  console.log(existUser);
+  
   if (!existUser) {
-    const username = profile.email.slice(0, profile.email.indexOf("@"))
+    const username = profile.email.slice(0, profile.email.indexOf("@"));
     const user = await User.create({
       username: username,
       fullName: profile.name,
@@ -20,7 +20,21 @@ export async function createUser(profile) {
   }
 }
 
+export async function getUserDetailsById(id) {
+  const user = await User.findById(id);
+  return {
+    username: user.username,
+    fullName: user.fullName,
+    avatar: user.avatar,
+  };
+}
+
 export async function getUserDetails(email) {
   const user = await User.findOne({ email: email });
-  return { id: user._id, username: user.username };
+  return {
+    id: user._id,
+    username: user.username,
+    fullName: user.fullName,
+    avatar: user.avatar,
+  };
 }

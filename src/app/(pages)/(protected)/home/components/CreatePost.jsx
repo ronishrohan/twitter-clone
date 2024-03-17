@@ -25,7 +25,8 @@ const CreatePost = () => {
   const content = useRef();
   const [show, setShow] = useState(false);
   async function handleSubmit(){
-    const res = await axios.post("/api/post/create", {userId: data.id, content: content.current.value})
+    
+    const res = await axios.post("/api/post/create", {userId: data.user._id, content: content.current.value})
     
   }
   function handleChange(){

@@ -5,15 +5,26 @@ import { getPosts } from "@/app/mongodb/controllers/post.controller";
 
 async function page() {
   const posts = await getPosts();
-  console.log(posts)
   return (
     <>
       <main className="size-full overflow-x-clip">
         <section className="font-roboto">
           <TopBar></TopBar>
           <CreatePost></CreatePost>
-          {posts.map((post, index) => <Post key={index}>{post.content}</Post>)}
-          
+          {posts.map((post, index) => (
+            <Post
+              key={index}
+              userId={post.createdBy}
+              details={{
+                comments: post.comments,
+                reposts: post.reposts,
+                likes: post.reposts,
+                created: post.createdAt,
+              }}
+            >
+              {post.content}
+            </Post>
+          ))}
         </section>
       </main>
     </>
