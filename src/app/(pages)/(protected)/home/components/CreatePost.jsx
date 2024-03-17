@@ -81,7 +81,7 @@ const CreatePost = () => {
             maxLength={500}
             ref={content}
             placeholder="start waffling 🗣🗣🗣🗣🗣"
-            className="bg-transparent resize-none overflow-y-auto max-h-44 h-28 outline-none w-full font-roboto"
+            className="bg-transparent resize-none overflow-y-auto max-h-44 h-28 text-2xl  outline-none w-full font-roboto placeholder:text-grays-300 placeholder:opacity-70"
             onChange={() => handleChange()}
           ></textarea>
         </div>
