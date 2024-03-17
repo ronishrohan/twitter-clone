@@ -24,7 +24,7 @@ async function Post({ userId, children, details }) {
           </span>
           <span className="leading-4 font-medium text-grays-300">{elapsed}</span>
         </div>
-        <div className="font-roboto mt-1">
+        <div className="font-roboto mt-1 mb-4">
           <Markdown>{children}</Markdown>
         </div>
         <section>

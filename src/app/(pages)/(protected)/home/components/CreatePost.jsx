@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
-import axios from "axios";
+import { createPostAction } from "@/app/mongodb/actions/post.actions";
 
 
 const Button = ({ icon, ...others }) => {
@@ -26,7 +26,7 @@ const CreatePost = () => {
   const [show, setShow] = useState(false);
   async function handleSubmit(){
     
-    const res = await axios.post("/api/post/create", {userId: data.user._id, content: content.current.value})
+    createPostAction(data.user._id,content.current.value)
     
   }
   function handleChange(){
@@ -34,9 +34,7 @@ const CreatePost = () => {
     if (content.current.scrollHeight > content.current.clientHeight) {
       setHeight(content.current.scrollHeight);
     }
-    else if(content.current.scrollHeight == content.current.clientHeight){
-      setHeight("max-content")
-    }
+    
     if(content.current.value.length>0){
       setShow(true)
     }
