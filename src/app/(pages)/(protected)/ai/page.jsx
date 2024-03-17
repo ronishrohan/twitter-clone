@@ -6,6 +6,7 @@ import { generatePost } from "./util/generatePost";
 import PostPreview from "./components/PostPreview";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
+import { createPostAction } from "@/app/mongodb/actions/post.actions";
 
 const gemini = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125" x="0px" y="0px">
@@ -25,7 +26,8 @@ const AiPage = () => {
     });
   }
   function handleCreatePost() {
-    console.log("hi");
+    createPostAction(response, true)
+    
   }
   return (
     <main className="size-full flex flex-col items-center overflow-clip">

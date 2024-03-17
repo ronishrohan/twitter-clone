@@ -1,10 +1,9 @@
 "use client";
-import React, {useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
-
 
 const Button = ({ icon, ...others }) => {
   return (
@@ -24,22 +23,20 @@ const CreatePost = () => {
   const [height, setHeight] = useState(50);
   const content = useRef();
   const [show, setShow] = useState(false);
-  async function handleSubmit(){
-    
-    createPostAction(content.current.value)
-    
+  async function handleSubmit() {
+    await createPostAction(content.current.value);
+    content.current.value = ""
+    setHeight(50)
   }
-  function handleChange(){
-    
+  function handleChange() {
     if (content.current.scrollHeight > content.current.clientHeight) {
       setHeight(content.current.scrollHeight);
     }
-    
-    if(content.current.value.length>0){
-      setShow(true)
-    }
-    else{
-      setShow(false)
+
+    if (content.current.value.length > 0) {
+      setShow(true);
+    } else {
+      setShow(false);
     }
   }
   return (
@@ -62,7 +59,7 @@ const CreatePost = () => {
           <textarea
             style={{ height: height }}
             ref={content}
-            placeholder="Write a post"
+            placeholder="start waffling 🗣🗣🗣🗣🗣"
             className="bg-transparent resize-none outline-none w-full "
             onChange={() => handleChange()}
           ></textarea>
@@ -87,7 +84,10 @@ const CreatePost = () => {
               <Button title="Media" icon={icons.media}></Button>
             </div>
 
-            <button onClick={handleSubmit} className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800">
+            <button
+              onClick={handleSubmit}
+              className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800"
+            >
               Post
             </button>
           </motion.div>

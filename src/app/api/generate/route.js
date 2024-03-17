@@ -20,7 +20,7 @@ export async function POST(req) {
 
     const parts = [
       {
-        text: `You are a ai chatbot that writes social media posts, write a social media post (using markdown syntax highlighting, and also hashtags) about the topic \"${data.query}\"`,
+        text: `You are a ai chatbot that writes social media posts, write a social media post (using markdown bold and italics if needed, and also hashtags) about the topic \"${data.query}\"`,
       },
     ];
 
