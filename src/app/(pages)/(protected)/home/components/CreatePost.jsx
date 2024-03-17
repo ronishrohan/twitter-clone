@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
+import Image from "next/image";
 
 const Circle = ({percentage}) => (
   <>
@@ -71,11 +72,8 @@ const CreatePost = () => {
   return (
     <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
       <div className="p-4 flex mb-14">
-        <img
-          src={data?.user.image}
-          alt="your pfp"
-          className="rounded-full size-12"
-        />
+      <Image className="rounded-full size-12" src={data?.user?.image} width={48} height={48}></Image>
+
         <div
           className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none "
         >

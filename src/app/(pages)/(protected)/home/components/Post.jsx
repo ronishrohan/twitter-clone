@@ -1,10 +1,10 @@
 import { icons } from "@/app/utils/icons";
 import React from "react";
 import { getUserDetailsById } from "@/app/mongodb/controllers/user.controller";
-import Markdown from "react-markdown";
 import { Button } from "./Post/Button";
 import { formatDateTime } from "@/app/helpers/format.helper";
 import Content from "./Post/Content";
+import Image from "next/image";
 
 async function Post({ userId, children, details }) {
   const data = await getUserDetailsById(userId);
@@ -12,11 +12,7 @@ async function Post({ userId, children, details }) {
   
   return (
     <div className="border-b border-grays-200  flex w-full p-4 pb-2 gap-2 font-overused shrink-0">
-      <img
-        src={data.avatar}
-        className="rounded-full size-10"
-        alt=""
-      />
+      <Image className="rounded-full size-10" src={data?.avatar} width={48} height={48}></Image>
       <div className="flex flex-col w-full">
         <div className="flex text-lg  align-top gap-2">
           <span className="leading-4 font-semibold">{data.fullName}</span>
