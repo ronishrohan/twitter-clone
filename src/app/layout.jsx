@@ -6,6 +6,7 @@ import SidebarHolder from "./components/sidebar/SidebarHolder";
 import QuickAccessHolder from "./components/quick-access/QuickAccessHolder";
 import Providers from "./components/Providers";
 
+
 const overused = localFont({
   src: "./assets/OverusedGrotesk.woff2",
   display: "swap",
@@ -18,6 +19,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  
   return (
     <html lang="en" className={overused.className}>
       <body className="bg-background text-text-900">
