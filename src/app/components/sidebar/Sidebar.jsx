@@ -33,7 +33,7 @@ const Sidebar = ({ width }) => {
         <NavLink href="/profile" title="Profile" icon={icons.profile}>
           Profile
         </NavLink>
-        <NavLink href="/ai" title="Generate" icon={icons.wand}>
+        <NavLink href="/generate" title="Generate" icon={icons.wand}>
           Generate
         </NavLink>
       </div>

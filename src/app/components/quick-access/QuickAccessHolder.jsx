@@ -2,7 +2,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import QuickAccess from './QuickAccess';
 
-function QuickAccessHolder() {
+function QuickAccessHolder({ children, ...others}) {
   const [width, setWidth] = useState(400);
     useEffect(() => {
         function changeWidth(){
@@ -21,7 +21,7 @@ function QuickAccessHolder() {
 
   return (
     <div  style={{width: width}} className="relative  shrink-0 transition-all">
-      <QuickAccess width={width}></QuickAccess>
+      <QuickAccess {...others} width={width}>{children}</QuickAccess>
     </div>
 )}
 

@@ -14,7 +14,6 @@ async function ProtectedPages({ children }) {
     <>
       <SidebarHolder></SidebarHolder>
       {children}
-      <QuickAccessHolder></QuickAccessHolder>
     </>
   );
 }

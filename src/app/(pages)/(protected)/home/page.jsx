@@ -3,6 +3,8 @@ import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
 import { getPosts } from "@/app/mongodb/controllers/post.controller";
 
+import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
+
 async function page() {
   const posts = await getPosts();
   return (
@@ -27,6 +29,7 @@ async function page() {
           ))}
         </section>
       </main>
+      <QuickAccessHolder></QuickAccessHolder>
     </>
   );
 }
