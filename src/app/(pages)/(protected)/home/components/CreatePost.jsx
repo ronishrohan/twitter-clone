@@ -26,7 +26,7 @@ const CreatePost = () => {
   const [show, setShow] = useState(false);
   async function handleSubmit(){
     
-    createPostAction(data.user._id,content.current.value)
+    createPostAction(content.current.value)
     
   }
   function handleChange(){

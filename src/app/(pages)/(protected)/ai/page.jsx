@@ -24,6 +24,9 @@ const AiPage = () => {
       }
     });
   }
+  function handleCreatePost() {
+    console.log("hi");
+  }
   return (
     <main className="size-full flex flex-col items-center overflow-clip">
       <div className="relative h-14 w-full border-b border-grays-200 overflow-hidden flex items-center p-4 shrink-0">
@@ -61,7 +64,7 @@ const AiPage = () => {
           )}
           {response && (
             <>
-            <div className='absolute mb-[120px] z-20 bg-gradient-to-t from-black to-transparent opacity-80 w-full bottom-0 h-12' ></div>
+              <div className="absolute mb-[120px] z-20 bg-gradient-to-t from-black to-transparent opacity-80 w-full bottom-0 h-12"></div>
               <PostPreview
                 content={response}
                 key={"post-preview"}
@@ -73,6 +76,7 @@ const AiPage = () => {
             key={"query-input"}
             handleSubmit={handleSubmit}
             done={response !== null || pending}
+            createPost={handleCreatePost}
           ></QueryInput>
         </AnimatePresence>
       </div>

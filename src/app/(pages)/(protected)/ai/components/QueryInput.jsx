@@ -19,7 +19,7 @@ const variants = {
   },
 };
 
-function QueryInput({ handleSubmit, done, pending }) {
+function QueryInput({ handleSubmit, done, pending, createPost }) {
   const query = useRef();
   const generateButton = useRef();
   function handleClick() {
@@ -80,6 +80,7 @@ function QueryInput({ handleSubmit, done, pending }) {
             ref={generateButton}
             disabled={pending}
             title="create post"
+            onClick={createPost}
             className=" shrink-0 mt-auto h-14 text-accent-900 disabled:text-accent-100 hover:text-white transition-colors disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_*]:disabled:animate-pulse   hover:bg-accent-900 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
           >
             {icons.plane} Post
