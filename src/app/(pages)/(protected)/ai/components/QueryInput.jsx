@@ -46,15 +46,13 @@ function QueryInput({ handleSubmit, done, pending }) {
       {!done && <span className="text-xl">Enter a topic to write about</span>}
       <div className="flex gap-2 h-full pt-4">
         <div
-          onClick={() => query.current.focus()}
-          onBlur={() => query.current.blur()}
           className="overflow-hidden relative cursor-text flex items-center resize-none w-full p-4 bg-grays-100 rounded-2xl outline-none focus-within:bg-background focus-within:border-heart_pink-200 border border-transparent"
         >
           <input
             ref={query}
             onKeyDown={(e) => {
               if (e.key == "Enter") {
-                generateButton.current.click();
+                handleClick()
               }
             }}
             placeholder="Example: Write a post about dogs"
@@ -82,7 +80,7 @@ function QueryInput({ handleSubmit, done, pending }) {
             ref={generateButton}
             disabled={pending}
             title="create post"
-            className=" shrink-0 mt-auto h-14 text-accent-900 hover:text-white transition-colors disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_svg]:disabled:animate-pulse  hover:bg-heart_pink-200 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
+            className=" shrink-0 mt-auto h-14 text-accent-900 disabled:text-accent-100 hover:text-white transition-colors disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_*]:disabled:animate-pulse   hover:bg-accent-900 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
           >
             {icons.plane} Post
           </motion.button>
