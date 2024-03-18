@@ -5,7 +5,7 @@ import { icons } from "@/app/utils/icons";
 
 import Image from "next/image";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 function Profile() {
   const { data, status } = useSession();
@@ -28,9 +28,9 @@ function Profile() {
               @{data?.user.username}
             </span>
           </div>
-          <span className="ml-auto text-lg hidden lg:block">
+          <button onClick={signOut} className="ml-auto text-lg hidden lg:block">
             {icons.ellipsis}
-          </span>
+          </button>
         </>
       )}
     </button>
