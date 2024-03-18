@@ -17,6 +17,6 @@ export async function createPost({ createdBy, content }) {
 
 export async function getPosts() {
   await connectDatabase();
-  const posts = (await Post.find({})).reverse();
+  const posts = (await Post.find({},null, {limit: 4})).reverse();
   return posts;
 }
