@@ -14,10 +14,14 @@ export const handler = NextAuth({
     },
     async session({ session }) {
       const { id, username } = await getUserDetails(session.user.email);
-      session.user._id = id;
-      session.user.username = username;
-
-      return session;
+      if (id && username) {
+        session.user._id = id;
+        session.user.username = username;
+        return session;
+      }
+      else{
+        return session;
+      }
     },
   },
   providers: [
