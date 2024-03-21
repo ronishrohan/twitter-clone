@@ -15,3 +15,4 @@ export async function createPostAction( content, shouldRedirect=false) {
     redirect("/home")
   }
 }
+

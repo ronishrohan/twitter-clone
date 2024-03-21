@@ -1,8 +1,16 @@
+
 import React from 'react'
+import QuickAccessHolder from '@/app/components/quick-access/QuickAccessHolder'
+import Posts from './components/Posts'
+
 
 const ProfilePage = () => {
+
   return (
-    <div>this is the profile page</div>
+    <>
+      <main><Posts></Posts></main>
+      <QuickAccessHolder></QuickAccessHolder>
+    </>
   )
 }
 

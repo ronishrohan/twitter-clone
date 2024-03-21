@@ -31,7 +31,7 @@ export function ToastProvider({ children }) {
             transition={{ damping: 20, type: "spring" }}
             className="overflow-hidden bg-black border rounded-xl flex p-4 gap-2 items-center border-heart_pink-200 min-w-48  m-2 fixed z-50 bottom-0 right-0"
           >
-            <div className="absolute -z-10 bg-heart_pink-200 w-1/2 aspect-square blur-2xl opacity-30"></div>
+            <div className="absolute -z-10 bg-heart_pink-200 w-1/2 aspect-square blur-2xl opacity-20"></div>
             <button
               onClick={() => setEnabled(false)}
               className="p-2 hover:bg-[rgba(255,255,255,0.1)] [&_div]:hover:opacity-100 transition-all rounded-xl size-8 grid place-items-center"
