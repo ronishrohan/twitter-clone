@@ -1,12 +1,13 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
 import Image from "next/image";
+import useToast from "@/app/hooks/useToast";
 
-const Circle = ({percentage}) => (
+const Circle = ({ percentage }) => (
   <>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,11 +20,11 @@ const Circle = ({percentage}) => (
     >
       <circle
         style={{
-          stroke:"#1d9bf0",
+          stroke: "#1d9bf0",
           strokeWidth: 4,
           strokeDasharray: 100,
           strokeDashoffset: percentage,
-          
+
           fill: "transparent",
           fillRule: "nonzero",
           opacity: 1,
@@ -50,18 +51,21 @@ const Button = ({ icon, ...others }) => {
 };
 
 const CreatePost = () => {
+  const { notify } = useToast();
   const { data, status } = useSession();
+  const [pending, startTransition] = useTransition();
   const content = useRef();
   const [show, setShow] = useState(false);
-  const [perc, setPerc] = useState(0)
+  const [perc, setPerc] = useState(0);
   async function handleSubmit() {
-    await createPostAction(content.current.value);
-    content.current.value = "";
-    
+    startTransition(async () => {
+      await createPostAction(content.current.value);
+      notify("Your post has been created successfully");
+      content.current.value = "";
+    });
   }
   function handleChange() {
-    
-    setPerc(100-(content.current.value.length/5))
+    setPerc(100 - content.current.value.length / 5);
 
     if (content.current.value.length > 0) {
       setShow(true);
@@ -72,11 +76,14 @@ const CreatePost = () => {
   return (
     <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
       <div className="p-4 flex mb-14">
-      <Image className="rounded-full size-12" src={data?.user?.image} width={48} height={48}></Image>
+        <Image
+          className="rounded-full size-12"
+          src={data?.user?.image}
+          width={48}
+          height={48}
+        ></Image>
 
-        <div
-          className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none "
-        >
+        <div className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none ">
           <textarea
             maxLength={500}
             ref={content}
@@ -105,7 +112,7 @@ const CreatePost = () => {
               <Button title="Media" icon={icons.media}></Button>
             </div>
             <div className="h-full w-20 flex items-center justify-center stroke-accent-900 fill-accent-900">
-              <Circle percentage={perc} ></Circle>
+              <Circle percentage={perc}></Circle>
             </div>
             <button
               onClick={handleSubmit}

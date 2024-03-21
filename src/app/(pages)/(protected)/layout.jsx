@@ -1,6 +1,6 @@
 
 import React from "react";
-import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
+import Providers from "./components/Providers";
 import SidebarHolder from "@/app/components/sidebar/SidebarHolder";
 import { getServerSession } from "next-auth";
 import {redirect} from "next/navigation"
@@ -11,10 +11,10 @@ async function ProtectedPages({ children }) {
     redirect("/login")
   }
   return (
-    <>
+    <Providers>
       <SidebarHolder></SidebarHolder>
       {children}
-    </>
+    </Providers>
   );
 }
 

@@ -20,8 +20,13 @@ const variants = {
 };
 
 function QueryInput({ handleSubmit, done, pending, createPost }) {
+  const [clicked, setClicked] = useState(false);
   const query = useRef();
   const generateButton = useRef();
+  function startSubmit(){
+    setClicked(true);
+    createPost();
+  }
   function handleClick() {
     if (
       query.current.value &&
@@ -78,9 +83,9 @@ function QueryInput({ handleSubmit, done, pending, createPost }) {
             animate={{ width: "100%" }}
             transition={{ delay: 0, type: "spring", damping: 30 }}
             ref={generateButton}
-            disabled={pending}
+            disabled={pending || clicked}
             title="create post"
-            onClick={createPost}
+            onClick={startSubmit}
             className=" shrink-0 mt-auto h-14 text-accent-900 disabled:text-gray-600 hover:text-white transition-colors disabled:fill-grays-300 overflow-hidden max-w-24 text-xl bg-accent-200 disabled:bg-grays-100 [&_*]:disabled:animate-pulse    hover:bg-accent-900 hover:fill-grays-100   fill-heart_pink-200 flex items-center justify-center gap-2 rounded-full"
           >
             {icons.plane} <span>Post</span>

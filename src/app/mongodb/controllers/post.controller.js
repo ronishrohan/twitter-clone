@@ -17,7 +17,7 @@ export async function createPost({ createdBy, content }) {
 
 export async function getPosts() {
   await connectDatabase();
-  const posts = (await Post.find({},null, {limit: 4}).populate({path: "createdBy"}));
+  const posts = (await Post.find({}).populate({path: "createdBy"})).reverse();
   
 
   return posts;

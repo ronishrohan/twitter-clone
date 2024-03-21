@@ -11,7 +11,7 @@ async function Post({ user, children, details }) {
   
   return (
     <div className="border-b border-grays-200  flex w-full p-4 pb-2 gap-2 font-overused shrink-0">
-      <Image className="rounded-full size-10" src={user?.avatar} width={48} height={48}></Image>
+      <Image alt="a post" className="rounded-full size-10" src={user?.avatar} width={48} height={48}></Image>
       <div className="flex flex-col w-full">
         <div className="flex text-lg  align-top gap-2">
           <span className="leading-4 font-semibold">{user.fullName}</span>
