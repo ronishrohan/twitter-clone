@@ -1,18 +1,22 @@
 import { createContext, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { icons } from "../utils/icons";
 
 export const ToastContext = createContext();
 
 export function ToastProvider({ children }) {
-  const [text, setText] = useState(null);
+  const [text, setText] = useState("test");
   const [enabled, setEnabled] = useState(false);
   function notify(text) {
-    setEnabled(true);
-    setText(text);
+    setEnabled(false);
     setTimeout(() => {
-      setEnabled(false);
-      setText(null);
-    }, 3000);
+      setEnabled(true);
+      setText(text);
+      setTimeout(() => {
+        setEnabled(false);
+        setText(null);
+      }, 5000);
+    }, 100);
     console.log("this is supposed to be a notification");
   }
   return (
@@ -20,13 +24,22 @@ export function ToastProvider({ children }) {
       <AnimatePresence mode="sync">
         {enabled && (
           <motion.div
-            initial={{  opacity: 0, padding: 0 }}
-            animate={{  opacity: 1, padding: 20 }}
-            exit={{ opacity: 0}}
-            transition={{damping: 20, type:"spring"}}
-            className="overflow-hidden bg-black border rounded-xl border-heart_pink-200 min-w-48  m-2 fixed z-50 bottom-0 right-0"
+            key={text || "notification"}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ damping: 20, type: "spring" }}
+            className="overflow-hidden bg-black border rounded-xl flex p-4 gap-2 items-center border-heart_pink-200 min-w-48  m-2 fixed z-50 bottom-0 right-0"
           >
-            <div className="absolute -z-10 bg-heart_pink-200 w-1/2 aspect-square blur-2xl opacity-50"></div>
+            <div className="absolute -z-10 bg-heart_pink-200 w-1/2 aspect-square blur-2xl opacity-30"></div>
+            <button
+              onClick={() => setEnabled(false)}
+              className="p-2 hover:bg-[rgba(255,255,255,0.1)] [&_div]:hover:opacity-100 transition-all rounded-xl size-8 grid place-items-center"
+            >
+              <div className="rotate-45 grid place-items-center opacity-50 transition-all">
+                {icons.plus}
+              </div>
+            </button>
             <span className="z-50">{text}</span>
           </motion.div>
         )}

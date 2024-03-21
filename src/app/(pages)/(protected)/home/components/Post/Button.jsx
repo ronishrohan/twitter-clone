@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { icons } from "@/app/utils/icons";
 
 export function Button({ icon, filled, hover, active, amount, ...others }) {
   const [enabled, setEnabled] = useState(false);
@@ -13,24 +14,26 @@ export function Button({ icon, filled, hover, active, amount, ...others }) {
             setEnabled((prev) => !prev);
           }
         }}
-        className={`flex hover:bg-grays-100 gap-2 w-full items-center p-2 rounded-lg ${hover} ${
+        className={`flex gap-2 w-full items-center p-2 rounded-lg ${hover} ${
           enabled ? active : "text-gray-400"
         }`}
       >
         <AnimatePresence>
           {enabled ? (
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 500,
-                damping: 20,
-                bounce: 20,
-              }}
-            >
-              {filled}
-            </motion.span>
+            <>
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 20,
+                  bounce: 20,
+                }}
+              >
+                {filled}
+              </motion.span>
+            </>
           ) : (
             <span>{icon}</span>
           )}
