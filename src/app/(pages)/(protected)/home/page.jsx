@@ -16,7 +16,7 @@ async function page() {
           {posts.map((post, index) => (
             <Post
               key={index}
-              userId={post.createdBy}
+              user={post.createdBy}
               details={{
                 comments: post.comments,
                 reposts: post.reposts,
