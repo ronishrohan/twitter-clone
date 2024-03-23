@@ -76,13 +76,21 @@ const CreatePost = () => {
   return (
     <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
       <div className="p-4 flex mb-14">
-        <Image
-          className="rounded-full size-12"
-          src={data?.user?.image}
-          width={48}
-          height={48}
-          alt="your pfp"
-        ></Image>
+        {status == "loading" ? (
+          <>
+          <div className="rounded-full size-12 overflow-hidden shrink-0" >
+            <div className="size-full bg-loading animate-loading" ></div></div></>
+        ) : (
+          <>
+            <Image
+              className="rounded-full size-12 shrink-0"
+              src={data?.user?.image}
+              width={48}
+              height={48}
+              alt="your pfp"
+            ></Image>
+          </>
+        )}
 
         <div className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none ">
           <textarea

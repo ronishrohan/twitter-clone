@@ -9,7 +9,7 @@ async function page() {
   return (
     <>
       <main className="size-full overflow-x-clip">
-        <section className="font-roboto">
+        <section className="font-roboto h-full">
           <TopBar></TopBar>
           <CreatePost></CreatePost>
           <Posts></Posts>

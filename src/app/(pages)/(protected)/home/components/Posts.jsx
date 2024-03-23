@@ -16,19 +16,19 @@ function Posts() {
     fetchPosts();
   }, [page]);
   useEffect(() => {
-    if(debounce==true){
-        setTimeout(() => {
-            setDebounce(false);
-        }, 10000);
+    if (debounce == true) {
+      setTimeout(() => {
+        setDebounce(false);
+      }, 10000);
     }
-  }, [debounce])
+  }, [debounce]);
   useEffect(() => {
     function handleScroll() {
       const scrollY = window.scrollY + window.innerHeight;
       const height = document.body.scrollHeight;
       console.log(scrollY, height);
       if (scrollY / height > 0.9) {
-        if (debounce==false) {
+        if (debounce == false) {
           setPage((prev) => prev + 1);
           setDebounce(true);
         }
@@ -40,7 +40,7 @@ function Posts() {
   }, []);
   return (
     <>
-      {chunks &&
+      {chunks.length != 0 ? (
         chunks.map((posts) =>
           posts.map((post, index) => (
             <Post
@@ -56,7 +56,14 @@ function Posts() {
               {post.content}
             </Post>
           ))
-        )}
+        )
+      ) : (
+        <div className="w-full h-full overflow-hidden p-4">
+          <div className="size-full overflow-hidden  rounded-3xl">
+            <div className="size-full bg-loading animate-loading"></div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
