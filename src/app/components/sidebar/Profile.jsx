@@ -1,40 +1,40 @@
 "use client";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+
 import React from "react";
 
-import { icons } from "@/app/utils/icons";
-
-import Image from "next/image";
-
-import { signOut, useSession } from "next-auth/react";
-
-function Profile() {
+const Profile = () => {
   const { data, status } = useSession();
-
   return (
-    <button className="z-20 bg-black relative h-[75px] w-full p-4 flex items-center border-t border-transparent transition-all hover:border-grays-200 hover:bg-grays-100">
-      {status == "loading" ? (
-        <span>loading</span>
-      ) : (
-        <>
-          <Image
-            className="rounded-full size-12"
-            src={data?.user.image}
-            width={48}
-            height={48}
-          ></Image>
-          <div className="hidden z-20 lg:flex flex-col ml-4 text-lg h-full justify-between items-start leading-3">
-            <span className="font-bold">{data?.user.name}</span>
-            <span className="font-semibold text-text-400 text-base ">
-              @{data?.user.username}
-            </span>
-          </div>
-          <button onClick={signOut} className="ml-auto text-lg hidden lg:block">
-            {icons.ellipsis}
-          </button>
-        </>
-      )}
-    </button>
+    <div className="h-20 p-4 flex items-center gap-2">
+      <div className="h-full aspect-square rounded-full overflow-hidden grid place-items-center shrink-0">
+        {status == "loading" ? (
+          <>
+            <div className="size-full bg-loading animate-loading"></div>
+          </>
+        ) : (
+          <>
+            <img src={data?.user?.image} className="size-full" alt="" />
+          </>
+        )}
+      </div>
+      <div className="flex flex-col justify-evenly leading-4 text-xl h-full w-full overflow-hidden rounded-lg">
+       
+          {status == "loading" ? (
+            <>
+              <div className="size-full bg-loading animate-loading "></div>
+            </>
+          ) : (
+            <>
+              <div className="font-semibold text-text-900">{data?.user?.name}</div>
+              <div className="font-medium text-lg text-text-400" >@{data?.user?.username}</div>
+            </>
+          )}
+        
+      </div>
+    </div>
   );
-}
+};
 
 export default Profile;

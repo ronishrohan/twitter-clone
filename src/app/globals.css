@@ -43,3 +43,13 @@ body,html{
 }
 
 
+@keyframes loading {
+  0%{
+    scale: 2;
+    translate: -50% 0%;
+  }
+  100%{
+    scale: 2;
+    translate: 50% 0%;
+  }
+}

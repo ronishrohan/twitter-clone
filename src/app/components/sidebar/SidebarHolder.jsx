@@ -4,7 +4,10 @@ import Sidebar from "./Sidebar";
 
 function SidebarHolder() {
     const [width, setWidth] = useState(300);
+    
     useEffect(() => {
+      
+     
         function changeWidth(){
             
             if(window.innerWidth < 1024){

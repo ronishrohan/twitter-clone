@@ -81,6 +81,7 @@ const CreatePost = () => {
           src={data?.user?.image}
           width={48}
           height={48}
+          alt="your pfp"
         ></Image>
 
         <div className="relative cursor-text leading-7 placeholder:font-thin ml-4 w-full overflow-hidden text-wrap whitespace-nowrap max-h-screen text-2xl  outline-none bg-background resize-none ">

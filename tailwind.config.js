@@ -8,6 +8,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        loading: "linear-gradient(45deg,rgba(0,0,0,0.5), rgba(255,255,255,0.15), rgba(0,0,0,0.5))"
+      },
+      animation: {
+        loading: "loading 2s infinite ease-in-out alternate"
+      },
       fontFamily: {
         roboto: ["Roboto Flex Variable"],
         overused : ["Overused Grotesk"]

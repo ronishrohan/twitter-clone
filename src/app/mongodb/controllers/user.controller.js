@@ -30,6 +30,7 @@ export async function getUserDetailsById(id) {
 }
 
 export async function getUserDetails(email) {
+  
   const user = await User.findOne({ email: email });
   return {
     id: user._id,
