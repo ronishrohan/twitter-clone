@@ -14,9 +14,9 @@ async function Post({ user, children, details }) {
       <Image alt="a post" className="rounded-full size-10" src={user?.avatar} width={48} height={48}></Image>
       <div className="flex flex-col w-full">
         <div className="flex text-lg  align-top gap-2">
-          <span className="leading-4 font-semibold">{user.fullName}</span>
+          <span className="leading-4 font-semibold">{user?.fullName}</span>
           <span className="leading-4 font-medium text-grays-300">
-            @{user.username}
+            @{user?.username}
           </span>
           <span className="leading-4 font-medium text-grays-300">{elapsed}</span>
         </div>

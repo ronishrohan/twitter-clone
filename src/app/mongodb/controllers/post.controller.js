@@ -17,11 +17,11 @@ export async function createPost({ createdBy, content }) {
 
 export async function getPosts() {
   await connectDatabase();
-  const posts = await Post.find({})
-    .populate({ path: "createdBy" })
-    .sort({ createdAt: -1 })
-    .limit(5);
-
+  // const posts = await Post.find({})
+  //   .populate({ path: "createdBy" })
+  //   .sort({ createdAt: -1 })
+  //   .limit(5);
+  const posts = [{}]
   return posts;
 }
 
