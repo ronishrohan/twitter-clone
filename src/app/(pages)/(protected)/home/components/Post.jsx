@@ -1,13 +1,12 @@
 import { icons } from "@/app/utils/icons";
 import React from "react";
-import { getUserDetailsById } from "@/app/mongodb/controllers/user.controller";
 import { Button } from "./Post/Button";
 import { formatDateTime } from "@/app/helpers/format.helper";
 import Content from "./Post/Content";
 import Image from "next/image";
 
-async function Post({ user, children, details }) {
-  const elapsed = await formatDateTime(details.created)
+function Post({ user, children, details }) {
+  
   
   return (
     <div className="border-b border-grays-200  flex w-full p-4 pb-2 gap-2 font-overused shrink-0">
@@ -18,7 +17,7 @@ async function Post({ user, children, details }) {
           <span className="leading-4 font-medium text-grays-300">
             @{user?.username}
           </span>
-          <span className="leading-4 font-medium text-grays-300">{elapsed}</span>
+          <span className="leading-4 font-medium text-grays-300">{formatDateTime(details.created)}</span>
         </div>
         <Content key={children}>{children}</Content>
         <section>

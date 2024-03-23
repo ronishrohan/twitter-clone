@@ -1,6 +1,6 @@
 "use server"
 import { revalidatePath } from "next/cache";
-import { createPost } from "../controllers/post.controller";
+import { createPost, getPosts } from "../controllers/post.controller";
 import { getServerSession } from "next-auth";
 import { getUserDetails } from "../controllers/user.controller";
 import { redirect } from "next/navigation";

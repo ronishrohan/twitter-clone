@@ -2,6 +2,8 @@ import { Post } from "../models/post.model";
 import mongoose, { ObjectId } from "mongoose";
 import { connectDatabase } from "@/app/utils/connectDatabase";
 
+const n = 5;
+
 export async function createPost({ createdBy, content }) {
   await connectDatabase();
   try {
@@ -15,13 +17,11 @@ export async function createPost({ createdBy, content }) {
   }
 }
 
-export async function getPosts() {
+export async function getPosts(page) {
   await connectDatabase();
-  // const posts = await Post.find({})
-  //   .populate({ path: "createdBy" })
-  //   .sort({ createdAt: -1 })
-  //   .limit(5);
-  const posts = [{}]
+  const posts = await Post.find({}, null, {limit: n, skip: n*page}).sort({createdAt: -1})
+    .populate({ path: "createdBy" })
+
   return posts;
 }
 
