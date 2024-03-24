@@ -25,7 +25,7 @@ function Posts({endpoint, userid}) {
       }
     }, 500);
   }, [timer]);
-  useLayoutEffect(() => {
+  useEffect(() => {
     function fetchPosts() {
       startTransition(async () => {
         

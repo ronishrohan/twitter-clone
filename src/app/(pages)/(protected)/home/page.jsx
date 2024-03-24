@@ -14,7 +14,7 @@ function PostPage() {
   }
   return (
     <>
-      <main className="size-full overflow-x-clip">
+      <main className="size-full h-fit overflow-x-clip">
         <section className=" h-full">
           <TopBar></TopBar>
           <CreatePost revalidate={revalidate}></CreatePost>
