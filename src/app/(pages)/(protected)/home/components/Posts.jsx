@@ -1,43 +1,41 @@
 "use client";
 
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useTransition,
+} from "react";
 import Post from "./Post";
 
 function Posts() {
   const [chunks, setChunks] = useState([]);
   const [page, setPage] = useState(0);
-  const [debounce, setDebounce] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [pending, startTransition] = useTransition();
   useEffect(() => {
-    async function fetchPosts() {
-      const { data } = await axios.post("/api/posts/get", { page: page });
-      setChunks((prev) => [...prev, data.posts]);
-    }
-    fetchPosts();
-  }, [page]);
-  useEffect(() => {
-    if (debounce == true) {
-      setTimeout(() => {
-        setDebounce(false);
-      }, 10000);
-    }
-  }, [debounce]);
-  useEffect(() => {
-    function handleScroll() {
+    setTimeout(() => {
+      setTimer((prev) => prev + 1);
       const scrollY = window.scrollY + window.innerHeight;
       const height = document.body.scrollHeight;
-      console.log(scrollY, height);
+
       if (scrollY / height > 0.9) {
-        if (debounce == false) {
-          setPage((prev) => prev + 1);
-          setDebounce(true);
-        }
+        setPage((prev) => prev + 1);
       }
+    }, 500);
+  }, [timer]);
+  useLayoutEffect(() => {
+    function fetchPosts() {
+      startTransition(async () => {
+        
+        const { data } = await axios.post("/api/posts/get", { page: page });
+        setChunks((prev) => [...prev, data.posts]);
+      });
     }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    fetchPosts();
+  }, [page]);
   return (
     <>
       {chunks.length != 0 ? (
@@ -58,10 +56,18 @@ function Posts() {
           ))
         )
       ) : (
-        <div className="w-full h-full overflow-hidden p-4">
+        <div className="w-full h-60 overflow-hidden p-4">
           <div className="size-full overflow-hidden  rounded-3xl">
             <div className="size-full bg-loading animate-loading"></div>
           </div>
+        </div>
+      )}
+      {pending && (
+        <div className="relative h-14 w-full flex items-center overflow-hidden mt-auto">
+          <div className="z-50 m-4 w-full text-lg">
+            Loading more posts please wait
+          </div>
+          <div className="size-full absolute bg-loading animate-loading"></div>
         </div>
       )}
     </>

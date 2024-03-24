@@ -1,24 +1,29 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { icons } from "../utils/icons";
 
 export const ToastContext = createContext();
 
 export function ToastProvider({ children }) {
-  const [text, setText] = useState("test");
+  const [text, setText] = useState(null);
   const [enabled, setEnabled] = useState(false);
   function notify(text) {
     setEnabled(false);
     setTimeout(() => {
       setEnabled(true);
       setText(text);
-      setTimeout(() => {
-        setEnabled(false);
-        setText(null);
-      }, 5000);
+      
     }, 100);
     console.log("this is supposed to be a notification");
   }
+  useEffect(() => {
+    if(enabled == true){
+      setTimeout(() => {
+        setEnabled(false)
+        setText(null)
+      }, 2000);
+    }
+  }, [enabled])
   return (
     <ToastContext.Provider value={{ notify }}>
       <AnimatePresence mode="sync">

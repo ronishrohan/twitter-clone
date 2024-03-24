@@ -50,7 +50,7 @@ const Button = ({ icon, ...others }) => {
   );
 };
 
-const CreatePost = () => {
+const CreatePost = ({revalidate}) => {
   const { notify } = useToast();
   const { data, status } = useSession();
   const [pending, startTransition] = useTransition();
@@ -60,6 +60,7 @@ const CreatePost = () => {
   async function handleSubmit() {
     startTransition(async () => {
       await createPostAction(content.current.value);
+      revalidate();
       notify("Your post has been created successfully");
       content.current.value = "";
     });
@@ -96,7 +97,7 @@ const CreatePost = () => {
           <textarea
             maxLength={500}
             ref={content}
-            placeholder="start waffling 🗣🗣🗣🗣🗣"
+            placeholder="What do you want to waffle about today"
             className="bg-transparent resize-none overflow-y-auto max-h-44 h-28 text-2xl  outline-none w-full font-roboto placeholder:text-grays-300 placeholder:opacity-70"
             onChange={() => handleChange()}
           ></textarea>
