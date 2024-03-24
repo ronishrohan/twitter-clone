@@ -1,7 +1,7 @@
 "use client"
 import TopBar from "./components/TopBar";
 import CreatePost from "./components/CreatePost";
-import Posts from "./components/Posts";
+import Posts from "../components/Posts";
 import {motion} from "framer-motion"
 
 import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
@@ -15,10 +15,10 @@ function PostPage() {
   return (
     <>
       <main className="size-full overflow-x-clip">
-        <section className="font-roboto h-full">
+        <section className=" h-full">
           <TopBar></TopBar>
           <CreatePost revalidate={revalidate}></CreatePost>
-          <Posts key={key} ></Posts>
+          <Posts key={key} endpoint="/api/posts/get" userid="" ></Posts>
           
         </section>
       </main>

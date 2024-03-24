@@ -1,9 +1,9 @@
 
 import { icons } from "@/app/utils/icons";
 import React from "react";
-import { Button } from "./Post/Button";
+import { Button } from "../home/components/Post/Button";
 import { formatDateTime } from "@/app/helpers/format.helper";
-import Content from "./Post/Content";
+import Content from "../home/components/Post/Content";
 import Image from "next/image";
 
 function Post({ user, children, details }) {

@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import Post from "./Post";
 
-function Posts() {
+function Posts({endpoint, userid}) {
   const [chunks, setChunks] = useState([]);
   const [page, setPage] = useState(0);
   const [timer, setTimer] = useState(0);
@@ -29,7 +29,7 @@ function Posts() {
     function fetchPosts() {
       startTransition(async () => {
         
-        const { data } = await axios.post("/api/posts/get", { page: page });
+        const { data } = await axios.post(endpoint, { page: page, id: userid });
         setChunks((prev) => [...prev, data.posts]);
       });
     }

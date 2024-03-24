@@ -25,8 +25,10 @@ export async function getPosts(page) {
   return posts;
 }
 
-export async function getUserPosts(id) {
+export async function getUserPosts(page,id) {
   await connectDatabase();
-  const posts = await Post.find({createdBy: id}).populate({ path: "createdBy" }).limit(10);
+  const posts = await Post.find({createdBy:id}, null, {limit: n, skip: n*page}).sort({createdAt: -1})
+    .populate({ path: "createdBy" })
+
   return posts;
 }
