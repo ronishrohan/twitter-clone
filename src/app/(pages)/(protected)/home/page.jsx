@@ -7,7 +7,7 @@ import {motion} from "framer-motion"
 import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
 import { useState } from "react";
 
-function page() {
+function PostPage() {
   const [key, setKey] = useState(Math.random()*1000)
   function revalidate(){
     setKey(Math.random()*1000)
@@ -27,4 +27,4 @@ function page() {
   );
 }
 
-export default page;
+export default PostPage;
