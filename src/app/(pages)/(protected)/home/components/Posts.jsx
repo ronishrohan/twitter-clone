@@ -62,7 +62,7 @@ function Posts() {
           </div>
         </div>
       )}
-      {pending && (
+      {(pending && chunks.length >= 1) && (
         <div className="relative h-14 w-full flex items-center overflow-hidden mt-auto">
           <div className="z-50 m-4 w-full text-lg">
             Loading more posts please wait
