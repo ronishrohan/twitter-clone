@@ -126,7 +126,8 @@ const CreatePost = ({revalidate}) => {
             </div>
             <button
               onClick={handleSubmit}
-              className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl text-white font-semibold hover:bg-accent-800"
+              disabled={pending}
+              className="z-20 ml-auto bg-accent-900 px-8 m-2 rounded-2xl disabled:bg-accent-100 transition-colors text-white font-semibold hover:bg-accent-800"
             >
               Post
             </button>
