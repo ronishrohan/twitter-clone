@@ -7,7 +7,7 @@ import React from "react";
 const Profile = () => {
   const { data, status } = useSession();
   return (
-    <div className="h-20 p-4 flex items-center gap-2">
+    <div onClick={signOut} className="h-20 p-4 flex items-center gap-2 cursor-pointer">
       <div className="h-full aspect-square rounded-full overflow-hidden grid place-items-center shrink-0">
         {status == "loading" ? (
           <>
@@ -32,8 +32,8 @@ const Profile = () => {
             </>
           )}
         
+      
       </div>
-      <button onClick={signOut}>logout</button>
     </div>
   );
 };

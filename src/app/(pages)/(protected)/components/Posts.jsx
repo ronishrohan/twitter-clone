@@ -14,6 +14,7 @@ function Posts({endpoint, userid}) {
   const [page, setPage] = useState(0);
   const [timer, setTimer] = useState(0);
   const [pending, startTransition] = useTransition();
+  const [finished, setFinished] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setTimer((prev) => prev + 1);
@@ -30,11 +31,16 @@ function Posts({endpoint, userid}) {
       startTransition(async () => {
         
         const { data } = await axios.post(endpoint, { page: page, id: userid });
+        if(data.posts.length == 0){
+          setFinished(true);
+        }
         setChunks((prev) => [...prev, data.posts]);
       });
     }
 
-    fetchPosts();
+    if(finished==false){
+      fetchPosts();
+    }
   }, [page]);
   return (
     <>
@@ -70,6 +76,8 @@ function Posts({endpoint, userid}) {
           <div className="size-full absolute bg-loading animate-loading"></div>
         </div>
       )}
+      {finished && <>
+      <div className="h-14 p-4" >Thats all posts for now</div></>}
     </>
   );
 }
