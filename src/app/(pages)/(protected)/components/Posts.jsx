@@ -8,13 +8,17 @@ import React, {
   useTransition,
 } from "react";
 import Post from "./Post";
+import { icons } from "@/app/utils/icons";
 
-function Posts({endpoint, userid}) {
+function Posts({ endpoint, userid }) {
   const [chunks, setChunks] = useState([]);
   const [page, setPage] = useState(0);
   const [timer, setTimer] = useState(0);
   const [pending, startTransition] = useTransition();
   const [finished, setFinished] = useState(false);
+  function scrollToTop(){
+    window.scrollTo({top: 0, behavior: "smooth"})
+  }
   useEffect(() => {
     setTimeout(() => {
       setTimer((prev) => prev + 1);
@@ -29,16 +33,15 @@ function Posts({endpoint, userid}) {
   useEffect(() => {
     function fetchPosts() {
       startTransition(async () => {
-        
         const { data } = await axios.post(endpoint, { page: page, id: userid });
-        if(data.posts.length == 0){
+        if (data.posts.length == 0) {
           setFinished(true);
         }
         setChunks((prev) => [...prev, data.posts]);
       });
     }
 
-    if(finished==false){
+    if (finished == false) {
       fetchPosts();
     }
   }, [page]);
@@ -68,7 +71,7 @@ function Posts({endpoint, userid}) {
           </div>
         </div>
       )}
-      {(pending && chunks.length >= 1) && (
+      {pending && chunks.length >= 1 && (
         <div className="relative h-14 w-full flex items-center overflow-hidden mt-auto">
           <div className="z-50 m-4 w-full text-lg">
             Loading more posts please wait
@@ -76,8 +79,16 @@ function Posts({endpoint, userid}) {
           <div className="size-full absolute bg-loading animate-loading"></div>
         </div>
       )}
-      {finished && <>
-      <div className="h-14 p-4" >Thats all posts for now</div></>}
+      {finished && (
+        <>
+          <div className="h-16 p-4 flex justify-between">
+            <span>Thats all posts for now</span>
+            <button onClick={scrollToTop} className="h-full aspect-square rounded-lg hover:bg-grays-100 transition-colors">
+              <div className="rotate-90" >{icons.arrow}</div>
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 }
