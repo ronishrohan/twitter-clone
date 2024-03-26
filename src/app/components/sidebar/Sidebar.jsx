@@ -5,6 +5,7 @@ import NavLink from "./NavLink";
 import Profile from "./Profile";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
+import CreatePostButton from "./CreatePostButton";
 
 const Sidebar = ({ width }) => {
   return (
@@ -17,7 +18,9 @@ const Sidebar = ({ width }) => {
         href="/home"
         className="overflow-hidden relative text-4xl text-white  font-medium w-full items-center hidden lg:flex lg:justify-normal justify-center border-b border-transparent p-4 hover:border-grays-200 hover:bg-grays-100 transition-all"
       >
-        <span id="logo" className="font-overused">waffle</span>
+        <span id="logo" className="font-overused">
+          waffle
+        </span>
         <div className="absolute left-0 opacity-50 blur-3xl w-1/2 h-16 bg-accent-900"></div>
       </Link>
       <div className="flex flex-col">
@@ -38,13 +41,7 @@ const Sidebar = ({ width }) => {
         </NavLink>
       </div>
       <div className="flex flex-col mt-auto">
-        <button
-          title="Post"
-          className="filter hover:brightness-110 transition-all  h-14 bg-gradient-to-r from-accent-800 to-blue-600 m-4  text-white font-bold rounded-2xl text-lg"
-        >
-          <span className="hidden lg:block">Post</span>
-          <span className="lg:hidden block">{icons.plus}</span>
-        </button>
+        <CreatePostButton></CreatePostButton>
         <Profile></Profile>
       </div>
     </header>

@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
 import Image from "next/image";
 import useToast from "@/app/hooks/useToast";
+import useModal from "@/app/hooks/useModal";
 
 const Circle = ({ percentage }) => (
   <>
@@ -50,7 +51,8 @@ const Button = ({ icon, ...others }) => {
   );
 };
 
-const CreatePost = ({revalidate}) => {
+const CreatePost = ({ revalidate }) => {
+  const { open } = useModal();
   const { notify } = useToast();
   const { data, status } = useSession();
   const [pending, startTransition] = useTransition();
@@ -58,12 +60,13 @@ const CreatePost = ({revalidate}) => {
   const [show, setShow] = useState(false);
   const [perc, setPerc] = useState(0);
   async function handleSubmit() {
-    startTransition(async () => {
-      await createPostAction(content.current.value);
-      revalidate();
-      notify("Your post has been created successfully");
-      content.current.value = "";
-    });
+    // startTransition(async () => {
+    //   await createPostAction(content.current.value);
+    //   revalidate();
+    //   notify("Your post has been created successfully");
+    //   content.current.value = "";
+    // });
+    open(content.current.value);
   }
   function handleChange() {
     setPerc(100 - content.current.value.length / 5);
@@ -79,8 +82,10 @@ const CreatePost = ({revalidate}) => {
       <div className="p-4 flex mb-14">
         {status == "loading" ? (
           <>
-          <div className="rounded-full size-12 overflow-hidden shrink-0" >
-            <div className="size-full bg-loading animate-loading" ></div></div></>
+            <div className="rounded-full size-12 overflow-hidden shrink-0">
+              <div className="size-full bg-loading animate-loading"></div>
+            </div>
+          </>
         ) : (
           <>
             <Image

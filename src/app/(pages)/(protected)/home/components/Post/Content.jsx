@@ -10,14 +10,21 @@ function Content({ children }) {
   const [expanded, setExpanded] = useState(false);
   const [show, setShow] = useState(false);
   useEffect(() => {
+    
     if(content?.current?.clientHeight < defaultHeight){
         setShow(false)
+        
     }
+    
     else{
       setShow(true)
     }
+    if(content.current.clientHeight == content.current.scrollHeight){
+      setShow(false)
+    }
   }, [content])
   function handleExpand() {
+    console.log(content.current.scrollHeight,content.current.clientHeight)
     if (content.current.scrollHeight > content.current.clientHeight) {
       setHeight(content.current.scrollHeight);
       setExpanded(true);

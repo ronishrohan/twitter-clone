@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { icons } from "@/app/utils/icons";
+import useModal from "@/app/hooks/useModal";
 
 const gemini = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -20,6 +21,7 @@ const variants = {
 };
 
 function QueryInput({ handleSubmit, done, pending, createPost }) {
+  const {open} = useModal();
   const [clicked, setClicked] = useState(false);
   const query = useRef();
   const generateButton = useRef();

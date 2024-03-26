@@ -10,6 +10,7 @@ import { createPostAction } from "@/app/mongodb/actions/post.actions";
 import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
 import { QuickAccessCard } from "@/app/components/quick-access/QuickAccess";
 import useToast from "@/app/hooks/useToast";
+import useModal from "@/app/hooks/useModal";
 
 const gemini = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125" x="0px" y="0px">
@@ -18,6 +19,7 @@ const gemini = (
 );
 
 const AiPage = () => {
+  const { open } = useModal();
   const { notify } = useToast();
   const [pending, startTransition] = useTransition();
   const [response, setResponse] = useState(null);
@@ -30,8 +32,7 @@ const AiPage = () => {
     });
   }
   async function handleCreatePost() {
-    await createPostAction(response, true);
-    notify("Your post has been created successfully");
+    open(response);
   }
   return (
     <>

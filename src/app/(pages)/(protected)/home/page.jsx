@@ -2,7 +2,6 @@
 import TopBar from "./components/TopBar";
 import CreatePost from "./components/CreatePost";
 import Posts from "../components/Posts";
-import {motion} from "framer-motion"
 
 import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
 import { useState } from "react";

@@ -28,7 +28,7 @@ export function ToastProvider({ children }) {
     <ToastContext.Provider value={{ notify }}>
       <AnimatePresence mode="sync">
         {enabled && (
-          <motion.div
+          <motion.div 
             key={text || "notification"}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
