@@ -1,24 +1,32 @@
-
 import { icons } from "@/app/utils/icons";
 import React from "react";
 import { Button } from "../home/components/Post/Button";
 import { formatDateTime } from "@/app/helpers/format.helper";
 import Content from "../home/components/Post/Content";
 import Image from "next/image";
+import Link from "next/link";
 
 function Post({ user, children, details }) {
-  
-  
   return (
     <div className="border-b border-grays-200  flex w-full p-4 pb-2 gap-2 font-overused shrink-0">
-      <Image alt="a post" className="rounded-full size-10" src={user?.avatar} width={48} height={48}></Image>
+      <Image
+        alt="a post"
+        className="rounded-full size-10"
+        src={user?.avatar}
+        width={48}
+        height={48}
+      ></Image>
       <div className="flex flex-col w-full">
         <div className="flex text-lg  align-top gap-2">
-          <span className="leading-4 font-semibold">{user?.fullName}</span>
+          <Link href={`/user/${user?.username}`} className="flex gap-1">
+            <span className="leading-4 font-semibold hover:underline">{user?.fullName}</span>
+            <span className="leading-4 font-medium text-grays-300">
+              @{user?.username}
+            </span>
+          </Link>
           <span className="leading-4 font-medium text-grays-300">
-            @{user?.username}
+            {formatDateTime(details.created)}
           </span>
-          <span className="leading-4 font-medium text-grays-300">{formatDateTime(details.created)}</span>
         </div>
         <Content key={children}>{children}</Content>
         <section>

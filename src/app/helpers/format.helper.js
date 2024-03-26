@@ -1,7 +1,11 @@
 export function formatDateTime(date) {
   
+  const datePrev = new Date(date);
+  
   const dateToday = new Date();
-  let seconds = (dateToday - date) / 1000;
+  
+  let seconds = (dateToday-datePrev) / 1000;
+  
   const time = {
     seconds: Math.floor(seconds),
     minutes: Math.floor(seconds / 60),
