@@ -51,7 +51,7 @@ const Button = ({ icon, ...others }) => {
   );
 };
 
-const CreatePost = ({ revalidate }) => {
+const CreatePost = () => {
   const { open } = useModal();
   const { notify } = useToast();
   const { data, status } = useSession();
@@ -67,6 +67,7 @@ const CreatePost = ({ revalidate }) => {
     //   content.current.value = "";
     // });
     open(content.current.value);
+    content.current.value="";
   }
   function handleChange() {
     setPerc(100 - content.current.value.length / 5);

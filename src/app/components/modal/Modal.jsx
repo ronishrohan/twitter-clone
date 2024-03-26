@@ -4,17 +4,21 @@ import React, { useRef, useTransition } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
 import { useRouter } from "next/navigation";
+import useRevalidate from "@/app/hooks/useRevalidate";
+import useToast from "@/app/hooks/useToast";
 
 const Modal = ({ enabled, close, content }) => {
   const router = useRouter();
+  const {notify} = useToast();
   const postContent = useRef(null);
+  const {revalidatePosts} = useRevalidate();
   const [pending, startTransition] = useTransition();
   function handlePost() {
     startTransition(async () => {
       await createPostAction(postContent.current.value);
       router.push("/home")
-
-      
+      revalidatePosts();
+      notify("Your post has been created successfully");
       close();
     });
   }
