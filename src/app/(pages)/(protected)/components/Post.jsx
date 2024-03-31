@@ -12,6 +12,8 @@ import useToast from "@/app/hooks/useToast";
 import { motion } from "framer-motion";
 import { createPostAction } from "@/app/mongodb/actions/post.actions";
 import useRevalidate from "@/app/hooks/useRevalidate";
+import useModal from "@/app/hooks/useModal";
+import Markdown from "react-markdown";
 
 function Post({ user, children, details }) {
   const { data, status } = useSession();
@@ -22,6 +24,7 @@ function Post({ user, children, details }) {
   const [repostPending, startRepost] = useTransition();
   const { revalidatePosts } = useRevalidate();
   const { notify } = useToast();
+  const { open } = useModal();
 
   useEffect(() => {
     if (status == "authenticated") {
@@ -84,19 +87,59 @@ function Post({ user, children, details }) {
       revalidatePosts();
     });
   }
+  async function handleComment() {
+    open("", null, {
+      username: details.repost
+        ? details.repost.createdBy.username
+        : user.username,
+      image: details.repost ? details.repost.createdBy.avatar : user.avatar,
+      id: details.id,
+    });
+  }
   return (
     <div className="border-b border-grays-200  flex flex-col">
-      {details.repost && (
+      {details.replyingTo && (
         <div className=" ml-4 mt-2 text-grays-400 font-medium flex gap-1">
+          <div>{icons.arrow_up_left}</div>
+          <div>replying to </div>
+          <Link
+            className="hover:underline text-accent-100 flex gap-1 items-center  shrink-0"
+            href={`/users/${details.replyingTo.createdBy?.username}`}
+          >
+            <Image
+              width={20}
+              height={20}
+              className="aspect-square rounded-full size-[20px]"
+              src={details.replyingTo.createdBy?.avatar}
+            ></Image>
+            @{details.replyingTo.createdBy?.username}:
+            
+          </Link>
+          <div className="max-w-60 text-accent-100 whitespace-nowrap text-ellipsis overflow-hidden">
+            {details.replyingTo.content}
+          </div>
+        </div>
+      )}
+      {details.repost && (
+        <div className=" ml-4 mt-2 text-grays-400 font-medium flex items-center gap-1">
           <div>{icons.retweet}</div>
           <div>reposted by </div>
           <Link
-            href={`/user/${data.user.username}`}
-            className="hover:underline"
+            href={`/user/${user.username}`}
+            className="hover:underline text-accent-100 flex items-center gap-1"
           >
-            @{data.user.username}
+            <Image
+              width={20}
+              height={20}
+              className="aspect-square rounded-full size-[20px] shrink-0"
+              src={user.avatar}
+            ></Image>
+            @{user.username}
+            
           </Link>
-          <div className="opacity-75">{formatDateTime(details.createdAt)}</div>
+          <div className="opacity-75 ml-1">
+            {formatDateTime(details.createdAt)}
+          </div>
         </div>
       )}
       <div className="size-full flex gap-2 p-4 pb-2 shrink-0 ">
@@ -173,6 +216,7 @@ function Post({ user, children, details }) {
                 id={details.id}
                 repost={details.repost && details.repost._id}
                 icon={icons.comments}
+                onClick={handleComment}
                 amount={
                   details.repost ? details.repost.comments : details.comments
                 }

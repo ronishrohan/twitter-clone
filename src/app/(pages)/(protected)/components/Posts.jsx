@@ -72,6 +72,7 @@ function Posts({ infinite, endpoint, userid }) {
                 image: post.image,
                 repost: post.repost,
                 repostedBy: post.repostedBy,
+                replyingTo: post.replyingTo,
               }}
             >
               {post.content}

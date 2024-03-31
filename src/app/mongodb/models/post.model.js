@@ -2,6 +2,11 @@ import mongoose, { Mongoose, Schema } from "mongoose";
 
 const PostSchema = new Schema(
   {
+    replyingTo: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      required: false,
+    },
     repost: {
       type: Schema.Types.ObjectId,
       ref: "Post",

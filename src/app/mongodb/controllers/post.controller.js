@@ -5,7 +5,13 @@ import { User } from "../models/user.model";
 
 const n = 5;
 
-export async function createPost({ createdBy, content, image, repost }) {
+export async function createPost({
+  createdBy,
+  content,
+  image,
+  repost,
+  replyingTo,
+}) {
   await connectDatabase();
   try {
     const post = await Post.create({
@@ -13,6 +19,7 @@ export async function createPost({ createdBy, content, image, repost }) {
       content: content,
       image: image,
       repost: repost,
+      replyingTo: replyingTo,
     });
     console.log(post);
   } catch (error) {
@@ -25,7 +32,10 @@ export async function getPosts(page) {
   const posts = await Post.find({}, null, { limit: n, skip: n * page })
     .sort({ createdAt: -1 })
     .populate({ path: "createdBy" })
-    .populate({ path: "repost", populate: "createdBy" });
+    .populate([
+      { path: "repost", populate: "createdBy" },
+      { path: "replyingTo", populate: "createdBy" },
+    ]);
 
   return posts;
 }
@@ -38,7 +48,10 @@ export async function getUserPosts(page, id) {
   })
     .sort({ createdAt: -1 })
     .populate({ path: "createdBy" })
-    .populate({ path: "repost", populate: "createdBy" });
+    .populate([
+      { path: "repost", populate: "createdBy" },
+      { path: "replyingTo", populate: "createdBy" },
+    ]);
 
   return posts;
 }
@@ -51,7 +64,10 @@ export async function getLikedPosts(page, id) {
   })
     .sort({ createdAt: -1 })
     .populate({ path: "createdBy" })
-    .populate({ path: "repost", populate: "createdBy" });
+    .populate([
+      { path: "repost", populate: "createdBy" },
+      { path: "replyingTo", populate: "createdBy" },
+    ]);
 
   return posts;
 }
@@ -111,10 +127,24 @@ export async function getSavedPosts(id) {
           path: "repost",
           populate: "createdBy",
         },
+        { path: "replyingTo", populate: "createdBy" },
       ],
     });
 
   console.log(user.savedPosts);
 
   return user.savedPosts;
+}
+
+export async function comment(id) {
+  await connectDatabase();
+  const existPost = await Post.findByIdAndUpdate(
+    id,
+    {
+      $inc: { comments: 1 },
+    },
+    { new: true }
+  );
+  return existPost.comments;
+  console.log(existPost);
 }

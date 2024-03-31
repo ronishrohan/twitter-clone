@@ -91,7 +91,7 @@ const ProfilePage = ({ user, status }) => {
             </>
           )}
         </div>
-        <div className="h-14 border-b border-grays-200 flex sticky top-14 backdrop-blur-md z-50 bg-[rgba(0,0,0,0.9)]">
+        <div className="h-14 border-b border-grays-200 flex sticky top-14 backdrop-blur-md z-40 bg-[rgba(0,0,0,0.9)]">
           <Button mode={0} setMode={setMode} currentMode={mode}>
             Posts
           </Button>

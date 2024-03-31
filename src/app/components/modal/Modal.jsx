@@ -8,8 +8,9 @@ import useRevalidate from "@/app/hooks/useRevalidate";
 import useToast from "@/app/hooks/useToast";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
-const Modal = ({ enabled, close, content, image }) => {
+const Modal = ({ enabled, close, content, image, replyingTo }) => {
   const router = useRouter();
   const { notify } = useToast();
   const postContent = useRef(null);
@@ -25,10 +26,23 @@ const Modal = ({ enabled, close, content, image }) => {
   }, [image]);
   function handlePost() {
     startTransition(async () => {
-      await createPostAction(postContent.current.value, updatedImage);
+      await createPostAction(
+        postContent.current.value,
+        updatedImage,
+        null,
+        replyingTo ? replyingTo.id : null
+      );
+      if (replyingTo) {
+        const comments = await axios.post("/api/posts/update/comment", {
+          id: replyingTo.id,
+        });
+        console.log(comments);
+      }
       router.push("/home");
       revalidatePosts();
-      notify("Your post has been created successfully");
+      replyingTo
+        ? notify("Your comment has been created successfully")
+        : notify("Your post has been posted successfully");
       close();
     });
   }
@@ -48,7 +62,7 @@ const Modal = ({ enabled, close, content, image }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={close}
-            className="absolute  bg-[rgba(0,0,0,0.4)] size-full z-40"
+            className="absolute  bg-[rgba(0,0,0,0.4)] size-full z-50"
           ></motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -58,7 +72,10 @@ const Modal = ({ enabled, close, content, image }) => {
             className="w-1/2  bg-[rgba(0,0,0,0.9)] backdrop-blur-2xl rounded-3xl z-50 flex flex-col gap-4 p-4 border border-grays-200"
           >
             <div className="flex justify-between">
-              <span className="text-2xl font-semibold">Create a post</span>
+              <span className="text-2xl font-semibold">
+                {replyingTo ? "Post a comment" : "Create a post"}
+              </span>
+
               <button
                 onClick={close}
                 className="size-10 text-xl p-2 hover:bg-[rgba(255,255,255,0.05)] hover:text-heart_pink-200 transition-colors rounded-xl"
@@ -69,6 +86,29 @@ const Modal = ({ enabled, close, content, image }) => {
               </button>
             </div>
             <div className="overflow-hidden  h-fit  flex flex-col gap-2">
+              {replyingTo && (
+                <div className="font-medium text-text-400 flex items-center gap-2">
+                  <div>{icons.arrow_up_left}</div>
+                  replying to{" "}
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/user/${replyingTo.username}`}
+                      className="text-accent-800 hover:underline flex items-center gap-1"
+                    >
+                      <Image
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                        src={replyingTo.image}
+                      ></Image>
+                      @{replyingTo.username}
+                    </Link>
+                    <div className="size-6">
+                      
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="w-full h-44 rounded-2xl overflow-hidden border flex border-grays-200 focus:border-accent-800">
                 <textarea
                   placeholder="The body of your post goes here"
@@ -93,7 +133,10 @@ const Modal = ({ enabled, close, content, image }) => {
                     alt="your post image"
                     className="rounded-2xl cursor-pointer border-2 bg-grays-100 border-transparent hover:border-accent-900  transition-all"
                   ></Image>
-                  <button onClick={() => setImage(null)} className="size-10 mb-auto border border-grays-200 rounded-lg hover:bg-heart_pink-100 hover:text-heart_pink-200 hover:border-heart_pink-200 transition-colors ">
+                  <button
+                    onClick={() => setImage(null)}
+                    className="size-10 mb-auto border border-grays-200 rounded-lg hover:bg-heart_pink-100 hover:text-heart_pink-200 hover:border-heart_pink-200 transition-colors "
+                  >
                     <div className="rotate-45">{icons.plus}</div>
                   </button>
                 </div>
