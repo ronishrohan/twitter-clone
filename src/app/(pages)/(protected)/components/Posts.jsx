@@ -10,6 +10,7 @@ import React, {
 import Post from "./Post";
 import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
+import BackToTop from "./BackToTop";
 
 function Posts({ infinite, endpoint, userid }) {
   const [chunks, setChunks] = useState([]);
@@ -19,9 +20,7 @@ function Posts({ infinite, endpoint, userid }) {
   const [finished, setFinished] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const session = useSession();
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  
   useEffect(() => {
     if (isFetching === true) {
       if (infinite === true) {
@@ -60,6 +59,7 @@ function Posts({ infinite, endpoint, userid }) {
         chunks.map((posts) =>
           posts.map((post, index) => (
             <Post
+            disabled={false}
               key={index}
               user={post.createdBy}
               details={{
@@ -102,15 +102,7 @@ function Posts({ infinite, endpoint, userid }) {
             </div>
           ) : (
             <>
-              <div className="h-16 p-4 flex justify-between">
-                <span>Thats all posts for now</span>
-                <button
-                  onClick={scrollToTop}
-                  className="h-full aspect-square rounded-lg hover:bg-grays-100 transition-colors"
-                >
-                  <div className="rotate-90">{icons.arrow}</div>
-                </button>
-              </div>
+              <BackToTop></BackToTop>
             </>
           )}
         </>

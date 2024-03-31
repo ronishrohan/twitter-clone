@@ -14,8 +14,10 @@ import { createPostAction } from "@/app/mongodb/actions/post.actions";
 import useRevalidate from "@/app/hooks/useRevalidate";
 import useModal from "@/app/hooks/useModal";
 import Markdown from "react-markdown";
+import { useRouter } from "next/navigation";
 
-function Post({ user, children, details }) {
+function Post({ user, children, details, disabled }) {
+  const router = useRouter();
   const { data, status } = useSession();
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -53,7 +55,8 @@ function Post({ user, children, details }) {
       }
     }
   }, [status]);
-  async function handleSave() {
+  async function handleSave(e) {
+    e.stopPropagation();
     startTransition(async () => {
       if (saved === false) {
         const res = await axios.post("/api/users/update/save", {
@@ -71,7 +74,8 @@ function Post({ user, children, details }) {
       }
     });
   }
-  async function handleRepost() {
+  async function handleRepost(e) {
+    e.stopPropagation();
     startRepost(async () => {
       await createPostAction(
         children,
@@ -87,7 +91,8 @@ function Post({ user, children, details }) {
       revalidatePosts();
     });
   }
-  async function handleComment() {
+  async function handleComment(e) {
+    e.stopPropagation();
     open("", null, {
       username: details.repost
         ? details.repost.createdBy.username
@@ -96,13 +101,22 @@ function Post({ user, children, details }) {
       id: details.id,
     });
   }
+  async function handleRedirectToPost() {
+    router.push(`/post/${details.repost ? details.repost._id : details.id}`);
+  }
   return (
-    <div className="border-b border-grays-200  flex flex-col">
+    <div
+      onClick={handleRedirectToPost}
+      className={`border-b border-grays-200  flex flex-col transition-colors duration-500 ${
+        disabled === false && "hover:bg-[rgba(8,8,8)] cursor-pointer"
+      }`}
+    >
       {details.replyingTo && (
         <div className=" ml-4 mt-2 text-grays-400 font-medium flex gap-1">
           <div>{icons.arrow_up_left}</div>
           <div>replying to </div>
           <Link
+            onClick={(e) => e.stopPropagation()}
             className="hover:underline text-accent-100 flex gap-1 items-center  shrink-0"
             href={`/post/${details.replyingTo._id}`}
           >
@@ -112,12 +126,11 @@ function Post({ user, children, details }) {
               className="aspect-square rounded-full size-[20px]"
               src={details.replyingTo.createdBy?.avatar}
             ></Image>
-            @{details.replyingTo.createdBy?.username}:
-            
+            @{details.replyingTo.createdBy?.username} -
+            <div className="max-w-60 text-accent-100 whitespace-nowrap text-ellipsis overflow-hidden">
+              {details.replyingTo.content}
+            </div>
           </Link>
-          <div className="max-w-60 text-accent-100 whitespace-nowrap text-ellipsis overflow-hidden">
-            {details.replyingTo.content}
-          </div>
         </div>
       )}
       {details.repost && (
@@ -125,6 +138,7 @@ function Post({ user, children, details }) {
           <div>{icons.retweet}</div>
           <div>reposted by </div>
           <Link
+            onClick={(e) => e.stopPropagation()}
             href={`/user/${user.username}`}
             className="hover:underline text-accent-100 flex items-center gap-1"
           >
@@ -135,7 +149,6 @@ function Post({ user, children, details }) {
               src={user.avatar}
             ></Image>
             @{user.username}
-            
           </Link>
           <div className="opacity-75 ml-1">
             {formatDateTime(details.createdAt)}
@@ -169,6 +182,7 @@ function Post({ user, children, details }) {
             {details.repost ? (
               <>
                 <Link
+                  onClick={(e) => e.stopPropagation()}
                   href={`/user/${details.repost.createdBy?.username}`}
                   className="flex gap-1"
                 >
@@ -182,7 +196,11 @@ function Post({ user, children, details }) {
               </>
             ) : (
               <>
-                <Link href={`/user/${user?.username}`} className="flex gap-1">
+                <Link
+                  onClick={(e) => e.stopPropagation()}
+                  href={`/user/${user?.username}`}
+                  className="flex gap-1"
+                >
                   <span className="leading-4 font-semibold hover:underline">
                     {user?.fullName}
                   </span>
@@ -200,7 +218,11 @@ function Post({ user, children, details }) {
           </div>
           <Content key={children}>{children}</Content>
           {details.image && (
-            <Link href={`/post/${details.id}`} className="w-full h-fit pr-4 flex justify-center mb-2">
+            <Link
+              onClick={(e) => e.stopPropagation()}
+              href={`/post/${details.id}`}
+              className="w-full h-fit pr-4 flex justify-center mb-2"
+            >
               <Image
                 className="rounded-2xl w-full bg-grays-100"
                 width={1000}

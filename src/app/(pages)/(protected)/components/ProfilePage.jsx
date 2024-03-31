@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Posts from "./Posts";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const modes = {
   0: "/api/posts/profile",
@@ -28,29 +29,18 @@ const Button = ({ mode, setMode, currentMode, children }) => {
 
 const ProfilePage = ({ user, status }) => {
   const [mode, setMode] = useState(0);
-  const [hovered, setHovered] = useState(false);
+  
+  const router = useRouter();
+  function handleNavigateBack(){
+    router.back();
+  }
   return (
     <>
-      <Link
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        href="/home"
-        className="sticky top-0 h-14 border-b border-grays-200 flex items-center gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] z-50"
+      <div
+        
+        onClick={handleNavigateBack}
+        className="sticky top-0 h-14 border-b hover:bg-accent-200 cursor-pointer border-grays-200 flex items-center gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] z-50"
       >
-        <div className="absolute size-full z-10 overflow-hidden">
-          <AnimatePresence>
-            {hovered && (
-              <motion.div
-                key={"topbarblur"}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{opacity: 0}}
-                transition={{type: "spring"}}
-                className="rounded-[50%] bg-accent-900 size-full blur-3xl"
-              ></motion.div>
-            )}
-          </AnimatePresence>
-        </div>
         <div className="z-20 ml-4">{icons.arrow}</div>
         <div className="flex h-full justify-center items-baseline gap-2 z-20 py-4">
           <span className="text-xl font-semibold leading-3">
@@ -58,7 +48,7 @@ const ProfilePage = ({ user, status }) => {
           </span>
           <span className="text-text-400 font-semibold">@{user?.username}</span>
         </div>
-      </Link>
+      </div>
       <section className="flex flex-col size-full">
         <div className="h-44 flex flex-col p-4 border-b border-grays-200">
           {status != "loading" ? (

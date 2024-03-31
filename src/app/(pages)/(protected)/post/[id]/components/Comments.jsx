@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useTransition } from "react";
 import Post from "../../../components/Post";
 import axios from "axios";
+import BackToTop from "../../../components/BackToTop";
 
 function Comments({id}) {
   const [pending, startTransition] = useTransition();
@@ -18,6 +19,7 @@ function Comments({id}) {
         comments.map((comment, index) => {
           return (
             <Post
+              disabled={false}
               key={index}
               user={comment.createdBy}
               details={{
@@ -26,12 +28,17 @@ function Comments({id}) {
                 createdAt: comment.createdAt,
                 id: comment._id,
                 image: comment.image,
+                reposts: comment.reposts,
+                repostedBy: comment.repostedBy,
+                
               }}
             >
               {comment.content}
             </Post>
           );
         })}
+
+        {comments && comments.length == 0 ? <div className="h-32 flex items-center justify-center">This post does not have any comments</div> : <BackToTop></BackToTop>}
     </>
   );
 }

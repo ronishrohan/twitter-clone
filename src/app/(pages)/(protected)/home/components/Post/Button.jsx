@@ -24,7 +24,8 @@ export function Button({
   useEffect(() => {
     setEnabled(isActive);
   }, [isActive]);
-  async function handleUpdate() {
+  async function handleUpdate(e) {
+    e.stopPropagation();
     if (others.title == "like") {
       startTransition(async () => {
         if (enabled === false) {
