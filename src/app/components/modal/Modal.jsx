@@ -16,6 +16,7 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
   const postContent = useRef(null);
   const { revalidatePosts } = useRevalidate();
   const [pending, startTransition] = useTransition();
+  const [imageUploading, startUploading] = useTransition();
   const [updatedImage, setImage] = useState(null);
   const imageInput = useRef();
   function handleSelectImage() {
@@ -38,7 +39,7 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
         });
         console.log(comments);
       }
-      
+
       revalidatePosts();
       replyingTo
         ? notify("Your comment has been created successfully")
@@ -47,11 +48,13 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
     });
   }
   async function handleSubmitImage(e) {
-    const imagefile = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", imagefile);
-    const res = await axios.post("/api/cloudinary/upload", formData);
-    setImage(res.data.result.url);
+    startUploading(async () => {
+      const imagefile = e.target.files[0];
+      const formData = new FormData();
+      formData.append("image", imagefile);
+      const res = await axios.post("/api/cloudinary/upload", formData);
+      setImage(res.data.result.url);
+    });
   }
   return (
     <AnimatePresence>
@@ -103,9 +106,7 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
                       ></Image>
                       @{replyingTo.username}
                     </Link>
-                    <div className="size-6">
-                      
-                    </div>
+                    <div className="size-6"></div>
                   </div>
                 </div>
               )}
@@ -137,17 +138,21 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
                     onClick={() => setImage(null)}
                     className="size-10 mb-auto border border-grays-200 rounded-lg hover:bg-heart_pink-100 hover:text-heart_pink-200 hover:border-heart_pink-200 transition-colors "
                   >
-                    <div className="rotate-45">{icons.plus}</div>
+                    
+                        <div className="rotate-45">{icons.plus}</div>
+                      
                   </button>
                 </div>
               ) : (
                 <button
                   onClick={handleSelectImage}
-                  className="transition-colors size-20 bg-grays-100 flex items-center justify-center rounded-2xl text-grays-300 border border-grays-200 hover:bg-accent-200 hover:border-accent-800 hover:text-accent-900"
+                  disabled={imageUploading}
+                  className={`transition-colors size-20 bg-grays-100 flex items-center justify-center rounded-2xl text-grays-300 border border-grays-200 hover:bg-accent-200 hover:border-accent-800 hover:text-accent-900 ${imageUploading && "pointer-events-none"}`}
                 >
-                  {icons.media}
+                  {imageUploading==true ? <div className="animate-spin">{icons.spinner}</div> : <div>{icons.media}</div>}
                 </button>
               )}
+              
             </div>
             <div className="flex">
               <button
