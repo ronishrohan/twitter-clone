@@ -14,7 +14,7 @@ const Sidebar = ({ width }) => {
       <header
         style={{ width: width }}
         id="sidebar"
-        className="h-full fixed top-0 text-2xl border-r transition-all overflow-hidden   z-20 bg-background border-r-grays-200 flex flex-col"
+        className="h-full fixed top-0 text-2xl border-black sm:border-grays-200 border-0 sm:border-r transition-all overflow-hidden z-20 bg-background   flex flex-col"
       >
         <Link
           href="/home"

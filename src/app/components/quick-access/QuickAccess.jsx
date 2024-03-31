@@ -18,7 +18,7 @@ function QuickAccess({ width, search = true, children }) {
     <div
       style={{ width: width }}
       id="quickaccess"
-      className="fixed flex right-0  h-full border-l border-grays-200 transition-all"
+      className="fixed flex right-0  h-full sm:border-grays-200 border-0 sm:border-l transition-all"
     >
       {search && (
         <div className="w-full flex items-center h-12 m-4">
