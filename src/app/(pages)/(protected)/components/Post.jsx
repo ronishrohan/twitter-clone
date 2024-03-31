@@ -17,6 +17,7 @@ function Post({ user, children, details }) {
   const { data, status } = useSession();
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [reposted, setReposted] = useState(false);
   const [pending, startTransition] = useTransition();
   const [repostPending, startRepost] = useTransition();
   const { revalidatePosts } = useRevalidate();
@@ -26,6 +27,13 @@ function Post({ user, children, details }) {
     if (status == "authenticated") {
       if (data.user.savedPosts.includes(details.id)) {
         setSaved(true);
+      }
+      if (
+        (details.repostedBy && details.repostedBy.includes(data.user._id)) ||
+        (details.repost?.repostedBy &&
+          details.repost?.repostedBy.includes(data.user._id))
+      ) {
+        setReposted(true);
       }
     }
   }, [status]);
@@ -62,8 +70,17 @@ function Post({ user, children, details }) {
   }
   async function handleRepost() {
     startRepost(async () => {
-      await createPostAction(children, details.image, details.repost ? details.repost._id : details.id);
-      notify("Post reposted successfully")
+      await createPostAction(
+        children,
+        details.image,
+        details.repost ? details.repost._id : details.id
+      );
+      const res = await axios.post("/api/posts/update/repost", {
+        id: details.repost ? details.repost._id : details.id,
+        userId: data.user._id,
+      });
+      console.log(res.data);
+      notify("Post reposted successfully");
       revalidatePosts();
     });
   }
@@ -162,16 +179,18 @@ function Post({ user, children, details }) {
                 hover="hover:text-accent-900 hover:bg-accent-200"
                 title="comments"
               ></Button>
-              
+
               <Button
                 id={details.id}
                 repost={details.repost && details.repost._id}
                 loading={repostPending}
                 icon={icons.retweet}
+                isActive={reposted}
+                disabled={reposted}
+                active="text-green_hover-200"
                 amount={
                   details.repost ? details.repost.reposts : details.reposts
                 }
-                
                 onClick={handleRepost}
                 hover="hover:text-green_hover-200 hover:bg-green_hover-100"
                 title="repost"
@@ -182,7 +201,7 @@ function Post({ user, children, details }) {
                 icon={icons.heart}
                 filled={icons.heart_filled}
                 amount={details.repost ? details.repost.likes : details.likes}
-                liked={liked}
+                isActive={liked}
                 active="text-heart_pink-200"
                 hover="hover:text-heart_pink-200 hover:bg-heart_pink-100"
                 title="like"

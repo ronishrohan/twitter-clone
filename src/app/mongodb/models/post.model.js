@@ -32,6 +32,15 @@ const PostSchema = new Schema(
       ],
       default: [],
     },
+    repostedBy: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
     comments: {
       type: Number,
       default: 0,

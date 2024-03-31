@@ -14,7 +14,7 @@ export function Button({
   active,
   amount,
   id,
-  liked,
+  isActive,
   ...others
 }) {
   const [enabled, setEnabled] = useState(false);
@@ -22,8 +22,8 @@ export function Button({
   const { data, session } = useSession();
   const [updatedAmount, setAmount] = useState(amount)
   useEffect(() => {
-    setEnabled(liked);
-  }, [liked]);
+    setEnabled(isActive);
+  }, [isActive]);
   async function handleUpdate() {
     if (others.title == "like") {
       startTransition(async () => {
@@ -51,6 +51,7 @@ export function Button({
   }
   return (
     <>
+    
       <button
       title={others.disabled && "a repost cannot be reposted"}
         disabled={pending}
@@ -68,6 +69,7 @@ export function Button({
             {enabled ? (
               <>
                 <motion.span
+                  
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{
@@ -77,7 +79,7 @@ export function Button({
                     bounce: 20,
                   }}
                 >
-                  {filled}
+                  {filled ? filled : icon}
                 </motion.span>
               </>
             ) : (

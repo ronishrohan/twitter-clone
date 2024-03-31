@@ -69,6 +69,19 @@ export async function like(id, userId) {
   return existPost.likes;
   console.log(existPost);
 }
+export async function repost(id, userId) {
+  await connectDatabase();
+  const existPost = await Post.findByIdAndUpdate(
+    id,
+    {
+      $inc: { reposts: 1 },
+      $push: { repostedBy: userId },
+    },
+    { new: true }
+  );
+  console.log(existPost);
+  return existPost.reposts;
+}
 
 export async function unlike(id, userId) {
   await connectDatabase();

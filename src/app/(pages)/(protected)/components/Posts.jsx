@@ -23,13 +23,13 @@ function Posts({ infinite, endpoint, userid }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   useEffect(() => {
-    if(isFetching===true){
-      if (infinite===true) {
+    if (isFetching === true) {
+      if (infinite === true) {
         const timeout = setTimeout(() => {
           setTimer((prev) => prev + 1);
           const scrollY = window.scrollY + window.innerHeight;
           const height = document.body.scrollHeight;
-  
+
           if (scrollY / height > 0.9) {
             setPage((prev) => prev + 1);
           }
@@ -42,7 +42,7 @@ function Posts({ infinite, endpoint, userid }) {
     function fetchPosts() {
       startTransition(async () => {
         const { data } = await axios.post(endpoint, { page: page, id: userid });
-        setIsFetching(true)
+        setIsFetching(true);
         if (data.posts.length == 0) {
           setFinished(true);
         }
@@ -70,7 +70,8 @@ function Posts({ infinite, endpoint, userid }) {
                 createdAt: post.createdAt,
                 id: post._id,
                 image: post.image,
-                repost: post.repost
+                repost: post.repost,
+                repostedBy: post.repostedBy,
               }}
             >
               {post.content}
