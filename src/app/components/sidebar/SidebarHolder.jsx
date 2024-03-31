@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 
 function SidebarHolder() {
-    const [width, setWidth] = useState(300);
+    const [width, setWidth] = useState(0);
     
-    useEffect(() => {
+    useLayoutEffect(() => {
       
-     
+      
         function changeWidth(){
             
             if(window.innerWidth < 1024 && window.innerWidth > 640){
@@ -26,7 +26,7 @@ function SidebarHolder() {
     }, [])
 
   return (
-    <div  style={{width: width}} className="relative  shrink-0 transition-all overflow-hidden">
+    <div  style={{width: width}} className="relative shrink-0 transition-all ">
       <Sidebar width={width}></Sidebar>
     </div>
   );

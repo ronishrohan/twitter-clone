@@ -96,7 +96,7 @@ function Post({ user, children, details }) {
           >
             @{data.user.username}
           </Link>
-          <div>{formatDateTime(details.createdAt)}</div>
+          <div className="opacity-75">{formatDateTime(details.createdAt)}</div>
         </div>
       )}
       <div className="size-full flex gap-2 p-4 pb-2 shrink-0 ">
@@ -149,7 +149,7 @@ function Post({ user, children, details }) {
                 </Link>
               </>
             )}
-            <span className="leading-4 font-medium text-grays-300">
+            <span className="leading-4 font-medium text-grays-300 opacity-75">
               {formatDateTime(
                 details.repost ? details.repost.createdAt : details.createdAt
               )}
@@ -209,7 +209,7 @@ function Post({ user, children, details }) {
               <button
                 disabled={pending}
                 onClick={handleSave}
-                className="relative overflow-hidden flex items-center justify-center h-full aspect-square shrink-0 text-gray-500 hover:text-accent-900 hover:bg-accent-200 rounded-lg"
+                className="relative overflow-hidden flex items-center justify-center h-full aspect-square shrink-0 text-gray-500 hover:text-accent-900 hover:bg-accent-200 rounded-lg "
               >
                 {pending && (
                   <div className="absolute size-full bg-loading animate-loading opacity-50 pointer-events-none"></div>

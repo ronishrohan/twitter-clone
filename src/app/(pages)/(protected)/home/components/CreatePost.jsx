@@ -135,7 +135,7 @@ const CreatePost = () => {
           <textarea
             maxLength={500}
             ref={content}
-            placeholder="What do you want to waffle about today"
+            placeholder="Post something"
             className="bg-transparent resize-none overflow-y-auto max-h-44 h-28 text-2xl  outline-none w-full font-roboto placeholder:text-grays-300 placeholder:opacity-70"
             onChange={() => handleChange()}
           ></textarea>
