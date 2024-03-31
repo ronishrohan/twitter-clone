@@ -34,7 +34,7 @@ export function ToastProvider({ children }) {
             animate={{ opacity: 1, scale: 1, y:"0%" }}
             exit={{ opacity: 0, scale: 1, y:"100%" }}
             transition={{ damping: 20, type: "spring" }}
-            className="overflow-hidden bg-black border rounded-xl flex p-4 gap-2 items-center border-accent-900 min-w-48  m-2 fixed z-50 bottom-0 right-0"
+            className="overflow-hidden bg-black border rounded-xl flex p-4 gap-2 items-center border-accent-900 min-w-48  m-2 fixed z-50 bottom-16 sm:bottom-0 right-0"
           >
             <div className="absolute -z-10 bg-accent-800 w-1/2 aspect-square blur-2xl opacity-20"></div>
             <button

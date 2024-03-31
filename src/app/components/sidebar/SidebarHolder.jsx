@@ -10,8 +10,11 @@ function SidebarHolder() {
      
         function changeWidth(){
             
-            if(window.innerWidth < 1024){
+            if(window.innerWidth < 1024 && window.innerWidth > 640){
                 setWidth(80)
+            }
+            else if(window.innerWidth <= 640){
+              setWidth(0)
             }
             else{
                 setWidth(300)
@@ -23,7 +26,7 @@ function SidebarHolder() {
     }, [])
 
   return (
-    <div  style={{width: width}} className="relative  shrink-0 transition-all">
+    <div  style={{width: width}} className="relative  shrink-0 transition-all overflow-hidden">
       <Sidebar width={width}></Sidebar>
     </div>
   );

@@ -4,7 +4,7 @@ import QuickAccess from './QuickAccess';
 
 function QuickAccessHolder({ children, ...others}) {
   const [width, setWidth] = useState(400);
-    useEffect(() => {
+    useLayoutEffect(() => {
         function changeWidth(){
             
             if(window.innerWidth < 1024){

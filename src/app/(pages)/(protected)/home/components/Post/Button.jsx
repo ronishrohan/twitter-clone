@@ -59,7 +59,7 @@ export function Button({
         onClick={others.onClick || handleUpdate}
         className={`relative overflow-hidden w-full  rounded-lg  ${hover} ${
           enabled ? active : "text-gray-400"
-        } ${others.disabled && "pointer-events-none disabled:text-grays-300 bg-[rgba(255,255,255,0.05)]"}`}
+        } ${others.disabled && "pointer-events-none"}`}
       >
         {(pending || loading) && (
           <div className="size-full absolute bg-loading animate-loading pointer-events-none opacity-50"></div>

@@ -17,7 +17,7 @@ function NavLink({ children, icon, ...others }) {
   return (
     <Link
       {...others}
-      className={`${isActive && "pointer-events-none"} overflow-hidden relative font-medium flex text-2xl gap-4 p-4 items-center justify-center lg:justify-normal border-y border-transparent   hover:bg-accent-200 transition-all`}
+      className={`${isActive && "pointer-events-none"} shrink-0 overflow-hidden relative font-medium flex text-2xl gap-4 p-4 items-center justify-center lg:justify-normal border-y border-transparent   hover:bg-accent-200 transition-all`}
     >
       <AnimatePresence>
         {isActive && (
