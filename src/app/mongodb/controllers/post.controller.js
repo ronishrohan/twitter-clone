@@ -66,6 +66,7 @@ export async function like(id, userId) {
     },
     { new: true }
   );
+  return existPost.likes;
   console.log(existPost);
 }
 
@@ -79,6 +80,7 @@ export async function unlike(id, userId) {
     },
     { new: true }
   );
+  return existPost.likes;
   console.log(existPost);
 }
 

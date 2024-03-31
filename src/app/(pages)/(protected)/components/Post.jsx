@@ -18,26 +18,24 @@ function Post({ user, children, details }) {
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
-  const {revalidatePosts} = useRevalidate();
+  const [repostPending, startRepost] = useTransition();
+  const { revalidatePosts } = useRevalidate();
   const { notify } = useToast();
-  
+
   useEffect(() => {
     if (status == "authenticated") {
-      
       if (data.user.savedPosts.includes(details.id)) {
         setSaved(true);
       }
-      
     }
   }, [status]);
   useEffect(() => {
     if (status === "authenticated") {
-      if(details.repost){
+      if (details.repost) {
         if (details?.repost?.likedBy?.includes(data.user._id)) {
           setLiked(true);
         }
-      }
-      else{
+      } else {
         if (details.likedBy.includes(data.user._id)) {
           setLiked(true);
         }
@@ -63,8 +61,11 @@ function Post({ user, children, details }) {
     });
   }
   async function handleRepost() {
-    await createPostAction(children, details.image, details.id);
-    revalidatePosts();
+    startRepost(async () => {
+      await createPostAction(children, details.image, details.repost ? details.repost._id : details.id);
+      notify("Post reposted successfully")
+      revalidatePosts();
+    });
   }
   return (
     <div className="border-b border-grays-200  flex flex-col">
@@ -72,7 +73,12 @@ function Post({ user, children, details }) {
         <div className=" ml-4 mt-2 text-grays-400 font-medium flex gap-1">
           <div>{icons.retweet}</div>
           <div>reposted by </div>
-          <Link href={`/user/${data.user.username}`} className="hover:underline">@{data.user.username}</Link>
+          <Link
+            href={`/user/${data.user.username}`}
+            className="hover:underline"
+          >
+            @{data.user.username}
+          </Link>
           <div>{formatDateTime(details.createdAt)}</div>
         </div>
       )}
@@ -102,7 +108,10 @@ function Post({ user, children, details }) {
           <div className="flex text-lg  align-top gap-2">
             {details.repost ? (
               <>
-                <Link href={`/user/${details.repost.createdBy?.username}`} className="flex gap-1">
+                <Link
+                  href={`/user/${details.repost.createdBy?.username}`}
+                  className="flex gap-1"
+                >
                   <span className="leading-4 font-semibold hover:underline">
                     {details.repost.createdBy?.fullName}
                   </span>
@@ -124,7 +133,9 @@ function Post({ user, children, details }) {
               </>
             )}
             <span className="leading-4 font-medium text-grays-300">
-              {formatDateTime(details.repost ? details.repost.createdAt : details.createdAt)}
+              {formatDateTime(
+                details.repost ? details.repost.createdAt : details.createdAt
+              )}
             </span>
           </div>
           <Content key={children}>{children}</Content>
@@ -145,16 +156,22 @@ function Post({ user, children, details }) {
                 id={details.id}
                 repost={details.repost && details.repost._id}
                 icon={icons.comments}
-                amount={details.repost ? details.repost.comments : details.comments}
+                amount={
+                  details.repost ? details.repost.comments : details.comments
+                }
                 hover="hover:text-accent-900 hover:bg-accent-200"
                 title="comments"
               ></Button>
+              
               <Button
                 id={details.id}
                 repost={details.repost && details.repost._id}
+                loading={repostPending}
                 icon={icons.retweet}
-                amount={details.repost ? details.repost.reposts : details.reposts}
-                disabled={details.repost != null}
+                amount={
+                  details.repost ? details.repost.reposts : details.reposts
+                }
+                
                 onClick={handleRepost}
                 hover="hover:text-green_hover-200 hover:bg-green_hover-100"
                 title="repost"

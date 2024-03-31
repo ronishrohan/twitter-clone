@@ -9,6 +9,7 @@ export function Button({
   icon,
   filled,
   hover,
+  loading,
   repost,
   active,
   amount,
@@ -19,6 +20,7 @@ export function Button({
   const [enabled, setEnabled] = useState(false);
   const [pending, startTransition] = useTransition();
   const { data, session } = useSession();
+  const [updatedAmount, setAmount] = useState(amount)
   useEffect(() => {
     setEnabled(liked);
   }, [liked]);
@@ -31,6 +33,7 @@ export function Button({
             userId: data.user._id,
           });
           if (res.status === 200) {
+            setAmount(res.data.likes)
             setEnabled(true);
           }
         } else {
@@ -39,6 +42,7 @@ export function Button({
             userId: data.user._id,
           });
           if (res.status === 200) {
+            setAmount(res.data.likes)
             setEnabled(false);
           }
         }
@@ -56,7 +60,7 @@ export function Button({
           enabled ? active : "text-gray-400"
         } ${others.disabled && "pointer-events-none disabled:text-grays-300 bg-[rgba(255,255,255,0.05)]"}`}
       >
-        {pending && (
+        {(pending || loading) && (
           <div className="size-full absolute bg-loading animate-loading pointer-events-none opacity-50"></div>
         )}
         <div className="size-full p-2 flex gap-2 items-center">
@@ -81,13 +85,7 @@ export function Button({
             )}
           </AnimatePresence>
           <span>
-            {enabled
-              ? liked
-                ? amount
-                : amount + 1
-              : liked
-              ? amount - 1
-              : amount}
+            {updatedAmount}
           </span>
         </div>
       </button>
