@@ -87,7 +87,7 @@ function Posts({ infinite, endpoint, userid }) {
       )}
       {pending && chunks.length >= 1 && (
         <div className="relative h-14 w-full flex items-center overflow-hidden mt-auto">
-          <div className="z-50 m-4 w-full text-lg">
+          <div className="z-40 m-4 w-full text-lg">
             Loading more posts please wait
           </div>
           <div className="size-full absolute bg-loading animate-loading"></div>
