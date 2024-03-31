@@ -38,7 +38,7 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
         });
         console.log(comments);
       }
-      router.push("/home");
+      
       revalidatePosts();
       replyingTo
         ? notify("Your comment has been created successfully")

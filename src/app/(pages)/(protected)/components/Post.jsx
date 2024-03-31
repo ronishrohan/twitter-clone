@@ -47,7 +47,7 @@ function Post({ user, children, details }) {
           setLiked(true);
         }
       } else {
-        if (details.likedBy.includes(data.user._id)) {
+        if (details?.likedBy?.includes(data.user._id)) {
           setLiked(true);
         }
       }
@@ -104,7 +104,7 @@ function Post({ user, children, details }) {
           <div>replying to </div>
           <Link
             className="hover:underline text-accent-100 flex gap-1 items-center  shrink-0"
-            href={`/users/${details.replyingTo.createdBy?.username}`}
+            href={`/post/${details.replyingTo._id}`}
           >
             <Image
               width={20}
@@ -200,7 +200,7 @@ function Post({ user, children, details }) {
           </div>
           <Content key={children}>{children}</Content>
           {details.image && (
-            <div className="w-full h-fit pr-4 flex justify-center mb-2">
+            <Link href={`/post/${details.id}`} className="w-full h-fit pr-4 flex justify-center mb-2">
               <Image
                 className="rounded-2xl w-full bg-grays-100"
                 width={1000}
@@ -208,7 +208,7 @@ function Post({ user, children, details }) {
                 alt="post"
                 src={details.image}
               ></Image>
-            </div>
+            </Link>
           )}
           <section>
             <div className="w-full flex mt-auto h-12 gap-2">

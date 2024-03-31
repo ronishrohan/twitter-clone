@@ -72,46 +72,18 @@ export async function getLikedPosts(page, id) {
   return posts;
 }
 
-export async function like(id, userId) {
+
+export async function getPost(id) {
   await connectDatabase();
-  const existPost = await Post.findByIdAndUpdate(
-    id,
-    {
-      $inc: { likes: 1 },
-      $push: { likedBy: userId },
-    },
-    { new: true }
-  );
-  return existPost.likes;
+  const existPost = await Post.findById(id).populate([
+    { path: "createdBy" },
+    { path: "repost", populate: "createdBy" },
+    { path: "replyingTo", populate: "createdBy" },
+  ]);
   console.log(existPost);
-}
-export async function repost(id, userId) {
-  await connectDatabase();
-  const existPost = await Post.findByIdAndUpdate(
-    id,
-    {
-      $inc: { reposts: 1 },
-      $push: { repostedBy: userId },
-    },
-    { new: true }
-  );
-  console.log(existPost);
-  return existPost.reposts;
+  return existPost;
 }
 
-export async function unlike(id, userId) {
-  await connectDatabase();
-  const existPost = await Post.findByIdAndUpdate(
-    id,
-    {
-      $inc: { likes: -1 },
-      $pull: { likedBy: userId },
-    },
-    { new: true }
-  );
-  return existPost.likes;
-  console.log(existPost);
-}
 
 export async function getSavedPosts(id) {
   await connectDatabase();
@@ -134,6 +106,58 @@ export async function getSavedPosts(id) {
   console.log(user.savedPosts);
 
   return user.savedPosts;
+}
+
+export async function getComments(id){
+  await connectDatabase()
+  const posts = await Post.find({replyingTo: id}).populate({path: "createdBy"}).sort({createdAt: -1})
+  return posts;
+}
+
+
+export async function like(id, userId) {
+  console.log("hi");
+  await connectDatabase();
+  const existPost = await Post.findByIdAndUpdate(
+    id,
+    {
+      $inc: { likes: 1 },
+      $push: { likedBy: userId },
+    },
+    { new: true }
+  );
+  console.log(existPost);
+  return existPost.likes;
+}
+
+
+export async function repost(id, userId) {
+  await connectDatabase();
+  const existPost = await Post.findByIdAndUpdate(
+    id,
+    {
+      $inc: { reposts: 1 },
+      $push: { repostedBy: userId },
+    },
+    { new: true }
+  );
+  console.log(existPost);
+  return existPost.reposts;
+}
+
+
+export async function unlike(id, userId) {
+  await connectDatabase();
+  const existPost = await Post.findByIdAndUpdate(
+    id,
+    {
+      $inc: { likes: -1 },
+      $pull: { likedBy: userId },
+    },
+    { new: true }
+  );
+  return existPost.likes;
+  console.log(existPost);
 }
 
 export async function comment(id) {
