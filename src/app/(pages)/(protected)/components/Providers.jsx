@@ -4,13 +4,18 @@ import { ToastProvider } from "@/app/store/toast.store";
 import { ModalProvider } from "@/app/store/modal.store";
 import { RevalidateProvider } from "@/app/store/revalidate.store";
 
+
+
 const Providers = ({ children }) => {
+  
   return (
-    <RevalidateProvider>
-      <ToastProvider>
-        <ModalProvider>{children}</ModalProvider>
-      </ToastProvider>
-    </RevalidateProvider>
+    
+      <RevalidateProvider>
+        <ToastProvider>
+          <ModalProvider>{children}</ModalProvider>
+        </ToastProvider>
+      </RevalidateProvider>
+    
   );
 };
 
