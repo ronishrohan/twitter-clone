@@ -4,11 +4,13 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import MessagesList from "./components/MessagesList";
 
 const MessagesPage = () => {
+  const [id, setId] = useState(null)
+  
   return (
-    <main className="relative min-h-[200vh] max-h-fit w-full flex ">
-      <MessagesContainer></MessagesContainer>
+    <main className="relative max-h-fit w-full flex ">
+      <MessagesContainer id={id} ></MessagesContainer>
 
-      <MessagesList></MessagesList>
+      <MessagesList updateId={setId}></MessagesList>
     </main>
   );
 };

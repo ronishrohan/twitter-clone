@@ -63,3 +63,19 @@ export async function unsavePost(id, postId) {
   console.log(user);
 }
 
+export async function getUserMessaging(userId){
+  await connectDatabase();
+  const user = await User.findById(userId).populate("messages");
+  return user.messages.reverse();
+  
+}
+
+export async function addUserToMessaging(userId, id){
+  await connectDatabase();
+  const user = await User.findById(userId);
+  if(user.messages.includes(id)==false){
+    user.messages.push(id);
+    user.save();
+  }
+}
+

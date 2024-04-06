@@ -28,18 +28,27 @@ const UserSchema = new Schema(
       required: true,
     },
     savedPosts: {
-      type: [{
-        type: Schema.Types.ObjectId,
-        ref: "Post"
-      }],
-      default: []
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Post",
+        },
+      ],
+      default: [],
     },
     repostedPosts: {
-      type: [{
-        type: Schema.Types.ObjectId,
-        ref: "Post"
-      }],
-      default: []
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Post",
+        },
+      ],
+      default: [],
+    },
+    messages: {
+      type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+      default: [],
+      required: false,
     },
   },
   {
