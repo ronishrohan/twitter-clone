@@ -131,7 +131,7 @@ const MessagesContainer = ({ id }) => {
               >
                 {messages.length > 0 &&
                   messages.map((message, index) => (
-                    <Message self={message.self}>{message.content}</Message>
+                    <Message self={message.self} key={index + message.content}>{message.content}</Message>
                   ))}
               </div>
             </>
