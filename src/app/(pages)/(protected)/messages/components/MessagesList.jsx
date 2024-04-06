@@ -96,8 +96,8 @@ const MessagesList = ({ updateId, current }) => {
   }
 
   return (
-    <div className="w-16 h-full lg:w-[400px] shrink-0 transition-all   border-l border-grays-200 flex flex-col">
-      <div className="sticky top-0 border-b border-grays-200 p-4 text-2xl bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40 flex flex-col">
+    <div className="w-16 overflow-y-auto overflow-x-clip h-full  lg:w-[400px] shrink-0 transition-all   border-l border-grays-200 flex flex-col">
+      <div className="border-b  sticky top-0  border-grays-200 p-4 text-2xl bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40 flex flex-col">
         <div className="flex justify-between w-full h-full">
           <div>Messages</div>
           <button

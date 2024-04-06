@@ -22,7 +22,10 @@ const MessagesContainer = ({ id }) => {
   const [user, setUser] = useState(null);
   const [userLoading, getUser] = useTransition();
   const [disabled, setDisabled] = useState(true);
+  const [messagesLoading, getMessages] = useTransition();
+  const messagesContainer = useRef();
   useEffect(() => {
+    setMessages([]);
     if (status == "authenticated" && id) {
       const sckt = io("http://localhost:4000");
       const roomId = [id, data.user._id].sort().toString().replace(",", "");
@@ -36,14 +39,25 @@ const MessagesContainer = ({ id }) => {
         setMessages([]);
         return sckt;
       });
+
+      getMessages(async () => {
+        const res = await axios.post("/api/messages/get", {id1: id, id2: data.user._id});
+        const transformedMessages = []
+        res.data.messages.forEach((message) => {
+          transformedMessages.push({content: message.content, self: message.by==data.user._id})
+        })
+        setMessages(transformedMessages)
+      })
     }
     if (id) {
       getUser(async () => {
         const res = await axios.post("/api/users/details", { id: id });
-        console.log(res);
+        
         setUser(res.data.user);
       });
+      
     }
+    
   }, [status, id]);
   useMemo(() => {
     if (socket) {
@@ -55,14 +69,20 @@ const MessagesContainer = ({ id }) => {
       });
     }
   }, [socket]);
+  useEffect(() => {
+messagesContainer?.current?.scrollTo(0,messagesContainer.current.scrollHeight)
+  }, [messages])
 
   async function handleSendMessage() {
     if (inputRef.current.value.length > 0) {
       const msg = inputRef.current.value;
       await socket.emit("message", { content: msg }, room);
       setMessages((prev) => [...prev, { content: msg, self: true }]);
+      
+      await axios.post("/api/messages/create", {id1: data.user._id, id2: id, content: msg, by: data.user._id});
       inputRef.current.value = "";
     }
+    
   }
   function handleDisable(e) {
     {
@@ -74,8 +94,8 @@ const MessagesContainer = ({ id }) => {
     }
   }
   return (
-    <div className="w-full h-full">
-      <div className="border-y border-grays-200 h-16 sticky top-0 bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
+    <div className="w-full h-screen flex flex-col">
+      <div className="border-b border-grays-200 h-16 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
         {user && (
           <div className="size-full p-4 flex gap-2 items-center">
             <Image
@@ -92,14 +112,14 @@ const MessagesContainer = ({ id }) => {
       </div>
       {id ? (
         <>
-          <div className="size-full flex flex-col p-2 gap-1">
+          <div ref={messagesContainer} className="size-full flex flex-col p-2 gap-1 overflow-y-scroll">
             {messages.length > 0 &&
               messages.map((message, index) => (
                 <Message self={message.self}>{message.content}</Message>
               ))}
           </div>
 
-          <div className="flex w-full mt-auto sticky bottom-0 border-t border-grays-200">
+          <div className="flex w-full mt-auto relative border-t border-grays-200">
             <input
               type="text"
               placeholder="Enter message here"
@@ -113,9 +133,10 @@ const MessagesContainer = ({ id }) => {
               }}
             />
             <button
+
               disabled={disabled}
               onClick={handleSendMessage}
-              className={`size-16 shrink-0 rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors disabled:text-grays-300 ${
+              className={`size-16 shrink-0 bg-black rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors disabled:text-grays-300 ${
                 disabled && "pointer-events-none"
               }`}
             >

@@ -7,10 +7,10 @@ const MessagesPage = () => {
   const [id, setId] = useState(null)
   
   return (
-    <main className="relative max-h-fit w-full flex ">
-      <MessagesContainer id={id} ></MessagesContainer>
+    <main className="relative max-h-fit w-full flex overflow-hidden">
+      <MessagesContainer  id={id} ></MessagesContainer>
 
-      <MessagesList updateId={setId} current={id}></MessagesList>
+      <div className="h-screen "><MessagesList  updateId={setId} current={id}></MessagesList></div>
     </main>
   );
 };
