@@ -149,7 +149,7 @@ const MessagesList = ({ updateId, current }) => {
         {users.length > 0 ? (
           <>
             {users.map((user, index) => {
-              return <User active={current==user._id} updateId={updateId} user={user}></User>;
+              return <User active={current==user._id} key={user._id} updateId={updateId} user={user}></User>;
             })}
           </>
         ) : (
