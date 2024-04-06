@@ -30,7 +30,7 @@ const PostPage = ({ params }) => {
         <section className="h-full">
           <div
             onClick={handleNavigateBack}
-            className="sticky top-0 h-14 border-b cursor-pointer border-grays-200 flex items-center p-4 gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] hover:bg-accent-200 transition-colors z-50"
+            className="sticky top-0 h-16 border-b cursor-pointer border-grays-200 flex items-center p-4 gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] hover:bg-accent-200 transition-colors z-50"
           >
             <div>{icons.arrow}</div>
             <div className="text-xl">Go Back</div>

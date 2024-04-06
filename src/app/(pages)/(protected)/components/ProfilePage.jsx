@@ -18,8 +18,8 @@ const Button = ({ mode, setMode, currentMode, children }) => {
     <button
       disabled={currentMode==mode}
       onClick={() => setMode(mode)}
-      className={`h-full p-4 transition-all hover:bg-grays-100 hover:text-white ${
-        mode === currentMode ? "bg-accent-200 font-medium pointer-events-none" : "text-grays-300"
+      className={`h-full p-4 transition-all hover:bg-[rgb(8,8,8)] hover:text-white ${
+        mode === currentMode ? "bg-grays-100 font-medium pointer-events-none" : "text-grays-300"
       }`}
     >
       {children}
@@ -39,10 +39,10 @@ const ProfilePage = ({ user, status }) => {
       <div
         
         onClick={handleNavigateBack}
-        className="sticky top-0 h-14 border-b hover:bg-accent-200 cursor-pointer border-grays-200 flex items-center gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] z-50"
+        className="sticky top-0 h-16 border-b hover:bg-[rgb(8,8,8)] transition-colors cursor-pointer border-grays-200 flex items-center gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] z-50"
       >
         <div className="z-20 ml-4">{icons.arrow}</div>
-        <div className="flex h-full justify-center items-baseline gap-2 z-20 py-4">
+        <div className="flex h-full justify-center items-center gap-2 z-20 py-4">
           <span className="text-xl font-semibold leading-3">
             {user?.fullName}
           </span>

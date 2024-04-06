@@ -107,7 +107,7 @@ function Post({ user, children, details, disabled }) {
   return (
     <div
       onClick={handleRedirectToPost}
-      className={`border-b border-grays-200  flex flex-col transition-colors duration-500 ${
+      className={`border-b border-grays-200  flex flex-col transition-colors duration-300 ${
         disabled === false && "hover:bg-[rgba(8,8,8)] cursor-pointer"
       }`}
     >

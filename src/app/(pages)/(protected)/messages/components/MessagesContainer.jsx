@@ -93,6 +93,7 @@ const MessagesContainer = ({ id }) => {
         content: msg,
         by: data.user._id,
       });
+      await socket.emit("trigger-revalidate", id.toString());
     }
   }
   function handleDisable(e) {

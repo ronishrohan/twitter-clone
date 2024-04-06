@@ -26,21 +26,19 @@ const User = ({ user, updateId,active, ...others }) => {
         src={user.avatar}
       ></Image>
       <div className="hidden lg:flex  flex-col justify-evenly h-full">
-        <div className="flex gap-1 ">
+        <div className="flex flex-col gap-1 ">
           <span className="text-lg leading-4">{user.fullName}</span>
           <span className="text-lg leading-4 text-text-400">
             @{user.username}
           </span>
         </div>
-        <div className="text-lg leading-6 text-text-900 opacity-75 font-normal whitespace-nowrap text-ellipsis overflow-hidden max-w-40">
-          what up cuhhhhhhhhhhh
-        </div>
+        
       </div>
     </button>
   );
 };
 
-const MessagesList = ({ updateId, current }) => {
+const MessagesList = ({ updateId, current, update }) => {
   const [revalidate, setRevalidate] = useState(0);
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
@@ -54,11 +52,12 @@ const MessagesList = ({ updateId, current }) => {
         const res = await axios.post("/api/users/messages/getusers", {
           id: data.user._id,
         });
+      
         // console.log(res.data.users);
         setUsers(res.data.users);
       }
     });
-  }, [status, revalidate]);
+  }, [status, revalidate, update]);
   async function handleAddUser() {
     setOpen(false);
     const username = usernameRef.current.value;
