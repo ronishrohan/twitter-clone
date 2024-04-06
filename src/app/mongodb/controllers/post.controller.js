@@ -101,7 +101,7 @@ export async function getSavedPosts(id) {
         },
         { path: "replyingTo", populate: "createdBy" },
       ],
-    });
+    }).sort({"savedPosts.createdAt" : -1});
 
   console.log(user.savedPosts);
 
