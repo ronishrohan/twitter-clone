@@ -10,7 +10,7 @@ const MessagesPage = () => {
     <main className="relative max-h-fit w-full flex ">
       <MessagesContainer id={id} ></MessagesContainer>
 
-      <MessagesList updateId={setId}></MessagesList>
+      <MessagesList updateId={setId} current={id}></MessagesList>
     </main>
   );
 };

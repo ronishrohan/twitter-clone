@@ -1,9 +1,17 @@
 "use client";
 import { icons } from "@/app/utils/icons";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { io } from "socket.io-client";
 import Message from "./Message";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+import Image from "next/image";
 
 const MessagesContainer = ({ id }) => {
   const { data, status } = useSession();
@@ -11,27 +19,35 @@ const MessagesContainer = ({ id }) => {
   const [room, setRoom] = useState(null);
   const inputRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const [user, setUser] = useState(null);
+  const [userLoading, getUser] = useTransition();
+  const [disabled, setDisabled] = useState(true);
   useEffect(() => {
     if (status == "authenticated" && id) {
       const sckt = io("http://localhost:4000");
       const roomId = [id, data.user._id].sort().toString().replace(",", "");
-      console.log(roomId)
-      setRoom(roomId);
-    
-      sckt.emit("join-room", roomId)
 
-      setSocket(prev => {
+      setRoom(roomId);
+
+      sckt.emit("join-room", roomId);
+
+      setSocket((prev) => {
         prev && prev.disconnect();
-        setMessages([])
+        setMessages([]);
         return sckt;
       });
     }
-    
+    if (id) {
+      getUser(async () => {
+        const res = await axios.post("/api/users/details", { id: id });
+        console.log(res);
+        setUser(res.data.user);
+      });
+    }
   }, [status, id]);
   useMemo(() => {
     if (socket) {
       socket.on("incoming-message", (message) => {
-        console.log(message.content);
         setMessages((prev) => [
           ...prev,
           { content: message.content, self: false },
@@ -41,13 +57,39 @@ const MessagesContainer = ({ id }) => {
   }, [socket]);
 
   async function handleSendMessage() {
-    const msg = inputRef.current.value;
-    await socket.emit("message", { content: msg }, room);
-    setMessages((prev) => [...prev, { content: msg, self: true }]);
-    inputRef.current.value = "";
+    if (inputRef.current.value.length > 0) {
+      const msg = inputRef.current.value;
+      await socket.emit("message", { content: msg }, room);
+      setMessages((prev) => [...prev, { content: msg, self: true }]);
+      inputRef.current.value = "";
+    }
+  }
+  function handleDisable(e) {
+    {
+      if (e.target.value.length > 0) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    }
   }
   return (
     <div className="w-full h-full">
+      <div className="border-y border-grays-200 h-16 sticky top-0 bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
+        {user && (
+          <div className="size-full p-4 flex gap-2 items-center">
+            <Image
+              className="size-10 rounded-full overflow-hidden"
+              width={50}
+              height={50}
+              src={user.avatar}
+              alt="avatar"
+            ></Image>
+            <span className="text-xl">{user.fullName}</span>
+            <span className="text-xl text-grays-300">@{user.username}</span>
+          </div>
+        )}
+      </div>
       {id ? (
         <>
           <div className="size-full flex flex-col p-2 gap-1">
@@ -63,6 +105,7 @@ const MessagesContainer = ({ id }) => {
               placeholder="Enter message here"
               className="w-full p-4 bg-black outline-none "
               ref={inputRef}
+              onChange={handleDisable}
               onKeyDown={(e) => {
                 if (e.key == "Enter") {
                   handleSendMessage();
@@ -70,8 +113,11 @@ const MessagesContainer = ({ id }) => {
               }}
             />
             <button
+              disabled={disabled}
               onClick={handleSendMessage}
-              className="size-16 shrink-0 rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors"
+              className={`size-16 shrink-0 rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors disabled:text-grays-300 ${
+                disabled && "pointer-events-none"
+              }`}
             >
               {icons.arrow}
             </button>

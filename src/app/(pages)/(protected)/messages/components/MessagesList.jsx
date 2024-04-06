@@ -7,15 +7,16 @@ import axios from "axios";
 import useToast from "@/app/hooks/useToast";
 import { useSession } from "next-auth/react";
 
-const User = ({ user, updateId, ...others }) => {
+const User = ({ user, updateId,active, ...others }) => {
   function handleChangeUser() {
     updateId(user._id);
   }
   return (
     <button
       {...others}
+      disabled={active}
       onClick={handleChangeUser}
-      className="hover:bg-[rgba(8,8,8)] transition-colors  p-4 flex text-left gap-2"
+      className={`hover:bg-[rgba(8,8,8)] transition-colors  p-4 flex text-left gap-2 ${active && "bg-accent-200 pointer-events-none"}`}
     >
       <Image
       alt="avatar"
@@ -39,7 +40,7 @@ const User = ({ user, updateId, ...others }) => {
   );
 };
 
-const MessagesList = ({ updateId }) => {
+const MessagesList = ({ updateId, current }) => {
   const [revalidate, setRevalidate] = useState(0);
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
@@ -78,6 +79,7 @@ const MessagesList = ({ updateId }) => {
       });
       setRevalidate(Math.random())
       notify("User added successfully");
+      updateId(res.data.user._id)
     } else {
       notify("Username invalid or user does not exist");
     }
@@ -87,7 +89,7 @@ const MessagesList = ({ updateId }) => {
       if (prev == false) {
         setTimeout(() => {
           usernameRef.current?.focus();
-        }, 500);
+        }, 200);
       }
       return !prev;
     });
@@ -118,7 +120,7 @@ const MessagesList = ({ updateId }) => {
             initial={{ height: "0", translateY: "-100%", opacity: 0 }}
             animate={{ height: "60px", translateY: "0%", opacity: 1 }}
             exit={{ height: "0", translateY: "-200%", opacity: 0 }}
-            transition={{ type: "tween", ease: "circInOut", duration: 0.8 }}
+            transition={{ type: "tween", ease: "circInOut", duration: 0.2 }}
             className="w-full overflow-hidden border-b border-grays-200 relative flex"
           >
             <input
@@ -147,7 +149,7 @@ const MessagesList = ({ updateId }) => {
         {users.length > 0 ? (
           <>
             {users.map((user, index) => {
-              return <User updateId={updateId} user={user}></User>;
+              return <User active={current==user._id} updateId={updateId} user={user}></User>;
             })}
           </>
         ) : (
