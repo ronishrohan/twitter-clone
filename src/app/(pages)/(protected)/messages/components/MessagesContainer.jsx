@@ -27,7 +27,7 @@ const MessagesContainer = ({ id }) => {
   useEffect(() => {
     setMessages([]);
     if (status == "authenticated" && id) {
-      const sckt = io("http://localhost:4000");
+      const sckt = io(process.env.NEXT_PUBLIC_MESSAGES_ENDPOINT);
       const roomId = [id, data.user._id].sort().toString().replace(",", "");
 
       setRoom(roomId);
@@ -41,23 +41,27 @@ const MessagesContainer = ({ id }) => {
       });
 
       getMessages(async () => {
-        const res = await axios.post("/api/messages/get", {id1: id, id2: data.user._id});
-        const transformedMessages = []
+        const res = await axios.post("/api/messages/get", {
+          id1: id,
+          id2: data.user._id,
+        });
+        const transformedMessages = [];
         res.data.messages.forEach((message) => {
-          transformedMessages.push({content: message.content, self: message.by==data.user._id})
-        })
-        setMessages(transformedMessages)
-      })
+          transformedMessages.push({
+            content: message.content,
+            self: message.by == data.user._id,
+          });
+        });
+        setMessages(transformedMessages);
+      });
     }
     if (id) {
       getUser(async () => {
         const res = await axios.post("/api/users/details", { id: id });
-        
+
         setUser(res.data.user);
       });
-      
     }
-    
   }, [status, id]);
   useMemo(() => {
     if (socket) {
@@ -70,19 +74,26 @@ const MessagesContainer = ({ id }) => {
     }
   }, [socket]);
   useEffect(() => {
-messagesContainer?.current?.scrollTo(0,messagesContainer.current.scrollHeight)
-  }, [messages])
+    messagesContainer?.current?.scrollTo(
+      0,
+      messagesContainer.current.scrollHeight
+    );
+  }, [messages]);
 
   async function handleSendMessage() {
     if (inputRef.current.value.length > 0) {
       const msg = inputRef.current.value;
       await socket.emit("message", { content: msg }, room);
       setMessages((prev) => [...prev, { content: msg, self: true }]);
-      
-      await axios.post("/api/messages/create", {id1: data.user._id, id2: id, content: msg, by: data.user._id});
+
       inputRef.current.value = "";
+      await axios.post("/api/messages/create", {
+        id1: data.user._id,
+        id2: id,
+        content: msg,
+        by: data.user._id,
+      });
     }
-    
   }
   function handleDisable(e) {
     {
@@ -95,29 +106,39 @@ messagesContainer?.current?.scrollTo(0,messagesContainer.current.scrollHeight)
   }
   return (
     <div className="w-full h-screen flex flex-col">
-      <div className="border-b border-grays-200 h-16 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
-        {user && (
-          <div className="size-full p-4 flex gap-2 items-center">
-            <Image
-              className="size-10 rounded-full overflow-hidden"
-              width={50}
-              height={50}
-              src={user.avatar}
-              alt="avatar"
-            ></Image>
-            <span className="text-xl">{user.fullName}</span>
-            <span className="text-xl text-grays-300">@{user.username}</span>
-          </div>
-        )}
-      </div>
       {id ? (
         <>
-          <div ref={messagesContainer} className="size-full flex flex-col p-2 gap-1 overflow-y-scroll">
-            {messages.length > 0 &&
-              messages.map((message, index) => (
-                <Message self={message.self}>{message.content}</Message>
-              ))}
+          <div className="border-b border-grays-200 h-16 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
+            {user && (
+              <div className="size-full p-4 flex gap-2 items-center">
+                <Image
+                  className="size-10 rounded-full overflow-hidden"
+                  width={50}
+                  height={50}
+                  src={user.avatar}
+                  alt="avatar"
+                ></Image>
+                <span className="text-xl">{user.fullName}</span>
+                <span className="text-xl text-grays-300">@{user.username}</span>
+              </div>
+            )}
           </div>
+          {messages.length > 0 ? (
+            <>
+              <div
+                ref={messagesContainer}
+                className="size-full flex flex-col p-2 gap-1 overflow-y-scroll"
+              >
+                {messages.length > 0 &&
+                  messages.map((message, index) => (
+                    <Message self={message.self}>{message.content}</Message>
+                  ))}
+              </div>
+            </>
+          ) : (
+            <>
+            <div className="size-full flex items-center justify-center text-lg text-grays-300" >Nothing to show yet, why not start with a Hi</div></>
+          )}
 
           <div className="flex w-full mt-auto relative border-t border-grays-200">
             <input
@@ -133,7 +154,6 @@ messagesContainer?.current?.scrollTo(0,messagesContainer.current.scrollHeight)
               }}
             />
             <button
-
               disabled={disabled}
               onClick={handleSendMessage}
               className={`size-16 shrink-0 bg-black rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors disabled:text-grays-300 ${

@@ -31,7 +31,7 @@ function Button({ active, children, ...others }) {
 function TopBar() {
   const [mode, setMode] = useState(0);
   return (
-    <div className="sticky top-0 w-full border-b z-40 border-grays-200 bg-[rgba(0,0,0,0.9)] backdrop-blur-md h-14 flex text-text-900">
+    <div className="sticky top-0 w-full h-16 border-b z-40 border-grays-200 bg-[rgba(0,0,0,0.9)] backdrop-blur-md h-14 flex text-text-900">
       <Button onClick={() => setMode(0)} active={mode === 0}>
         For You
       </Button>
