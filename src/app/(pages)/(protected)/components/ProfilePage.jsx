@@ -19,7 +19,7 @@ const Button = ({ mode, setMode, currentMode, children }) => {
       disabled={currentMode==mode}
       onClick={() => setMode(mode)}
       className={`h-full p-4 transition-all hover:bg-[rgb(8,8,8)] hover:text-white ${
-        mode === currentMode ? "bg-grays-100 font-medium pointer-events-none" : "text-grays-300"
+        mode === currentMode ? "bg-grays-100  pointer-events-none" : "text-grays-300"
       }`}
     >
       {children}

@@ -42,6 +42,7 @@ function Post({ user, children, details, disabled }) {
   const { revalidatePosts } = useRevalidate();
   const { notify } = useToast();
   const { open } = useModal();
+  const [phover, setPhover] = useState(false);
 
   useEffect(() => {
     if (status == "authenticated") {
@@ -127,16 +128,26 @@ function Post({ user, children, details, disabled }) {
             <div className="border border-grays-200 h-full w-0 absolute z-10 ml-[32px] translate-y-1/2"></div>
             <div
               onClick={() => router.push(`/post/${details.replyingTo._id}`)}
-              className="flex size-full overflow-hidden p-[16px] gap-2 hover:bg-[rgba(8,8,8)] cursor-pointer"
+              className={`flex size-full overflow-hidden p-[16px] gap-2 duration-200 hover:bg-[rgba(8,8,8)] cursor-pointer ${
+                phover && "bg-[rgba(8,8,8)]"
+              }`}
             >
-              <Link href={`/user/${details.replyingTo.createdBy.username}`} className="z-30 size-fit"><Image
-                width={32}
-                height={32}
-                className="size-[32px] rounded-full z-30"
-                src={details.replyingTo.createdBy.avatar}
-              ></Image></Link>
+              <Link
+                href={`/user/${details.replyingTo.createdBy.username}`}
+                className="z-30 size-fit shrink-0"
+              >
+                <Image
+                  width={32}
+                  height={32}
+                  className="size-[32px] rounded-full z-30"
+                  src={details.replyingTo.createdBy.avatar}
+                ></Image>
+              </Link>
               <div className="flex flex-col justify-between gap-1 w-full h-fit">
-                <Link href={`/user/${details.replyingTo.createdBy.username}`} className="flex text-lg leading-3 hover:underline  h-full text-text-900 font-medium">
+                <Link
+                  href={`/user/${details.replyingTo.createdBy.username}`}
+                  className="flex text-lg leading-3 hover:underline  h-full text-text-900 font-medium"
+                >
                   <div>{details.replyingTo.createdBy.fullName}</div>
                   <div className="text-grays-300">
                     @{details.replyingTo.createdBy.username}
@@ -152,6 +163,8 @@ function Post({ user, children, details, disabled }) {
       )}
       <div
         onClick={handleRedirectToPost}
+        onMouseEnter={() => setPhover(true)}
+        onMouseLeave={() => setPhover(false)}
         className={`border-b border-grays-200  flex flex-col transition-colors duration-300 ${
           disabled === false && "hover:bg-[rgba(8,8,8)] cursor-pointer"
         }`}
@@ -181,23 +194,33 @@ function Post({ user, children, details, disabled }) {
         <div className="size-full flex gap-2 p-4 pb-2 shrink-0 ">
           {details.repost ? (
             <>
-              <Link className="shrink-0 size-fit" href={`/user/${details.repost.createdBy.username}`}><Image
-                alt="a post"
-                className="rounded-full size-10 shrink-0"
-                src={details.repost.createdBy?.avatar}
-                width={48}
-                height={48}
-              ></Image></Link>
+              <Link
+                className="shrink-0 size-fit"
+                href={`/user/${details.repost.createdBy.username}`}
+              >
+                <Image
+                  alt="a post"
+                  className="rounded-full size-10 shrink-0"
+                  src={details.repost.createdBy?.avatar}
+                  width={48}
+                  height={48}
+                ></Image>
+              </Link>
             </>
           ) : (
             <>
-              <Link href={`/user/${user.username}`} className="overflow-visible shrink-0 size-fit"><Image
-                alt="a post"
-                className="rounded-full size-[40px] shrink-0"
-                src={user?.avatar}
-                width={48}
-                height={48}
-              ></Image></Link>
+              <Link
+                href={`/user/${user.username}`}
+                className="overflow-visible shrink-0 size-fit"
+              >
+                <Image
+                  alt="a post"
+                  className="rounded-full size-[40px] shrink-0"
+                  src={user?.avatar}
+                  width={48}
+                  height={48}
+                ></Image>
+              </Link>
             </>
           )}
           <div className="flex flex-col w-full">

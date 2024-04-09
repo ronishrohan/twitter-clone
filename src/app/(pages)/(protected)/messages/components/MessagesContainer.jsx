@@ -74,6 +74,7 @@ const MessagesContainer = ({ id }) => {
     }
   }, [socket]);
   useEffect(() => {
+    
     messagesContainer?.current?.scrollTo(
       0,
       messagesContainer.current.scrollHeight
@@ -109,45 +110,87 @@ const MessagesContainer = ({ id }) => {
     <div className="w-full h-screen flex flex-col">
       {id ? (
         <>
-          <div className="border-b border-grays-200 h-16 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
-            {user && (
-              <div className="size-full p-4 flex gap-2 items-center">
-                <Image
-                  className="size-10 rounded-full overflow-hidden"
-                  width={50}
-                  height={50}
-                  src={user.avatar}
-                  alt="avatar"
-                ></Image>
-                <span className="text-xl">{user.fullName}</span>
-                <span className="text-xl text-grays-300">@{user.username}</span>
+          <div className="border-b border-grays-200 h-16 p-4 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
+            {userLoading ? (
+              <div className="size-full flex items-center gap-2">
+                <div className="size-10 overflow-hidden rounded-full" ><div className="size-full bg-loading animate-loading" ></div></div>
+                <div className="w-44 h-8 overflow-hidden rounded-lg" ><div className="size-full bg-loading animate-loading" ></div></div>
               </div>
+            ) : (
+              <>
+                {user && (
+                  <div className="size-full  flex gap-2 items-center">
+                    <Image
+                      className="size-10 rounded-full overflow-hidden"
+                      width={50}
+                      height={50}
+                      src={user.avatar}
+                      alt="avatar"
+                    ></Image>
+                    <span className="text-xl">{user.fullName}</span>
+                    <span className="text-xl text-grays-300">
+                      @{user.username}
+                    </span>
+                  </div>
+                )}
+              </>
             )}
           </div>
-          {messages.length > 0 ? (
+          {messagesLoading === false ? (
             <>
-              <div
-                ref={messagesContainer}
-                className="size-full flex flex-col p-2 gap-1 overflow-y-scroll"
-              >
-                {messages.length > 0 &&
-                  messages.map((message, index) => (
-                    <Message self={message.self} key={index + message.content}>{message.content}</Message>
-                  ))}
-              </div>
+              {messages.length > 0 ? (
+                <>
+                  <div
+                    ref={messagesContainer}
+                    className="size-full flex flex-col  p-2 gap-1 overflow-y-scroll"
+                  >
+                    {messages.length > 0 &&
+                      messages.map((message, index) => (
+                        <Message
+                          self={message.self}
+                          key={index + message.content}
+                        >
+                          {message.content}
+                        </Message>
+                      ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="size-full flex items-center justify-center text-lg text-grays-300">
+                    Nothing to show yet, why not start with a Hi
+                  </div>
+                </>
+              )}
             </>
           ) : (
-            <>
-            <div className="size-full flex items-center justify-center text-lg text-grays-300" >Nothing to show yet, why not start with a Hi</div></>
+            <div className="size-full flex flex-col p-4 justify-end gap-2">
+              <div className="w-full flex justify-end">
+                <div className="w-44 overflow-hidden rounded-3xl">
+                  <div className="h-8 w-full bg-loading animate-loading"></div>
+                </div>
+              </div>
+              <div className="w-full flex justify-end">
+                <div className="w-72 overflow-hidden rounded-3xl">
+                  <div className="h-8 w-full bg-loading animate-loading"></div>
+                </div>
+              </div>
+              <div className="w-full flex justify-start">
+                <div className="w-52 overflow-hidden rounded-3xl">
+                  <div className="h-8 w-full bg-loading animate-loading"></div>
+                </div>
+              </div>
+            </div>
           )}
 
           <div className="flex w-full mt-auto relative border-t border-grays-200">
             <input
               type="text"
               placeholder="Enter message here"
-              className="w-full p-4 bg-black outline-none "
+              className="w-full p-4 bg-black outline-none disabled:opacity-30 transition-colors"
               ref={inputRef}
               onChange={handleDisable}
+              disabled={messagesLoading || userLoading}
               onKeyDown={(e) => {
                 if (e.key == "Enter") {
                   handleSendMessage();
@@ -155,10 +198,10 @@ const MessagesContainer = ({ id }) => {
               }}
             />
             <button
-              disabled={disabled}
+              disabled={disabled || userLoading || messagesLoading}
               onClick={handleSendMessage}
               className={`size-16 shrink-0 bg-black rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors disabled:text-grays-300 ${
-                disabled && "pointer-events-none"
+                disabled || userLoading || messagesLoading && "pointer-events-none"
               }`}
             >
               {icons.arrow}

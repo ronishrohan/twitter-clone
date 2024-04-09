@@ -98,7 +98,7 @@ const MessagesList = ({ updateId, current, update }) => {
     <div className="w-16 overflow-y-auto overflow-x-clip h-full  lg:w-[400px] shrink-0 transition-all   border-l border-grays-200 flex flex-col">
       <div className="border-b  sticky top-0  border-grays-200 p-4 h-16 text-2xl bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40 flex flex-col">
         <div className="flex justify-between w-full h-full">
-          <div>Messages</div>
+          <div className="hidden lg:flex">Messages</div>
           <button
             onClick={toggleOpen}
             className="h-full aspect-square rounded-lg transition-colors text-lg hover:bg-grays-100"
@@ -106,7 +106,7 @@ const MessagesList = ({ updateId, current, update }) => {
             <div
               className={`${
                 open ? "-rotate-45 text-heart_pink-200" : "rotate-0"
-              } transition-all duration-700 ease-in-out`}
+              } transition-all duration-300 ease-in-out`}
             >
               {icons.plus}
             </div>
