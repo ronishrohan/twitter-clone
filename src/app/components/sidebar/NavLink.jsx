@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
-function NavLink({ children, icon, ...others }) {
+function NavLink({ children, icon, onLoad, ...others }) {
   const [isActive, setActive] = useState(false);
+  const [loading, setLoading] = useState(onLoad ? true : false);
   const pathname = usePathname();
   useEffect(() => {
     if (pathname === others.href) {
@@ -14,33 +15,58 @@ function NavLink({ children, icon, ...others }) {
       setActive(false);
     }
   }, [pathname]);
+  useEffect(() => {
+    async function handleLoad() {
+      await onLoad();
+      setLoading(false);
+    }
+    if (onLoad) {
+      handleLoad();
+    }
+  }, []);
   return (
     <Link
+      title={loading ? others.title : "loading"}
       {...others}
-      className={`${isActive && "pointer-events-none"} shrink-0 overflow-hidden relative font-medium flex text-2xl gap-4 p-4 items-center justify-center lg:justify-normal border-y border-transparent   hover:bg-accent-200 transition-all`}
+      className={`${
+        isActive || loading && "pointer-events-none"
+      } shrink-0 overflow-hidden relative font-medium flex text-2xl gap-4  items-center justify-center lg:justify-normal border-y border-transparent   hover:bg-accent-200 transition-all`}
     >
-      <AnimatePresence>
-        {isActive && (
-          <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.1}} className="size-1/2 absolute bg-accent-900 -z-10 blur-3xl pointer-events-none right-0 bottom-0 scale-150"></motion.div>
-        )}
-      </AnimatePresence>
-      <span
-        className={
-          isActive
-            ? "text-white transition-colors text-lg"
-            : "text-text-900 text-lg"
-        }
-      >
-        {icon}
-      </span>
-      <span
-        className={
-          (isActive ? "font-bold " : "font-normal ") +
-          "transition-all hidden lg:block"
-        }
-      >
-        {children}
-      </span>
+      {loading && (
+        <div className="size-full absolute overflow-hidden">
+          <div className="size-full bg-loading animate-loading"></div>
+        </div>
+      )}
+      <div className="flex justify-center items-center p-4 gap-2">
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              className="size-1/2 absolute bg-accent-900 -z-10 blur-3xl pointer-events-none right-0 bottom-0 scale-150"
+            ></motion.div>
+          )}
+        </AnimatePresence>
+        <span
+          className={
+            isActive
+              ? "text-white transition-colors text-lg"
+              : "text-text-900 text-lg"
+          }
+        >
+          {icon}
+        </span>
+        <span
+          className={
+            (isActive ? "font-bold " : "font-normal ") +
+            "transition-all hidden lg:block"
+          }
+        >
+          {children}
+        </span>
+      </div>
     </Link>
   );
 }

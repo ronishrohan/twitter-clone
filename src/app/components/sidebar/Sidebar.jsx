@@ -7,8 +7,14 @@ import { motion } from "framer-motion";
 import { forwardRef } from "react";
 import CreatePostButton from "./CreatePostButton";
 import { signOut } from "next-auth/react";
+import axios from "axios"
 
 const Sidebar = ({ width }) => {
+  async function handleLoadMessagesPage(){
+    console.log("here")
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_MESSAGES_ENDPOINT}/init`)
+    console.log(res);
+  }
   return (
     <>
       <header
@@ -32,7 +38,7 @@ const Sidebar = ({ width }) => {
           <NavLink href="/explore" title="Explore" icon={icons.search}>
             Explore
           </NavLink>
-          <NavLink href="/messages" title="Messages" icon={icons.messages}>
+          <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages}>
             Messages
           </NavLink>
           <NavLink href="/profile" title="Profile" icon={icons.profile}>
@@ -54,7 +60,7 @@ const Sidebar = ({ width }) => {
         <NavLink href="/explore" title="Explore" icon={icons.search}>
           Explore
         </NavLink>
-        <NavLink href="/messages" title="Messages" icon={icons.messages}>
+        <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages}>
           Messages
         </NavLink>
         <NavLink href="/profile" title="Profile" icon={icons.profile}>

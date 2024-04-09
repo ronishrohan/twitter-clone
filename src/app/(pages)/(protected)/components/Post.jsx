@@ -191,7 +191,7 @@ function Post({ user, children, details, disabled }) {
             </>
           ) : (
             <>
-              <Link href={`/user/${user.username}`} className="size-10 overflow-visible shrink-0 size-fit"><Image
+              <Link href={`/user/${user.username}`} className="overflow-visible shrink-0 size-fit"><Image
                 alt="a post"
                 className="rounded-full size-[40px] shrink-0"
                 src={user?.avatar}
