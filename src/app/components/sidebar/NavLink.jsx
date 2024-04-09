@@ -29,8 +29,8 @@ function NavLink({ children, icon, onLoad, ...others }) {
       title={loading ? others.title : "loading"}
       {...others}
       className={`${
-        isActive || loading && "pointer-events-none"
-      } shrink-0 overflow-hidden relative font-medium flex text-2xl gap-4  items-center justify-center lg:justify-normal border-y border-transparent   hover:bg-accent-200 transition-all`}
+        isActive || (onLoad && loading) && "pointer-events-none"
+      } shrink-0 overflow-hidden relative font-medium flex text-2xl gap-4  items-center justify-center lg:justify-normal    transition-all ${isActive==false ? "hover:bg-[rgb(8,8,8)]" : "pointer-events-none"}`}
     >
       {loading && (
         <div className="size-full absolute overflow-hidden">
