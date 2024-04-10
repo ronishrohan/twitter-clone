@@ -22,7 +22,7 @@ const ExploreLayout = ({ children }) => {
           <input
             defaultValue={searchParams.get("query")}
             onKeyDown={(e) => {
-              if (e.key == "Enter") {
+              if (e.keyCode == 13) {
                 handleSearch();
               }
             }}
