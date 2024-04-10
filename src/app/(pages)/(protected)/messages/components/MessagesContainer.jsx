@@ -107,7 +107,7 @@ const MessagesContainer = ({ id }) => {
     }
   }
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-screen flex flex-col pb-16 sm:p-0 transition-all">
       {id ? (
         <>
           <div className="border-b border-grays-200 h-16 p-4 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
@@ -142,6 +142,7 @@ const MessagesContainer = ({ id }) => {
                 <>
                   <div
                     ref={messagesContainer}
+                   
                     className="size-full flex flex-col  p-2 gap-1 overflow-y-scroll"
                   >
                     {messages.length > 0 &&
