@@ -27,9 +27,46 @@ export async function createPost({
   }
 }
 
-export async function getPosts(page) {
+export async function getPosts(page, query) {
+  console.log(query);
   await connectDatabase();
-  const posts = await Post.find({}, null, { limit: n, skip: n * page })
+  let posts;
+  if (query) {
+    posts = await Post.find(
+      {
+        $text: {
+          $search: query,
+          $caseSensitive: false,
+        },
+      },
+      null,
+      { limit: n, skip: n * page }
+    )
+      .sort({ createdAt: -1 })
+      .populate({ path: "createdBy" })
+      .populate([
+        { path: "repost", populate: "createdBy" },
+        { path: "replyingTo", populate: "createdBy" },
+      ]);
+  } else {
+    posts = await Post.find({}, null, { limit: n, skip: n * page })
+      .sort({ createdAt: -1 })
+      .populate({ path: "createdBy" })
+      .populate([
+        { path: "repost", populate: "createdBy" },
+        { path: "replyingTo", populate: "createdBy" },
+      ]);
+  }
+
+  return posts;
+}
+
+export async function getImagePosts(page) {
+  await connectDatabase();
+  const posts = await Post.find({ image: { $ne: null } }, null, {
+    skip: page * 5,
+    limit: n,
+  })
     .sort({ createdAt: -1 })
     .populate({ path: "createdBy" })
     .populate([
@@ -72,7 +109,6 @@ export async function getLikedPosts(page, id) {
   return posts;
 }
 
-
 export async function getPost(id) {
   await connectDatabase();
   const existPost = await Post.findById(id).populate([
@@ -83,7 +119,6 @@ export async function getPost(id) {
   console.log(existPost);
   return existPost;
 }
-
 
 export async function getSavedPosts(id) {
   await connectDatabase();
@@ -101,19 +136,21 @@ export async function getSavedPosts(id) {
         },
         { path: "replyingTo", populate: "createdBy" },
       ],
-    }).sort({"savedPosts.createdAt" : -1});
+    })
+    .sort({ "savedPosts.createdAt": -1 });
 
   console.log(user.savedPosts);
 
   return user.savedPosts;
 }
 
-export async function getComments(id){
-  await connectDatabase()
-  const posts = await Post.find({replyingTo: id}).populate({path: "createdBy"}).sort({createdAt: -1})
+export async function getComments(id) {
+  await connectDatabase();
+  const posts = await Post.find({ replyingTo: id })
+    .populate({ path: "createdBy" })
+    .sort({ createdAt: -1 });
   return posts;
 }
-
 
 export async function like(id, userId) {
   console.log("hi");
@@ -130,7 +167,6 @@ export async function like(id, userId) {
   return existPost.likes;
 }
 
-
 export async function repost(id, userId) {
   await connectDatabase();
   const existPost = await Post.findByIdAndUpdate(
@@ -144,7 +180,6 @@ export async function repost(id, userId) {
   console.log(existPost);
   return existPost.reposts;
 }
-
 
 export async function unlike(id, userId) {
   await connectDatabase();

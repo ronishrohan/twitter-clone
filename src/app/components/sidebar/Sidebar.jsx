@@ -11,9 +11,9 @@ import axios from "axios"
 
 const Sidebar = ({ width }) => {
   async function handleLoadMessagesPage(){
-    console.log("here")
+    
     const res = await axios.get(`${process.env.NEXT_PUBLIC_MESSAGES_ENDPOINT}/init`)
-    console.log(res);
+    
   }
   return (
     <>
