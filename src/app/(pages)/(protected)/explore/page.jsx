@@ -12,7 +12,7 @@ const ExplorePage = () => {
     if (searchParams.get("query")!=null) {
       setIsSearchView(true);
     }
-  }, []);
+  }, [searchParams.get("query")]);
   return (
     <>
       {isSearchView==false ? (
