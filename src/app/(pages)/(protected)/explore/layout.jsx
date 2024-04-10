@@ -5,7 +5,7 @@ import { icons } from "@/app/utils/icons";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-const layout = ({ children }) => {
+const ExploreLayout = ({ children }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const queryRef = useRef();
@@ -39,4 +39,4 @@ const layout = ({ children }) => {
   );
 };
 
-export default layout;
+export default ExploreLayout;
