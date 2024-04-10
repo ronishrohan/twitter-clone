@@ -23,7 +23,6 @@ const ExplorePosts = () => {
           window.scrollY + window.innerHeight &&
         canGet == true
       ) {
-        
         setPage((prev) => prev + 1);
         setCanGet(false);
         return;
@@ -42,7 +41,7 @@ const ExplorePosts = () => {
   return (
     <>
       <div className="h-fit w-full grid grid-cols-2 gap-4 p-4">
-        {posts.length > 0 && (
+        {posts.length > 0 || !postsLoading ? (
           <>
             {posts.map((post, index) => {
               return (
@@ -54,9 +53,16 @@ const ExplorePosts = () => {
               );
             })}
           </>
+        ) : (
+          <>
+          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
+          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
+          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
+          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
+          </>
         )}
       </div>
-      <div className="w-full h-16 sm:hidden" ></div>
+      <div className="w-full h-16 sm:hidden"></div>
     </>
   );
 };
