@@ -57,6 +57,7 @@ function Post({ user, children, details, disabled }) {
         setReposted(true);
       }
     }
+    
   }, [status]);
   useEffect(() => {
     if (status === "authenticated") {
@@ -210,7 +211,7 @@ function Post({ user, children, details, disabled }) {
           ) : (
             <>
               <Link
-                href={`/user/${user.username}`}
+                href={`/user/${user?.username}`}
                 className="overflow-visible shrink-0 size-fit"
               >
                 <Image

@@ -39,8 +39,7 @@ export async function getPosts(page, query) {
           $caseSensitive: false,
         },
       },
-      null,
-      { limit: n, skip: n * page }
+      null
     )
       .sort({ createdAt: -1 })
       .populate({ path: "createdBy" })
@@ -48,6 +47,7 @@ export async function getPosts(page, query) {
         { path: "repost", populate: "createdBy" },
         { path: "replyingTo", populate: "createdBy" },
       ]);
+    console.log(posts);
   } else {
     posts = await Post.find({}, null, { limit: n, skip: n * page })
       .sort({ createdAt: -1 })
