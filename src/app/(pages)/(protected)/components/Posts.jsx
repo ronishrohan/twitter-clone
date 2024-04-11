@@ -20,7 +20,7 @@ function Posts({ infinite, endpoint, userid }) {
   const [finished, setFinished] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const session = useSession();
-  
+
   useEffect(() => {
     if (isFetching === true) {
       if (infinite === true) {
@@ -59,7 +59,7 @@ function Posts({ infinite, endpoint, userid }) {
         chunks.map((posts) =>
           posts.map((post, index) => (
             <Post
-            disabled={false}
+              disabled={false}
               key={index}
               user={post.createdBy}
               details={{
@@ -80,9 +80,25 @@ function Posts({ infinite, endpoint, userid }) {
           ))
         )
       ) : (
-        <div className="w-full h-60 overflow-hidden p-4">
-          <div className="size-full overflow-hidden  rounded-3xl">
-            <div className="size-full bg-loading animate-loading"></div>
+        <div className="w-full overflow-hidden p-4 flex gap-2">
+          <div className="shrink-0 size-10 rounded-full overflow-hidden">
+            <div className="animate-loading bg-loading size-full"></div>
+          </div>
+          <div className="flex flex-col gap-2 w-full">
+            <div className="flex gap-2">
+              <div className="h-6 w-44 overflow-hidden rounded-xl">
+                <div className="animate-loading bg-loading size-full"></div>
+              </div>
+              <div className="h-6 w-16 overflow-hidden rounded-xl">
+                <div className="animate-loading bg-loading size-full"></div>
+              </div>
+            </div>
+            <div className="h-6 w-64 overflow-hidden rounded-xl">
+              <div className="animate-loading bg-loading size-full"></div>
+            </div>
+            <div className="h-72 w-full overflow-hidden rounded-xl">
+              <div className="animate-loading bg-loading size-full"></div>
+            </div>
           </div>
         </div>
       )}

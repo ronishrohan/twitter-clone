@@ -39,9 +39,10 @@ const ExploreLayout = ({ children }) => {
             ref={queryRef}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
+            placeholder="Enter a query"
             type="text"
             spellCheck="false"
-            className="size-full outline-none bg-transparent p-4 pl-12 border-b border-grays-200 focus:border-accent-800 focus:border-b-2 transition-colors"
+            className="size-full outline-none placeholder:text-grays-300 bg-transparent p-4 pl-12 border-b border-grays-200 focus:border-accent-800 focus:border-b-2 transition-colors"
           />
         </header>
         <div className="h-fit w-full">{children}</div>
