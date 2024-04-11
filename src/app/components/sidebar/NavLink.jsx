@@ -30,7 +30,7 @@ function NavLink({ children, icon, onLoad, ...others }) {
       {...others}
       className={`${
         isActive || (onLoad && loading) && "pointer-events-none"
-      } shrink-0 overflow-hidden relative font-medium flex text-2xl gap-4  items-center justify-center lg:justify-normal    transition-all ${isActive==false ? "hover:bg-[rgb(8,8,8)]" : "pointer-events-none"}`}
+      } overflow-hidden relative w-full font-medium flex text-2xl gap-4  items-center justify-center lg:justify-normal    transition-all ${isActive==false ? "hover:bg-[rgb(8,8,8)]" : "pointer-events-none"}`}
     >
       {loading && (
         <div className="size-full absolute overflow-hidden">
@@ -52,7 +52,7 @@ function NavLink({ children, icon, onLoad, ...others }) {
         <span
           className={
             isActive
-              ? "text-white transition-colors text-lg"
+              ? "text-accent-900 transition-colors text-lg"
               : "text-text-900 text-lg"
           }
         >

@@ -6,7 +6,7 @@ function Button({ active, children, ...others }) {
   return (
     <button
       {...others}
-      className={`relative w-1/2 overflow-hidden flex justify-center items-center  ${
+      className={`relative w-1/2 overflow-hidden flex justify-center items-center transition-all  ${
         active
           ? "font-bold"
           : "font-semibold hover:bg-[rgba(255,255,255,0.08)] text-text-500"
@@ -16,11 +16,11 @@ function Button({ active, children, ...others }) {
       <AnimatePresence>
         {active && (
           <motion.div
-            initial={{ y: "120%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "120%" }}
-            transition={{ type: "tween", duration: 1.2 }}
-            className="absolute -bottom-full blur-3xl opacity-85 w-1/2 h-16 bg-accent-900"
+            initial={{ y: "120%", opacity: 0 }}
+            animate={{ y: "0%", opacity: 1 }}
+            exit={{ y: "120%", opacity: 0 }}
+            transition={{ type: "tween", duration: 0.6 }}
+            className="absolute -bottom-full blur-3xl  w-1/2 h-16 bg-accent-900"
           ></motion.div>
         )}
       </AnimatePresence>
@@ -31,7 +31,7 @@ function Button({ active, children, ...others }) {
 function TopBar() {
   const [mode, setMode] = useState(0);
   return (
-    <div className="sticky top-0 w-full h-16 border-b z-40 border-grays-200 bg-[rgba(0,0,0,0.9)] backdrop-blur-md h-14 flex text-text-900">
+    <div className="sticky top-0 w-full border-b z-40 border-grays-200 bg-[rgba(0,0,0,0.9)] backdrop-blur-md h-16 flex text-text-900">
       <Button onClick={() => setMode(0)} active={mode === 0}>
         For You
       </Button>

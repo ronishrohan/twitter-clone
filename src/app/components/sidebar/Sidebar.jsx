@@ -69,7 +69,7 @@ const Sidebar = ({ width }) => {
         <NavLink href="/generate" title="Generate" icon={icons.wand}>
           Generate
         </NavLink>
-        <button onClick={signOut} className="size-full flex items-center justify-center">Log Out</button>
+        <button onClick={signOut} className="size-full w-44 shrink-0 flex items-center justify-center transition-colors hover:bg-[rgb(8,8,8)]">Log Out</button>
       </div>
     </>
   );
