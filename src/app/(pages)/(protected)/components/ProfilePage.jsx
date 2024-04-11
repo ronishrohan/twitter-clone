@@ -6,7 +6,7 @@ import Link from "next/link";
 import Posts from "./Posts";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import axios from "axios";
 import useToast from "@/app/hooks/useToast";
 
@@ -163,6 +163,17 @@ const ProfilePage = ({ user, status }) => {
                     Message
                   </button>
                 )}
+
+                <div className="flex flex-col">
+                  {isUser && (
+                    <button
+                      onClick={signOut}
+                      className="p-2 px-6 w-fit  bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]"
+                    >
+                      Log out
+                    </button>
+                  )}
+                </div>
               </div>
             </>
           ) : (
