@@ -12,6 +12,7 @@ import Message from "./Message";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link"
 
 const MessagesContainer = ({ id }) => {
   const { data, status } = useSession();
@@ -110,7 +111,7 @@ const MessagesContainer = ({ id }) => {
     <div className="w-full h-screen flex flex-col pb-16 sm:p-0 transition-all">
       {id ? (
         <>
-          <div className="border-b border-grays-200 h-16 p-4 relative bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
+          <Link href={`/user/${user?.username}`} className="border-b border-grays-200 h-16 p-4 transition-colors relative hover:bg-[rgb(8,8,8)] bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
             {userLoading ? (
               <div className="size-full flex items-center gap-2">
                 <div className="size-10 overflow-hidden rounded-full" ><div className="size-full bg-loading animate-loading" ></div></div>
@@ -119,7 +120,7 @@ const MessagesContainer = ({ id }) => {
             ) : (
               <>
                 {user && (
-                  <div className="size-full  flex gap-2 items-center">
+                  <div  className="size-full  flex gap-2 items-center">
                     <Image
                       className="size-10 rounded-full overflow-hidden"
                       width={50}
@@ -135,7 +136,7 @@ const MessagesContainer = ({ id }) => {
                 )}
               </>
             )}
-          </div>
+          </Link>
           {messagesLoading === false ? (
             <>
               {messages.length > 0 ? (

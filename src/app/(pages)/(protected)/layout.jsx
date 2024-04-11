@@ -4,6 +4,7 @@ import SidebarHolder from "@/app/components/sidebar/SidebarHolder";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+
 async function ProtectedPages({ children }) {
   const session = await getServerSession();
   if (!session) {
@@ -12,6 +13,7 @@ async function ProtectedPages({ children }) {
   return (
     <Providers>
       <SidebarHolder></SidebarHolder>
+      
       {children}
     </Providers>
   );

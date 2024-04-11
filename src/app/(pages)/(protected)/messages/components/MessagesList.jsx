@@ -6,8 +6,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 import useToast from "@/app/hooks/useToast";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 const User = ({ user, updateId,active, ...others }) => {
+  
   function handleChangeUser() {
     updateId(user._id);
   }
@@ -39,6 +41,7 @@ const User = ({ user, updateId,active, ...others }) => {
 };
 
 const MessagesList = ({ updateId, current, update }) => {
+  const searchParams = useSearchParams();
   const [revalidate, setRevalidate] = useState(0);
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
@@ -55,6 +58,10 @@ const MessagesList = ({ updateId, current, update }) => {
       
         // console.log(res.data.users);
         setUsers(res.data.users);
+        const u = searchParams.get("u")
+        if(u){
+          updateId(res.data.users[u]._id);
+        }
       }
     });
   }, [status, revalidate, update]);
@@ -96,7 +103,7 @@ const MessagesList = ({ updateId, current, update }) => {
 
   return (
     <div className="w-16 overflow-y-auto overflow-x-clip h-full  lg:w-[400px] shrink-0 transition-all   border-l border-grays-200 flex flex-col">
-      <div className="border-b  sticky top-0  border-grays-200 p-4 h-16 text-2xl bg-[rgba(0,0,0)] backdrop-blur-lg z-40 flex flex-col">
+      <div className="border-b   border-grays-200 p-4 h-16 text-2xl bg-[rgba(0,0,0)] backdrop-blur-lg z-40 flex flex-col">
         <div className="flex justify-between w-full h-full">
           <div className="hidden lg:flex size-full bg-black z-50">Messages</div>
           <button

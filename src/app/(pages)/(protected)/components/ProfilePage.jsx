@@ -6,6 +6,8 @@ import Link from "next/link";
 import Posts from "./Posts";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 const modes = {
   0: "/api/posts/profile",
@@ -29,10 +31,17 @@ const Button = ({ mode, setMode, currentMode, children }) => {
 
 const ProfilePage = ({ user, status }) => {
   const [mode, setMode] = useState(0);
-  
+  const {data, session} = useSession();
   const router = useRouter();
   function handleNavigateBack(){
     router.back();
+  }
+  async function addUserToDMS(){
+    await axios.post("/api/users/messages/adduser", {
+      id: user._id,
+      userId: data.user._id,
+    });
+    router.push("/messages?u=0");
   }
   return (
     <>
@@ -47,10 +56,11 @@ const ProfilePage = ({ user, status }) => {
             {user?.fullName}
           </span>
           <span className="text-text-400 font-semibold">@{user?.username}</span>
+          
         </div>
       </div>
       <section className="flex flex-col size-full">
-        <div className="h-44 flex flex-col p-4 border-b border-grays-200">
+        <div className="h-fit flex flex-col p-4 border-b border-grays-200">
           {status != "loading" ? (
             <>
               <div className="overflow-hidden rounded-full size-fit">
@@ -69,6 +79,7 @@ const ProfilePage = ({ user, status }) => {
                 <span className="text-xl font-medium text-text-500">
                   @{user?.username}
                 </span>
+                <button onClick={addUserToDMS} className="p-2 px-6 w-fit mt-6 bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]" >Message</button>
               </div>
             </>
           ) : (
