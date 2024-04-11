@@ -14,7 +14,7 @@ const overused = localFont({
 });
 
 export const metadata = {
-  title: "waffle",
+  title: "Waffle",
   description: "waffling",
 };
 

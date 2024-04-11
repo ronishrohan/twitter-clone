@@ -49,6 +49,8 @@ const ExplorePosts = () => {
                   key={index + post.image}
                   image={post.image}
                   id={post._id}
+                  user={post.createdBy}
+                  details={post}
                 ></ExplorePost>
               );
             })}
