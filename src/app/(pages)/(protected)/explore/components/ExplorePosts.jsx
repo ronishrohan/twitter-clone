@@ -10,11 +10,17 @@ const ExplorePosts = () => {
   const { postsRevalidation } = useRevalidate();
   const [canGet, setCanGet] = useState(true);
   const [page, setPage] = useState(0);
+  const [stop, setStop] = useState(false);
   useEffect(() => {
-    startGetPosts(async () => {
-      const res = await axios.post("/api/posts/getimages", { page: page });
-      setPosts((prev) => [...prev, ...res.data.posts]);
-    });
+    if (stop == false) {
+      startGetPosts(async () => {
+        const res = await axios.post("/api/posts/getimages", { page: page });
+        if (res.data.posts.length == 0) {
+          setStop(true);
+        }
+        setPosts((prev) => [...prev, ...res.data.posts]);
+      });
+    }
   }, [postsRevalidation, page]);
   useEffect(() => {
     function handleUpdate() {
@@ -54,13 +60,26 @@ const ExplorePosts = () => {
                 ></ExplorePost>
               );
             })}
+            {stop == false && (
+              <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+                <div className="size-full bg-loading animate-loading"></div>
+              </div>
+            )}
           </>
         ) : (
           <>
-          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
-          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
-          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
-          <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl" ><div className="size-full bg-loading animate-loading" ></div></div>
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+              <div className="size-full bg-loading animate-loading"></div>
+            </div>
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+              <div className="size-full bg-loading animate-loading"></div>
+            </div>
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+              <div className="size-full bg-loading animate-loading"></div>
+            </div>
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+              <div className="size-full bg-loading animate-loading"></div>
+            </div>
           </>
         )}
       </div>
