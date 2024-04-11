@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { icons } from "@/app/utils/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import useToast from "@/app/hooks/useToast";
 
 const modes = {
   0: "/api/posts/profile",
@@ -18,10 +19,12 @@ const modes = {
 const Button = ({ mode, setMode, currentMode, children }) => {
   return (
     <button
-      disabled={currentMode==mode}
+      disabled={currentMode == mode}
       onClick={() => setMode(mode)}
       className={`h-full p-4 transition-all hover:bg-[rgb(8,8,8)] hover:text-white ${
-        mode === currentMode ? "bg-grays-100  pointer-events-none" : "text-grays-300"
+        mode === currentMode
+          ? "bg-grays-100  pointer-events-none"
+          : "text-grays-300"
       }`}
     >
       {children}
@@ -31,22 +34,58 @@ const Button = ({ mode, setMode, currentMode, children }) => {
 
 const ProfilePage = ({ user, status }) => {
   const [mode, setMode] = useState(0);
-  const {data, session} = useSession();
+  const { data, status: userStatus } = useSession();
+  const [isUser, setIsUser] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const { notify } = useToast();
+  const usernameRef = useRef();
+
   const router = useRouter();
-  function handleNavigateBack(){
+  useEffect(() => {
+    if (userStatus == "authenticated") {
+      console.log(data.user._id, user._id);
+      if (data.user._id === user._id) {
+        setIsUser(true);
+      }
+    }
+  }, [userStatus]);
+  function handleNavigateBack() {
     router.back();
   }
-  async function addUserToDMS(){
+  async function addUserToDMS() {
     await axios.post("/api/users/messages/adduser", {
       id: user._id,
       userId: data.user._id,
     });
     router.push("/messages?u=0");
   }
+  function handleEditUsername() {
+    setEditing(true);
+    setTimeout(() => {
+      usernameRef.current.focus();
+    }, 500);
+  }
+  async function handleChangeUsername() {
+    if (usernameRef.current.value === user.username) {
+      notify("You have not changed anything");
+      setEditing(false);
+    } else {
+      const newUsername = usernameRef.current.value;
+      const res = await axios.post("/api/users/update/username", {
+        username: newUsername,
+        id: user._id,
+      });
+      if (res.data.status !== 200) {
+        notify("Username already exists");
+      } else {
+        user.username = newUsername;
+      }
+      setEditing(false);
+    }
+  }
   return (
     <>
       <div
-        
         onClick={handleNavigateBack}
         className="sticky top-0 h-16 border-b hover:bg-[rgb(8,8,8)] transition-colors cursor-pointer border-grays-200 flex items-center gap-4 backdrop-blur-md bg-[rgba(0,0,0,0.9)] z-50"
       >
@@ -56,7 +95,6 @@ const ProfilePage = ({ user, status }) => {
             {user?.fullName}
           </span>
           <span className="text-text-400 font-semibold">@{user?.username}</span>
-          
         </div>
       </div>
       <section className="flex flex-col size-full">
@@ -76,10 +114,55 @@ const ProfilePage = ({ user, status }) => {
                 <span className="text-2xl font-medium text-text-900">
                   {user?.fullName}
                 </span>
-                <span className="text-xl font-medium text-text-500">
-                  @{user?.username}
-                </span>
-                <button onClick={addUserToDMS} className="p-2 px-6 w-fit mt-6 bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]" >Message</button>
+                <div className="text-xl font-medium text-text-500 flex items-center">
+                  {isUser && (
+                    <>
+                      {editing ? (
+                        <>
+                          <span>@</span>
+                          <input
+                            ref={usernameRef}
+                            type="text"
+                            spellCheck="false"
+                            className="bg-black outline-none w-max"
+                            maxLength={20}
+                            defaultValue={user?.username}
+                          />
+                          <button
+                            onClick={handleChangeUsername}
+                            className="size-10 hover:bg-[rgb(8,8,8)] rounded-lg transition-colors hover:text-accent-900 text-sm"
+                          >
+                            {icons.check}
+                          </button>
+                          <button
+                            onClick={() => setEditing(false)}
+                            className="size-10 hover:bg-heart_pink-100 rounded-lg transition-colors hover:text-heart_pink-200 text-sm"
+                          >
+                            <div className="rotate-45">{icons.plus}</div>
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <span>@{user?.username}</span>
+                          <button
+                            onClick={handleEditUsername}
+                            className="size-10 ml-2 hover:bg-[rgb(8,8,8)] rounded-lg transition-colors hover:text-accent-900 text-sm"
+                          >
+                            {icons.pen}
+                          </button>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+                {isUser == false && (
+                  <button
+                    onClick={addUserToDMS}
+                    className="p-2 px-6 w-fit mt-6 bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]"
+                  >
+                    Message
+                  </button>
+                )}
               </div>
             </>
           ) : (

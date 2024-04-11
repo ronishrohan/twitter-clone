@@ -79,3 +79,15 @@ export async function addUserToMessaging(userId, id){
   }
 }
 
+export async function updateUsername(username, id){
+  await connectDatabase();
+  const existUser = await User.findOne({username: username});
+  if(existUser){
+    return 0;
+  }
+  else{
+    await User.findByIdAndUpdate(id, {$set: {username: username}});
+    return 1;
+  }
+}
+

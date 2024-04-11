@@ -103,9 +103,9 @@ const MessagesList = ({ updateId, current, update }) => {
 
   return (
     <div className="w-16 overflow-y-auto overflow-x-clip h-full  lg:w-[400px] shrink-0 transition-all   border-l border-grays-200 flex flex-col">
-      <div className="border-b   border-grays-200 p-4 h-16 text-2xl bg-[rgba(0,0,0)] backdrop-blur-lg z-40 flex flex-col">
+      <div className="border-b sticky top-0 min-h-16 border-grays-200 p-4 text-2xl bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40 flex flex-col">
         <div className="flex justify-between w-full h-full">
-          <div className="hidden lg:flex size-full bg-black z-50">Messages</div>
+          <div className="hidden lg:flex size-full z-50">Messages</div>
           <button
             onClick={toggleOpen}
             className="h-full aspect-square rounded-lg transition-colors text-lg hover:bg-grays-100"
@@ -127,7 +127,7 @@ const MessagesList = ({ updateId, current, update }) => {
             animate={{ height: "60px", translateY: "0%", opacity: 1 }}
             exit={{ height: "0", translateY: "-200%", opacity: 0 }}
             transition={{ type: "tween", ease: "circInOut", duration: 0.2 }}
-            className="w-44 z-50 overflow-hidden border-b border-grays-200 lg:flex hidden lg:relative lg:w-full"
+            className="w-44 z-40  overflow-hidden bg-[rgba(0,0,0,0.9)] backdrop-blur-lg  border-b border-grays-200 lg:flex hidden lg:sticky top-16 shrink-0 lg:w-full"
           >
             <input
               spellCheck="false"
@@ -143,7 +143,7 @@ const MessagesList = ({ updateId, current, update }) => {
             />
             <button
               onClick={handleAddUser}
-              className="h-full aspect-square rotate-180 hover:bg-grays-100"
+              className="h-full aspect-square rotate-180 shrink-0 hover:bg-grays-100"
             >
               {icons.arrow}
             </button>
