@@ -3,11 +3,10 @@ import { icons } from "@/app/utils/icons";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-
-export function QuickAccessCard({children}) {
+export function QuickAccessCard({ children }) {
   return (
     <>
-      <div className="overflow-hidden relative m-3 w-full bg-[rgb(10,10,10)] h-fit rounded-2xl p-4">
+      <div className="overflow-hidden relative  w-full flex flex-col bg-[rgb(10,10,10)] h-fit rounded-2xl p-4">
         {children}
       </div>
     </>
@@ -18,14 +17,14 @@ function QuickAccess({ width, search = true, children }) {
   const router = useRouter();
   const [isFocused, setFocus] = useState(false);
   const searchRef = useRef();
-  function handleSearch(){
-    router.push(`/explore?query=${searchRef.current.value}`)
+  function handleSearch() {
+    router.push(`/explore?query=${searchRef.current.value}`);
   }
   return (
     <div
       style={{ width: width }}
       id="quickaccess"
-      className="fixed flex right-0  h-full sm:border-grays-200 border-0 sm:border-l transition-all"
+      className="fixed flex flex-col  h-full sm:border-grays-200 border-0 sm:border-l transition-all"
     >
       {search && (
         <div className="w-full flex items-center h-16">
@@ -37,11 +36,11 @@ function QuickAccess({ width, search = true, children }) {
             {icons.search}
           </span>
           <input
-            ref = {searchRef}
+            ref={searchRef}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             onKeyDown={(e) => {
-              if(e.keyCode == 13){
+              if (e.keyCode == 13) {
                 handleSearch();
               }
             }}
@@ -52,7 +51,7 @@ function QuickAccess({ width, search = true, children }) {
           />
         </div>
       )}
-      {children}
+      <div className="flex flex-col w-full p-3 gap-3">{children}</div>
     </div>
   );
 }

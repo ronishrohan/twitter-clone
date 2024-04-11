@@ -102,7 +102,7 @@ const AiPage = () => {
               >
                 gemini api
               </a>{" "}
-              to generate the post content
+              to generate the post content.
             </span>
           </div>
           <div className="absolute size-20 top-0  -z-10 bg-heart_pink-200"></div>
