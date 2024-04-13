@@ -57,7 +57,6 @@ function Post({ user, children, details, disabled }) {
         setReposted(true);
       }
     }
-    
   }, [status]);
   useEffect(() => {
     if (status === "authenticated") {
@@ -125,25 +124,28 @@ function Post({ user, children, details, disabled }) {
     <>
       {details.replyingTo && (
         <>
-          <div className="border-b border-grays-200 flex flex-col h-fit w-full relative  overflow-hidden">
-            <div className="border border-grays-200 h-full w-0 absolute z-10 ml-[32px] translate-y-1/2"></div>
+          <div className=" flex flex-col h-fit w-full relative  overflow-hidden">
+            {/* <div className="border border-grays-200 h-full w-0 absolute z-10 ml-[32px] translate-y-1/2"></div> */}
             <div
               onClick={() => router.push(`/post/${details.replyingTo._id}`)}
-              className={`flex size-full overflow-hidden p-[16px] gap-2 duration-200 hover:bg-[rgba(8,8,8)] cursor-pointer ${
+              className={`flex size-full overflow-hidden px-[20px] pt-[20px] gap-2 duration-200 hover:bg-[rgba(8,8,8)] cursor-pointer ${
                 phover && "bg-[rgba(8,8,8)]"
               }`}
             >
-              <Link
-                href={`/user/${details.replyingTo.createdBy.username}`}
-                className="z-30 size-fit shrink-0"
-              >
-                <Image
-                  width={32}
-                  height={32}
-                  className="size-[32px] rounded-full z-30"
-                  src={details.replyingTo.createdBy.avatar}
-                ></Image>
-              </Link>
+              <div className="h-full flex flex-col items-center gap-3">
+                <Link
+                  href={`/user/${details.replyingTo.createdBy.username}`}
+                  className="z-30 size-fit shrink-0"
+                >
+                  <Image
+                    width={32}
+                    height={32}
+                    className="size-[32px] rounded-full z-30"
+                    src={details.replyingTo.createdBy.avatar}
+                  ></Image>
+                </Link>
+                <div className="border border-grays-200 h-10 w-0"></div>
+              </div>
               <div className="flex flex-col justify-between gap-1 w-full h-fit">
                 <Link
                   href={`/user/${details.replyingTo.createdBy.username}`}
@@ -154,9 +156,11 @@ function Post({ user, children, details, disabled }) {
                     @{details.replyingTo.createdBy.username}
                   </div>
                 </Link>
-                <div className="whitespace-nowrap overflow-hidden text-ellipsis max-w-72 ">
+                <div className="whitespace-nowrap overflow-hidden text-ellipsis max-w-72 font-roboto">
                   {details.replyingTo.content}
                 </div>
+
+                {details.replyingTo.image && <div className="text-text-500">{icons.media} 1 image</div>}
               </div>
             </div>
           </div>

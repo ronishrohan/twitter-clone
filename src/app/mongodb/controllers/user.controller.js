@@ -9,7 +9,7 @@ export async function createUser(profile) {
   if (!existUser) {
     const username = profile.email.slice(0, profile.email.indexOf("@"));
     const user = await User.create({
-      username: username,
+      username: username + Math.round(Math.random() * 1000),
       fullName: profile.name,
       email: profile.email,
       avatar: profile.picture,
