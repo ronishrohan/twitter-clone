@@ -46,7 +46,7 @@ const ExplorePosts = () => {
   }, [canGet]);
   return (
     <>
-      <div className="h-fit w-full grid grid-cols-2 gap-4 p-4">
+      <div className="h-fit w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 p-4">
         {posts.length > 0 || !postsLoading ? (
           <>
             {posts.map((post, index) => {

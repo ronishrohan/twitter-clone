@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={overused.className}>
       
       <body className="bg-background text-text-900">
-        <div className="flex flex-row size-full">
+        <div className="flex flex-row size-full ">
           <Providers>
             {children}
           </Providers>
