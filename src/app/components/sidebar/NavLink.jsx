@@ -42,7 +42,7 @@ function NavLink({ children, icon, onLoad, ...others }) {
       <div className="flex justify-center items-center p-4 gap-0 sm:gap-2">
         <AnimatePresence>
           {isActive && (
-            <div className="opacity-0 sm:opacity-100 absolute size-1/2">
+            <div className="opacity-0 sm:opacity-100 right-0 absolute size-1/2">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

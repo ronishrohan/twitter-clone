@@ -2,13 +2,19 @@
 import { icons } from "@/app/utils/icons";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export function QuickAccessCard({ children }) {
   return (
     <>
-      <div className="overflow-hidden relative  w-full flex flex-col bg-[rgb(10,10,10)] h-fit rounded-2xl p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: "spring", damping: 20 }}
+        className="overflow-hidden relative  w-full flex flex-col bg-[rgb(10,10,10)] h-fit rounded-2xl p-4"
+      >
         {children}
-      </div>
+      </motion.div>
     </>
   );
 }

@@ -11,9 +11,9 @@ const ExplorePost = ({ image, id, user, details }) => {
     function onScroll() {
       const y = window.innerHeight/2;
       const x = window.innerWidth/2;
-      const rect = card.current.getBoundingClientRect();
-      const cardX = rect.left + rect.width/2;
-      const cardY = rect.top + rect.height/2;
+      const rect = card.current?.getBoundingClientRect();
+      const cardX = rect?.left + rect?.width/2;
+      const cardY = rect?.top + rect?.height/2;
       if(y-200 < cardY && y+200 > cardY){
         setHoverd(true);
       }

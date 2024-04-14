@@ -8,13 +8,16 @@ import useToast from "@/app/hooks/useToast";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
-const User = ({ user, updateId,active, ...others }) => {
+const User = ({ user, index,updateId,active, ...others }) => {
   
   function handleChangeUser() {
     updateId(user._id);
   }
   return (
-    <button
+    <motion.button
+    initial={{opacity:0, x: "10%"}}
+    animate={{opacity: 1, x:"0%"}}
+    transition={{delay: 0.01*index, type: "spring", damping: 20}}
       {...others}
       disabled={active}
       onClick={handleChangeUser}
@@ -36,7 +39,7 @@ const User = ({ user, updateId,active, ...others }) => {
         </div>
         
       </div>
-    </button>
+    </motion.button>
   );
 };
 
@@ -155,7 +158,7 @@ const MessagesList = ({ updateId, current, update }) => {
         {users.length > 0 ? (
           <>
             {users.map((user, index) => {
-              return <User active={current==user._id} key={user._id} updateId={updateId} user={user}></User>;
+              return <User index={index} active={current==user._id} key={user._id} updateId={updateId} user={user}></User>;
             })}
           </>
         ) : (

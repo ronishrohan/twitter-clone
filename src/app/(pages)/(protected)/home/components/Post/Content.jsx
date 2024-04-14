@@ -23,8 +23,8 @@ function Content({ children }) {
       setShow(false)
     }
   }, [content])
-  function handleExpand() {
-    
+  function handleExpand(e) {
+    e.stopPropagation();
     if (content.current.scrollHeight > content.current.clientHeight) {
       setHeight(content.current.scrollHeight);
       setExpanded(true);
@@ -43,7 +43,7 @@ function Content({ children }) {
       >
         <Markdown className="[overflow-wrap:anywhere]">{children}</Markdown>
         {(show && !expanded) && (
-          <div className="absolute w-full bottom-0 h-14 bg-gradient-to-t from-black to-transparent"></div>
+          <div className="absolute w-full bottom-0 h-14 bg-gradient-to-t pointer-events-none mix-blend-hard-light from-black to-transparent"></div>
         )}
       </div>
       {show && (

@@ -72,7 +72,7 @@ const AiPage = () => {
             )}
             {response && (
               <>
-                <div className="absolute mb-[120px] z-20 bg-gradient-to-t from-black to-transparent opacity-80 w-full bottom-0 h-12"></div>
+                <div className="absolute mb-[120px] z-20 bg-gradient-to-t pointer-events-none from-black to-transparent opacity-80 w-full bottom-0 h-12"></div>
                 <PostPreview
                   content={response}
                   key={"post-preview"}
