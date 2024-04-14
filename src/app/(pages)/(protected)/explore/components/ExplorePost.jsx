@@ -1,13 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 const ExplorePost = ({ image, id, user, details }) => {
   const [hovered, setHoverd] = useState(false);
+  const card = useRef();
+  useEffect(() => {
+    function onScroll() {
+      const y = window.innerHeight/2;
+      const x = window.innerWidth/2;
+      const rect = card.current.getBoundingClientRect();
+      const cardX = rect.left + rect.width/2;
+      const cardY = rect.top + rect.height/2;
+      if(y-200 < cardY && y+200 > cardY){
+        setHoverd(true);
+      }
+      else{
+        setHoverd(false)
+      }
+    }
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
     <Link
+      ref={card}
       onMouseEnter={() => setHoverd(true)}
       onMouseLeave={() => setHoverd(false)}
       href={`/post/${id}`}
@@ -16,7 +36,7 @@ const ExplorePost = ({ image, id, user, details }) => {
       <motion.div
         initial={{ y: 0 }}
         animate={{ y: hovered ? -60 : 0 }}
-        transition={{type:"spring", damping: 20}}
+        transition={{ type: "spring", damping: 20 }}
         className="size-full"
       >
         <Image

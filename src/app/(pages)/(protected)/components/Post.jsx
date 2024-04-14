@@ -128,7 +128,7 @@ function Post({ user, children, details, disabled }) {
             {/* <div className="border border-grays-200 h-full w-0 absolute z-10 ml-[32px] translate-y-1/2"></div> */}
             <div
               onClick={() => router.push(`/post/${details.replyingTo._id}`)}
-              className={`flex size-full overflow-hidden px-[20px] pt-[20px] gap-2 duration-200 hover:bg-[rgba(8,8,8)] cursor-pointer ${
+              className={`flex size-full overflow-hidden px-[20px] pt-[20px] gap-2 duration-200 hover:bg-[rgba(6,6,6)] cursor-pointer ${
                 phover && "bg-[rgba(8,8,8)]"
               }`}
             >
@@ -155,12 +155,17 @@ function Post({ user, children, details, disabled }) {
                   <div className="text-grays-300">
                     @{details.replyingTo.createdBy.username}
                   </div>
+                  <span className="ml-2 text-grays-300 opacity-75">
+                    {formatDateTime(details.replyingTo.createdAt)}
+                  </span>
                 </Link>
                 <div className="whitespace-nowrap overflow-hidden text-ellipsis max-w-72 font-roboto">
                   {details.replyingTo.content}
                 </div>
 
-                {details.replyingTo.image && <div className="text-text-500">{icons.media} 1 image</div>}
+                {details.replyingTo.image && (
+                  <div className="text-text-500">{icons.media} 1 image</div>
+                )}
               </div>
             </div>
           </div>
@@ -170,7 +175,7 @@ function Post({ user, children, details, disabled }) {
         onClick={handleRedirectToPost}
         onMouseEnter={() => setPhover(true)}
         onMouseLeave={() => setPhover(false)}
-        className={`border-b border-grays-200  flex flex-col transition-colors duration-300 ${
+        className={`border-b border-grays-200  flex flex-col transition-colors  ${
           disabled === false && "hover:bg-[rgba(8,8,8)] cursor-pointer"
         }`}
       >

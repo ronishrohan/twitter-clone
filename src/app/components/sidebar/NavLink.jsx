@@ -42,13 +42,13 @@ function NavLink({ children, icon, onLoad, ...others }) {
       <div className="flex justify-center items-center p-4 gap-0 sm:gap-2">
         <AnimatePresence>
           {isActive && (
-            <div className="opacity-0 sm:opacity-100">
+            <div className="opacity-0 sm:opacity-100 absolute size-1/2">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.1 }}
-                className="size-1/2 absolute bg-accent-900 -z-10 blur-3xl pointer-events-none right-0 bottom-0 scale-150"
+                className="size-full bg-accent-900 -z-10 blur-3xl pointer-events-none right-0 bottom-0 scale-150"
               ></motion.div>
             </div>
           )}
