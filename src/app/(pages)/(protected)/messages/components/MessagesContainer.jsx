@@ -108,7 +108,7 @@ const MessagesContainer = ({ id }) => {
     }
   }
   return (
-    <div className="w-full h-screen flex flex-col transition-all">
+    <div className="w-full h-dvh flex flex-col transition-all pb-16">
       {id ? (
         <>
           <Link href={`/user/${user?.username}`} className="border-b border-grays-200 h-16 p-4 transition-colors relative hover:bg-[rgb(8,8,8)] bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
@@ -215,7 +215,7 @@ const MessagesContainer = ({ id }) => {
           No messages sent or received
         </div>
       )}
-      <div className="h-16 p-5 sm:hidden w-full" ></div>
+      
     </div>
   );
 };
