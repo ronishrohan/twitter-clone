@@ -60,7 +60,7 @@ const ExplorePosts = () => {
                 ></ExplorePost>
               );
             })}
-            {stop == false && (
+            {stop == false && postsLoading && (
               <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
                 <div className="size-full bg-loading animate-loading"></div>
               </div>

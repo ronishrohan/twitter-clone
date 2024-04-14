@@ -8,20 +8,28 @@ import { icons } from "@/app/utils/icons";
 import useRevalidate from "@/app/hooks/useRevalidate";
 import Comments from "./components/Comments";
 import { useRouter } from "next/navigation";
+import { QuickAccessCard } from "@/app/components/quick-access/QuickAccess";
+import Image from "next/image";
 
 const PostPage = ({ params }) => {
   const [pending, startTransition] = useTransition();
   const [post, setPost] = useState(null);
   const { postsRevalidation } = useRevalidate();
+  const [user, setUser] = useState(null);
   const router = useRouter();
-  function handleNavigateBack(){
+  function handleNavigateBack() {
     router.back();
   }
   useEffect(() => {
     startTransition(async () => {
       const res = await axios.post("/api/posts/getpost", { id: params.id });
+      const userRes = await axios.post("/api/users/details", {
+        id: res.data.post.repost
+          ? res.data.post.repost.createdBy
+          : res.data.post.createdBy,
+      });
       setPost(res.data.post);
-      console.log(res.data.post);
+      setUser(userRes.data.user);
     });
   }, []);
   return (
@@ -68,7 +76,41 @@ const PostPage = ({ params }) => {
           <Comments key={postsRevalidation} id={params.id}></Comments>
         </section>
       </main>
-      <QuickAccessHolder></QuickAccessHolder>
+      <QuickAccessHolder>
+        <QuickAccessCard >
+          
+          {user ? (
+            <Link href={`/user/${user.username}`} className=" w-full flex h-16 gap-2">
+              <Image
+                width={100}
+                height={100}
+                src={user.avatar}
+                className="rounded-full size-16"
+              ></Image>
+              <div className="h-full flex flex-col leading-5 text-xl font-medium text-text-900">
+                <div>{user.fullName}</div>
+                <div className="text-grays-300">@{user.username}</div>
+              </div>
+            </Link>
+          ) : (
+            <>
+              <div className="h-16 w-full flex gap-2">
+                <div className="size-16 rounded-full overflow-hidden">
+                  <div className="size-full bg-loading animate-loading"></div>
+                </div>
+                <div className="h-full flex flex-col gap-2">
+                  <div className="w-32 h-4 overflow-hidden rounded-lg">
+                    <div className="size-full bg-loading animate-loading"></div>
+                  </div>
+                  <div className="w-44 h-4 overflow-hidden rounded-lg">
+                    <div className="size-full bg-loading animate-loading"></div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </QuickAccessCard>
+      </QuickAccessHolder>
     </>
   );
 };

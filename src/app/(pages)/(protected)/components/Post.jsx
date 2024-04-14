@@ -173,8 +173,8 @@ function Post({ user, children, details, disabled }) {
       )}
       <div
         onClick={handleRedirectToPost}
-        onMouseEnter={() => setPhover(true)}
-        onMouseLeave={() => setPhover(false)}
+        onMouseEnter={() => disabled==false && setPhover(true)}
+        onMouseLeave={() => disabled==false && setPhover(false)}
         className={`border-b border-grays-200  flex flex-col transition-colors  ${
           disabled === false && "hover:bg-[rgba(8,8,8)] cursor-pointer"
         }`}
