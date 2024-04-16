@@ -17,7 +17,7 @@ const MessagesPage = () => {
       socket.emit("join-room", data.user?._id.toString())
       socket.on("revalidate", () => {
         setListUpdate(Math.random());
-        notify("Someone sent you a message");
+        
       })
     }
   }, [status])
