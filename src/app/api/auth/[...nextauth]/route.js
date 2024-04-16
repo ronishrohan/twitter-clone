@@ -16,6 +16,9 @@ export const handler = NextAuth({
       const { id, username, savedPosts, following,  followers } = await getUserDetails(
         session.user.email
       );
+      if(username == "freeiptvlinks268"){
+        return null;
+      }
       if (id && username) {
         session.user._id = id;
         session.user.username = username;
