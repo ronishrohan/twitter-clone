@@ -134,6 +134,7 @@ function Post({ user, children, details, disabled }) {
             >
               <div className="h-full flex flex-col items-center gap-3">
                 <Link
+                  onClick={(e) => e.stopPropagation()}
                   href={`/user/${details.replyingTo.createdBy.username}`}
                   className="z-30 size-fit shrink-0"
                 >
@@ -148,6 +149,7 @@ function Post({ user, children, details, disabled }) {
               </div>
               <div className="flex flex-col justify-between gap-1 w-full h-fit">
                 <Link
+                onClick={(e) => e.stopPropagation()}
                   href={`/user/${details.replyingTo.createdBy.username}`}
                   className="flex text-lg leading-3 hover:underline  h-full text-text-900 font-medium"
                 >
