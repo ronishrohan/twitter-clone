@@ -4,12 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
-function NavLink({ children, icon,filled, onLoad, ...others }) {
+function NavLink({ children, icon, filled, onLoad, ...others }) {
   const [isActive, setActive] = useState(false);
   const [loading, setLoading] = useState(onLoad ? true : false);
   const pathname = usePathname();
   useEffect(() => {
-    if (pathname === others.href) {
+    if (
+      pathname ===
+      (others.href.indexOf("?") == -1
+        ? others.href
+        : others.href.slice(0, others.href.indexOf("?")))
+    ) {
       setActive(true);
     } else {
       setActive(false);
@@ -55,9 +60,7 @@ function NavLink({ children, icon,filled, onLoad, ...others }) {
         </AnimatePresence>
         <span
           className={
-            isActive
-              ? "text-accent-900 transition-colors "
-              : "text-text-900"
+            isActive ? "text-accent-900 transition-colors " : "text-text-900"
           }
         >
           {isActive ? filled : icon}

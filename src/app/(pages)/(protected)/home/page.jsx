@@ -20,8 +20,8 @@ function PostPage() {
   }
   return (
     <>
-      <main className="size-full h-fit overflow-x-clip">
-        <section className=" h-full">
+      <main className="size-full h-fit min-h-dvh overflow-x-clip">
+        <section className="pb-16 h-full flex flex-col">
           <TopBar mode={params.get("m") || "0"}></TopBar>
           <motion.div
             initial={{ height: 200 }}

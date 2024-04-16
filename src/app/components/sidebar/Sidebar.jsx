@@ -32,7 +32,7 @@ const Sidebar = ({ width }) => {
           <div className="absolute left-0 opacity-50 blur-3xl w-1/2 h-16 bg-accent-900"></div>
         </Link>
         <div className="flex flex-col">
-          <NavLink href="/home" title="Home" icon={icons.home} filled={icons.home}>
+          <NavLink href="/home?m=0" title="Home" icon={icons.home} filled={icons.home}>
             Home
           </NavLink>
           <NavLink href="/explore" title="Explore" icon={icons.search} filled={icons.search}>

@@ -33,7 +33,7 @@ function Button({ active, children, ...others }) {
 function TopBar({mode}) {
   const router = useRouter();
   return (
-    <div className="sticky top-0 w-full border-b z-40 border-grays-200 bg-[rgba(0,0,0,0.9)] backdrop-blur-md h-16 flex text-text-900">
+    <div className="sticky shrink-0 top-0 w-full border-b z-40 border-grays-200 bg-[rgba(0,0,0,0.9)] backdrop-blur-md h-16 flex text-text-900">
       <Button onClick={() => router.push("/home?m=0")} active={mode === "0"}>
         For You
       </Button>
