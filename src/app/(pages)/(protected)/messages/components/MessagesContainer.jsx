@@ -144,7 +144,7 @@ const MessagesContainer = ({ id }) => {
                   <div
                     ref={messagesContainer}
                    
-                    className="size-full flex flex-col  p-2 gap-1 overflow-y-scroll"
+                    className="size-full flex flex-col  p-2 gap-1 overflow-y-scroll overflow-x-hidden"
                   >
                     {messages.length > 0 &&
                       messages.map((message, index) => (
