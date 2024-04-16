@@ -36,7 +36,7 @@ const AiPage = () => {
   }
   return (
     <>
-      <main className="size-full flex flex-col items-center overflow-clip">
+      <main className="size-full h-dvh pb-16 sm:p-0 flex flex-col items-center overflow-clip">
         <div className="relative h-16 w-full border-b border-grays-200 overflow-hidden flex items-center p-4 shrink-0">
           <motion.div
             initial={{ opacity: 0, x: "-100%" }}

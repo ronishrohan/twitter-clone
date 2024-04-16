@@ -72,7 +72,7 @@ const Modal = ({ enabled, close, content, image, replyingTo }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "tween", ease: "circInOut" }}
-            className="w-1/2  bg-[rgba(0,0,0,0.9)] backdrop-blur-2xl rounded-3xl z-50 flex flex-col gap-4 p-4 border border-grays-200"
+            className="w-3/4 sm:w-1/2  bg-[rgba(0,0,0,0.9)] backdrop-blur-2xl rounded-3xl z-50 flex flex-col gap-4 p-4 border border-grays-200"
           >
             <div className="flex justify-between">
               <span className="text-2xl font-semibold">

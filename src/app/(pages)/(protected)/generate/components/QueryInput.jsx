@@ -62,7 +62,7 @@ function QueryInput({ handleSubmit, done, pending, createPost }) {
                 handleClick()
               }
             }}
-            placeholder="Example: Write a post about dogs"
+            placeholder="Write a post about dogs"
             spellCheck="true"
             type="text"
             className="outline-none overflow-hidden whitespace-nowrap w-full text-wrap bg-transparent p-4"

@@ -39,10 +39,10 @@ function NavLink({ children, icon, onLoad, ...others }) {
           <div className="size-full bg-loading animate-loading"></div>
         </div>
       )}
-      <div className="flex justify-center items-center p-4 gap-0 sm:gap-2">
+      <div className="flex justify-center items-center p-4 gap-0 sm:gap-2 text-lg leading-3">
         <AnimatePresence>
           {isActive && (
-            <div className="opacity-0 sm:opacity-100 right-0 absolute size-1/2">
+            <div className="opacity-0 sm:opacity-100 right-0 absolute size-1/2 ">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -56,8 +56,8 @@ function NavLink({ children, icon, onLoad, ...others }) {
         <span
           className={
             isActive
-              ? "text-accent-900 transition-colors text-lg"
-              : "text-text-900 text-lg"
+              ? "text-accent-900 transition-colors "
+              : "text-text-900"
           }
         >
           {icon}
@@ -65,7 +65,7 @@ function NavLink({ children, icon, onLoad, ...others }) {
         <span
           className={
             (isActive ? "font-bold " : "font-normal ") +
-            "transition-all hidden lg:block"
+            "transition-all hidden lg:block text-2xl leading-3 py-2"
           }
         >
           {children}
