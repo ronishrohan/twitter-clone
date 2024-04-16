@@ -54,7 +54,7 @@ const Sidebar = ({ width }) => {
         </div>
       </header>
       <div className="fixed bottom-0 h-16 w-full bg-[rgba(0,0,0,0.9)] border-t border-grays-200 backdrop-blur-lg z-50 flex sm:hidden">
-        <NavLink href="/home" title="Home" icon={icons.home} filled={icons.home}>
+        <NavLink href="/home?m=0" title="Home" icon={icons.home} filled={icons.home}>
           Home
         </NavLink>
         <NavLink href="/explore" title="Explore" icon={icons.search} filled={icons.search}>
@@ -63,7 +63,7 @@ const Sidebar = ({ width }) => {
         <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages} filled={icons.messages_filled}>
           Messages
         </NavLink>
-        <NavLink href="/profile" title="Profile" icon={icons.profile} filled={icons.profile_filled} > 
+        <NavLink  href={`/user/${data?.user?.username}`} title="Profile" icon={icons.profile} filled={icons.profile_filled} > 
           Profile
         </NavLink>
         <NavLink href="/generate" title="Generate" icon={icons.wand} filled={icons.wand}>
