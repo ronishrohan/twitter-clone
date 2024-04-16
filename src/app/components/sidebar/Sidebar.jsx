@@ -1,18 +1,18 @@
+"use client"
 import React from "react";
 import Link from "next/link";
 import { icons } from "@/app/utils/icons";
 import NavLink from "./NavLink";
 import Profile from "./Profile";
-import { motion } from "framer-motion";
-import { forwardRef } from "react";
 import CreatePostButton from "./CreatePostButton";
-import { signOut } from "next-auth/react";
+import {  useSession } from "next-auth/react";
 import axios from "axios"
 
 const Sidebar = ({ width }) => {
+  const {data,status} = useSession();
   async function handleLoadMessagesPage(){
     
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_MESSAGES_ENDPOINT}/init`)
+    await axios.get(`${process.env.NEXT_PUBLIC_MESSAGES_ENDPOINT}/init`)
     
   }
   return (
@@ -41,7 +41,7 @@ const Sidebar = ({ width }) => {
           <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages} filled={icons.messages_filled}>
             Messages
           </NavLink>
-          <NavLink href="/profile" title="Profile" icon={icons.profile} filled={icons.profile_filled}>
+          <NavLink href={`/user/${data?.user?.username}`} title="Profile" icon={icons.profile} filled={icons.profile_filled}>
             Profile
           </NavLink>
           <NavLink href="/generate" title="Generate" icon={icons.wand} filled={icons.wand}>

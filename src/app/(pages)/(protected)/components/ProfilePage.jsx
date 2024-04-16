@@ -32,11 +32,15 @@ const Button = ({ mode, setMode, currentMode, children }) => {
   );
 };
 
-const UserButton = ({ children, ...others }) => {
+const UserButton = ({ children, active, ...others }) => {
   return (
     <button
       {...others}
-      className="p-2 px-6 w-full bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]"
+      className={`p-2 px-6 w-full font-medium rounded-2xl transition-colors border-2 border-transparent hover:border-accent-800  ${
+        active
+          ? "bg-accent-900 border-accent-900 text-white font-black hover:bg-accent-800"
+          : "bg-grays-100 text-text-900"
+      }`}
     >
       {children}
     </button>
@@ -49,23 +53,43 @@ const ProfilePage = ({ user, status }) => {
   const [isUser, setIsUser] = useState(false);
   const [editing, setEditing] = useState(false);
   const [followers, setFollowers] = useState(user.followers);
+  const [following, setFollowing] = useState(false);
   const { notify } = useToast();
   const usernameRef = useRef();
 
   const router = useRouter();
   useEffect(() => {
     if (userStatus == "authenticated") {
-      console.log(data.user._id, user._id);
       if (data.user._id === user._id) {
         setIsUser(true);
+      }
+      if (data.user.following.includes(user._id)) {
+        setFollowing(true);
       }
     }
   }, [userStatus]);
   function handleNavigateBack() {
     router.back();
   }
-  async function handleFollow(){
-
+  async function handleFollow() {
+    let res;
+    if (following == false) {
+      res = await axios.post("/api/users/update/follow", {
+        id: user._id,
+        userId: data.user._id,
+      });
+      setFollowing(true);
+      notify(`You are following ${user.fullName}`)
+    } else {
+      res = await axios.post("/api/users/update/unfollow", {
+        id: user._id,
+        userId: data.user._id,
+      });
+      setFollowing(false);
+      notify(`You have stopped following ${user.fullName}`)
+    }
+    console.log(res.data.following);
+    setFollowers(res.data.followers);
   }
   async function addUserToDMS() {
     await axios.post("/api/users/messages/adduser", {
@@ -176,17 +200,21 @@ const ProfilePage = ({ user, status }) => {
                     {user?.posts} <span className="text-grays-300">posts</span>
                   </span>
                   <span>
-                    {followers} <span className="text-grays-300">followers</span>
+                    {followers}{" "}
+                    <span className="text-grays-300">followers</span>
                   </span>
                   <span>
-                    {user.following.length} <span className="text-grays-300">following</span>
+                    {user.following?.length}{" "}
+                    <span className="text-grays-300">following</span>
                   </span>
                 </div>
                 <div className="flex gap-2 mt-2">
                   {isUser == false ? (
                     <>
                       <UserButton onClick={addUserToDMS}>Message</UserButton>
-                      <UserButton>Follow</UserButton>
+                      <UserButton active={following} onClick={handleFollow}>
+                        {following ? "Following" : "Follow"}
+                      </UserButton>
                     </>
                   ) : (
                     <>

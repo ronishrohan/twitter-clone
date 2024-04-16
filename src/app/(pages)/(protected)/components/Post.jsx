@@ -298,7 +298,7 @@ function Post({ user, children, details, disabled }) {
                   amount={
                     details.repost ? details.repost.comments : details.comments
                   }
-                  e
+                  
                   hover="hover:text-accent-900 hover:bg-accent-200"
                   title="comments"
                 ></Button>

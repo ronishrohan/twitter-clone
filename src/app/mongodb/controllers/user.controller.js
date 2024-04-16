@@ -42,7 +42,7 @@ export async function getUserDetails(email) {
     avatar: user.avatar,
     savedPosts: user.savedPosts,
     followers: user.followers,
-    following: user.following.length,
+    following: user.following,
   };
 }
 
@@ -94,3 +94,16 @@ export async function updateUsername(username, id){
   }
 }
 
+export async function followUser(id, userId){
+  await connectDatabase();
+  const user = await User.findByIdAndUpdate(id, {$inc: {followers: 1}}, {new: true});
+  await User.findByIdAndUpdate(userId, {$push: {following: id}});
+  return user.followers;
+}
+
+export async function unfollowUser(id, userId){
+  await connectDatabase();
+  const user = await User.findByIdAndUpdate(id, {$inc: {followers: -1}}, {new:true});
+  await User.findByIdAndUpdate(userId, {$pull: {following: id}});
+  return user.followers;
+}

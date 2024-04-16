@@ -14,19 +14,12 @@ export function ToastProvider({ children }) {
       setText(text);
       
     }, 100);
+    
     console.log("this is supposed to be a notification");
   }
-  useEffect(() => {
-    if(enabled == true){
-      setTimeout(() => {
-        setEnabled(false)
-        setText(null)
-      }, 2000);
-    }
-  }, [enabled])
   return (
     <ToastContext.Provider value={{ notify }}>
-      <AnimatePresence mode="sync">
+      <AnimatePresence mode="wait">
         {enabled && (
           <motion.div 
             key={text || "notification"}

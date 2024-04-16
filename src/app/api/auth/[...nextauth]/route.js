@@ -13,13 +13,15 @@ export const handler = NextAuth({
       return true;
     },
     async session({ session }) {
-      const { id, username, savedPosts } = await getUserDetails(
+      const { id, username, savedPosts, following,  followers } = await getUserDetails(
         session.user.email
       );
       if (id && username) {
         session.user._id = id;
         session.user.username = username;
         session.user.savedPosts = savedPosts;
+        session.user.following = following;
+        session.user.followers = followers;
         return session;
       } else {
         return session;
