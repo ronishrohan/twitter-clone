@@ -50,6 +50,16 @@ const UserSchema = new Schema(
       default: [],
       required: false,
     },
+    followers:{
+      type: Number,
+      required: true,
+      default: 0
+    },
+    following: {
+      type: [{type: Schema.Types.ObjectId, ref: "User"}],
+      default: [],
+      required: true,
+    }
   },
   {
     timestamps: true,

@@ -34,12 +34,15 @@ export async function getUserDetails(email) {
   await connectDatabase();
 
   const user = await User.findOne({ email: email });
+  console.log(user);
   return {
     id: user._id,
     username: user.username,
     fullName: user.fullName,
     avatar: user.avatar,
-    savedPosts: user.savedPosts
+    savedPosts: user.savedPosts,
+    followers: user.followers,
+    following: user.following.length,
   };
 }
 

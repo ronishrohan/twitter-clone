@@ -32,11 +32,23 @@ const Button = ({ mode, setMode, currentMode, children }) => {
   );
 };
 
+const UserButton = ({ children, ...others }) => {
+  return (
+    <button
+      {...others}
+      className="p-2 px-6 w-full bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]"
+    >
+      {children}
+    </button>
+  );
+};
+
 const ProfilePage = ({ user, status }) => {
   const [mode, setMode] = useState(0);
   const { data, status: userStatus } = useSession();
   const [isUser, setIsUser] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [followers, setFollowers] = useState(user.followers);
   const { notify } = useToast();
   const usernameRef = useRef();
 
@@ -51,6 +63,9 @@ const ProfilePage = ({ user, status }) => {
   }, [userStatus]);
   function handleNavigateBack() {
     router.back();
+  }
+  async function handleFollow(){
+
   }
   async function addUserToDMS() {
     await axios.post("/api/users/messages/adduser", {
@@ -115,6 +130,7 @@ const ProfilePage = ({ user, status }) => {
                   {user?.fullName}
                 </span>
                 <div className="text-xl font-medium text-text-500 flex items-center">
+                  {!isUser && <span>@{user?.username}</span>}
                   {isUser && (
                     <>
                       {editing ? (
@@ -155,23 +171,27 @@ const ProfilePage = ({ user, status }) => {
                     </>
                   )}
                 </div>
-                {isUser == false && (
-                  <button
-                    onClick={addUserToDMS}
-                    className="p-2 px-6 w-fit mt-6 bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]"
-                  >
-                    Message
-                  </button>
-                )}
-
-                <div className="flex flex-col">
-                  {isUser && (
-                    <button
-                      onClick={signOut}
-                      className="p-2 px-6 w-fit  bg-grays-100 font-medium rounded-2xl transition-colors border-2 hover:text-accent-900 border-transparent hover:border-accent-800 hover:bg-[rgb(8,8,8)]"
-                    >
-                      Log out
-                    </button>
+                <div className="flex gap-2 text-lg font-medium mt-4">
+                  <span>
+                    {user?.posts} <span className="text-grays-300">posts</span>
+                  </span>
+                  <span>
+                    {followers} <span className="text-grays-300">followers</span>
+                  </span>
+                  <span>
+                    {user.following.length} <span className="text-grays-300">following</span>
+                  </span>
+                </div>
+                <div className="flex gap-2 mt-2">
+                  {isUser == false ? (
+                    <>
+                      <UserButton onClick={addUserToDMS}>Message</UserButton>
+                      <UserButton>Follow</UserButton>
+                    </>
+                  ) : (
+                    <>
+                      <UserButton onClick={signOut}>Logout</UserButton>
+                    </>
                   )}
                 </div>
               </div>
