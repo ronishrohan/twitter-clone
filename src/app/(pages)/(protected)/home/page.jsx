@@ -4,18 +4,17 @@ import CreatePost from "./components/CreatePost";
 import Posts from "../components/Posts";
 import { QuickAccessCard } from "@/app/components/quick-access/QuickAccess";
 import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
-import { useState } from "react";
+import { motion } from "framer-motion";
 import useRevalidate from "@/app/hooks/useRevalidate";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
-
 function PostPage() {
   const { data, status } = useSession();
   const { postsRevalidation } = useRevalidate();
   const params = useSearchParams();
-  
+
   function revalidate() {
     setKey(Math.random() * 1000);
   }
@@ -24,14 +23,21 @@ function PostPage() {
       <main className="size-full h-fit overflow-x-clip">
         <section className=" h-full">
           <TopBar mode={params.get("m") || "0"}></TopBar>
-          <CreatePost></CreatePost>
+          <motion.div
+            initial={{ height: 200 }}
+            animate={{ height: params.get("m") == "1" ? 0 : 200 }}
+            transition={{ type: "tween", ease: "circInOut"}}
+            className="overflow-hidden border-b border-grays-200"
+          >
+            <CreatePost></CreatePost>
+          </motion.div>
           {status == "authenticated" && (
             <>
-              {params.get("m") == 0 ? (
+              {params.get("m") == "0" ? (
                 <>
                   <Posts
                     infinite={true}
-                    key={postsRevalidation + params.get("mode")}
+                    key={postsRevalidation + params.get("m")}
                     endpoint="/api/posts/get"
                     userid=""
                   ></Posts>
@@ -40,7 +46,7 @@ function PostPage() {
                 <>
                   <Posts
                     infinite={true}
-                    key={postsRevalidation + params.get("mode")}
+                    key={postsRevalidation + params.get("m")}
                     endpoint="/api/posts/get"
                     userid=""
                     following={data.user.following}

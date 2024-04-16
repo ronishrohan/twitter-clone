@@ -107,7 +107,7 @@ const CreatePost = () => {
   }
 
   return (
-    <div className="overflow-hidden relative border-b border-grays-200  flex flex-col">
+    <div className="overflow-hidden relative flex flex-col justify-between h-full">
       <div
         onMouseMove={(e) => e.stopPropagation()}
         className="p-4 flex mb-14 z-10"
