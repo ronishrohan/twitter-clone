@@ -33,7 +33,7 @@ function PostPage() {
           </motion.div>
           {status == "authenticated" && (
             <>
-              {params.get("m") == "0" ? (
+              {params.get("m") == "0" || params.get("m")==null ? (
                 <>
                   <Posts
                     infinite={true}
