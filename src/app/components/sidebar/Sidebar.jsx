@@ -32,19 +32,19 @@ const Sidebar = ({ width }) => {
           <div className="absolute left-0 opacity-50 blur-3xl w-1/2 h-16 bg-accent-900"></div>
         </Link>
         <div className="flex flex-col">
-          <NavLink href="/home" title="Home" icon={icons.home}>
+          <NavLink href="/home" title="Home" icon={icons.home} filled={icons.home}>
             Home
           </NavLink>
-          <NavLink href="/explore" title="Explore" icon={icons.search}>
+          <NavLink href="/explore" title="Explore" icon={icons.search} filled={icons.search}>
             Explore
           </NavLink>
-          <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages}>
+          <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages} filled={icons.messages_filled}>
             Messages
           </NavLink>
-          <NavLink href="/profile" title="Profile" icon={icons.profile}>
+          <NavLink href="/profile" title="Profile" icon={icons.profile} filled={icons.profile_filled}>
             Profile
           </NavLink>
-          <NavLink href="/generate" title="Generate" icon={icons.wand}>
+          <NavLink href="/generate" title="Generate" icon={icons.wand} filled={icons.wand}>
             Generate
           </NavLink>
         </div>
@@ -54,19 +54,19 @@ const Sidebar = ({ width }) => {
         </div>
       </header>
       <div className="fixed bottom-0 h-16 w-full bg-[rgba(0,0,0,0.9)] border-t border-grays-200 backdrop-blur-lg z-50 flex sm:hidden">
-        <NavLink href="/home" title="Home" icon={icons.home}>
+        <NavLink href="/home" title="Home" icon={icons.home} filled={icons.home}>
           Home
         </NavLink>
-        <NavLink href="/explore" title="Explore" icon={icons.search}>
+        <NavLink href="/explore" title="Explore" icon={icons.search} filled={icons.search}>
           Explore
         </NavLink>
-        <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages}>
+        <NavLink onLoad={handleLoadMessagesPage} href="/messages" title="Messages" icon={icons.messages} filled={icons.messages_filled}>
           Messages
         </NavLink>
-        <NavLink href="/profile" title="Profile" icon={icons.profile}>
+        <NavLink href="/profile" title="Profile" icon={icons.profile} filled={icons.profile_filled} > 
           Profile
         </NavLink>
-        <NavLink href="/generate" title="Generate" icon={icons.wand}>
+        <NavLink href="/generate" title="Generate" icon={icons.wand} filled={icons.wand}>
           Generate
         </NavLink>
         {/* <button onClick={signOut} className="size-full w-44 shrink-0 flex items-center justify-center transition-colors hover:bg-[rgb(8,8,8)]">Log Out</button> */}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
-function NavLink({ children, icon, onLoad, ...others }) {
+function NavLink({ children, icon,filled, onLoad, ...others }) {
   const [isActive, setActive] = useState(false);
   const [loading, setLoading] = useState(onLoad ? true : false);
   const pathname = usePathname();
@@ -60,7 +60,7 @@ function NavLink({ children, icon, onLoad, ...others }) {
               : "text-text-900"
           }
         >
-          {icon}
+          {isActive ? filled : icon}
         </span>
         <span
           className={

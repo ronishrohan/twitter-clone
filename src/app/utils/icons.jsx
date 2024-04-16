@@ -1,5 +1,5 @@
 import { faBookmark, faEnvelope, faHeart, faImage, faMessage, faPaperPlane, faUser } from "@fortawesome/free-regular-svg-icons";
-import {   faEllipsisH, faFeatherPointed, faHouse, faPlus, faRetweet, faSearch, faWandMagicSparkles, faHeart as faHeartFilled, faBookmark as faBookmarkFilled, faSpinner, faArrowLeft, faArrowsSplitUpAndLeft, faPen, faCheck, faRightFromBracket, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {   faEllipsisH, faFeatherPointed, faHouse, faPlus, faRetweet, faSearch,faUser as faUser_filled,faWandMagicSparkles, faHeart as faHeartFilled, faBookmark as faBookmarkFilled, faSpinner, faArrowLeft, faArrowsSplitUpAndLeft, faPen, faCheck, faRightFromBracket, faArrowRightFromBracket, faEnvelope as faEnvelope_filled } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
@@ -7,7 +7,9 @@ export const icons = {
     home: <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>,
     search: <FontAwesomeIcon icon={faSearch} ></FontAwesomeIcon>,
     messages: <FontAwesomeIcon icon={faEnvelope} ></FontAwesomeIcon>,
+    messages_filled: <FontAwesomeIcon icon={faEnvelope_filled}></FontAwesomeIcon>,
     profile: <FontAwesomeIcon icon={faUser} ></FontAwesomeIcon>,
+    profile_filled: <FontAwesomeIcon icon={faUser_filled}></FontAwesomeIcon>,
     feather: <FontAwesomeIcon icon={faFeatherPointed} ></FontAwesomeIcon>,
     ellipsis: <FontAwesomeIcon icon={faEllipsisH} ></FontAwesomeIcon>,
     plus : <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>,

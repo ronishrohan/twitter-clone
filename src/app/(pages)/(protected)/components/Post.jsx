@@ -121,7 +121,7 @@ function Post({ user, children, details, disabled }) {
     router.push(`/post/${details.repost ? details.repost._id : details.id}`);
   }
   return (
-    <>
+    <motion.div initial={{opacity:0}} animate={{opacity:1}}>
       {details.replyingTo && (
         <>
           <div className=" flex flex-col h-fit w-full relative  overflow-hidden">
@@ -354,7 +354,7 @@ function Post({ user, children, details, disabled }) {
           </div>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }
 

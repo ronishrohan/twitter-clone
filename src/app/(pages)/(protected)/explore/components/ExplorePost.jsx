@@ -34,7 +34,8 @@ const ExplorePost = ({ image, id, user, details }) => {
       className="bg-[rgb(8,8,8)] rounded-2xl h-72 sm:h-96  w-full overflow-hidden border-2 hover:brightness-110 transition-all border-transparent duration-300 hover:border-accent-800 flex flex-col relative"
     >
       <motion.div
-        initial={{ y: 0 }}
+        initial={{ y: 0, scale: 1.05 }}
+        whileInView={{scale: 1}}
         animate={{ y: hovered ? -60 : 0 }}
         transition={{ type: "spring", damping: 20 }}
         className="size-full"
