@@ -36,7 +36,7 @@ const PostPage = ({ params }) => {
   return (
     <>
       {error ? (
-        <Error statusCode={404}></Error>
+        <></>
       ) : (
         <>
           <>

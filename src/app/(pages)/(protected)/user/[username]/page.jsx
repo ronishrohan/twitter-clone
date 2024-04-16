@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useTransition } from "react";
 import ProfilePage from "../../components/ProfilePage";
-import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
+
 import {notFound} from "next/navigation";
 
 const UserProfilePage = ({ params }) => {
@@ -15,13 +15,17 @@ const UserProfilePage = ({ params }) => {
   }
   useEffect(() => {
     startTransition(async () => {
-      const res = await axios.post("/api/users/details", {
-        username: params.username,
-      });
-      if (!res.data.user) {
-        triggernotfound();
+      try {
+        const res = await axios.post("/api/users/details", {
+          username: params.username,
+        });
+        if (!res.data.user) {
+          triggernotfound();
+        }
+        setUser(res.data.user);
+      } catch (error) {
+        triggernotfound()
       }
-      setUser(res.data.user);
     });
   }, []);
   return (
