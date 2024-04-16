@@ -169,6 +169,11 @@ export async function like(id, userId) {
 
 export async function repost(id, userId) {
   await connectDatabase();
+  const reposted = await Post.findById(id);
+  
+  if (reposted.repostedBy.includes(userId) == true) {
+    return reposted.reposts;
+  }
   const existPost = await Post.findByIdAndUpdate(
     id,
     {
