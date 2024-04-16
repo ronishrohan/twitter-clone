@@ -311,7 +311,7 @@ function Post({ user, children, details, disabled }) {
                   loading={repostPending}
                   icon={icons.retweet}
                   isActive={reposted}
-                  disabled={reposted}
+                  disabled={reposted || repostPending}
                   active="text-green_hover-200"
                   amount={
                     details.repost ? details.repost.reposts : details.reposts
