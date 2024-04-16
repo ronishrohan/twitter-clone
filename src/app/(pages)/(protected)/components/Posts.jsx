@@ -12,7 +12,7 @@ import { icons } from "@/app/utils/icons";
 import { useSession } from "next-auth/react";
 import BackToTop from "./BackToTop";
 
-function Posts({ infinite, endpoint, userid }) {
+function Posts({ infinite, endpoint, userid,following }) {
   const [chunks, setChunks] = useState([]);
   const [page, setPage] = useState(0);
   const [timer, setTimer] = useState(0);
@@ -40,7 +40,7 @@ function Posts({ infinite, endpoint, userid }) {
   useEffect(() => {
     function fetchPosts() {
       startTransition(async () => {
-        const { data } = await axios.post(endpoint, { page: page, id: userid });
+        const { data } = await axios.post(endpoint, { page: page, id: userid, following: following });
         setIsFetching(true);
         if (data.posts.length == 0) {
           setFinished(true);

@@ -1,5 +1,5 @@
 import { Post } from "../models/post.model";
-import mongoose, { ObjectId, connect } from "mongoose";
+import mongoose, { Mongoose, ObjectId, connect } from "mongoose";
 import { connectDatabase } from "@/app/utils/connectDatabase";
 import { User } from "../models/user.model";
 
@@ -27,8 +27,9 @@ export async function createPost({
   }
 }
 
-export async function getPosts(page, query) {
+export async function getPosts(page, query, following) {
   console.log(query);
+  
   await connectDatabase();
   let posts;
   if (query) {
@@ -49,13 +50,28 @@ export async function getPosts(page, query) {
       ]);
     console.log(posts);
   } else {
-    posts = await Post.find({}, null, { limit: n, skip: n * page })
+    if(!following){
+      posts = await Post.find({}, null, { limit: n, skip: n * page })
       .sort({ createdAt: -1 })
       .populate({ path: "createdBy" })
       .populate([
         { path: "repost", populate: "createdBy" },
         { path: "replyingTo", populate: "createdBy" },
       ]);
+    }
+    else{
+      following = following.map((user) => {
+        const obj = new mongoose.Types.ObjectId(user);
+        return obj;
+      });
+      posts = await Post.find({createdBy: {$in: following}}, null, { limit: n, skip: n * page })
+      .sort({ createdAt: -1 })
+      .populate({ path: "createdBy" })
+      .populate([
+        { path: "repost", populate: "createdBy" },
+        { path: "replyingTo", populate: "createdBy" },
+      ]);
+    }
   }
 
   return posts;

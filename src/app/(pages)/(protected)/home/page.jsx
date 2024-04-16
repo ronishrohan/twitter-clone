@@ -6,10 +6,16 @@ import { QuickAccessCard } from "@/app/components/quick-access/QuickAccess";
 import QuickAccessHolder from "@/app/components/quick-access/QuickAccessHolder";
 import { useState } from "react";
 import useRevalidate from "@/app/hooks/useRevalidate";
-import Link from "next/link"
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+
 
 function PostPage() {
+  const { data, status } = useSession();
   const { postsRevalidation } = useRevalidate();
+  const params = useSearchParams();
+  
   function revalidate() {
     setKey(Math.random() * 1000);
   }
@@ -17,14 +23,32 @@ function PostPage() {
     <>
       <main className="size-full h-fit overflow-x-clip">
         <section className=" h-full">
-          <TopBar></TopBar>
+          <TopBar mode={params.get("m") || "0"}></TopBar>
           <CreatePost></CreatePost>
-          <Posts
-            infinite={true}
-            key={postsRevalidation}
-            endpoint="/api/posts/get"
-            userid=""
-          ></Posts>
+          {status == "authenticated" && (
+            <>
+              {params.get("m") == 0 ? (
+                <>
+                  <Posts
+                    infinite={true}
+                    key={postsRevalidation + params.get("mode")}
+                    endpoint="/api/posts/get"
+                    userid=""
+                  ></Posts>
+                </>
+              ) : (
+                <>
+                  <Posts
+                    infinite={true}
+                    key={postsRevalidation + params.get("mode")}
+                    endpoint="/api/posts/get"
+                    userid=""
+                    following={data.user.following}
+                  ></Posts>
+                </>
+              )}
+            </>
+          )}
         </section>
       </main>
       <QuickAccessHolder>
@@ -41,7 +65,14 @@ function PostPage() {
           <div className="absolute bg-heart_pink-200 right-9 blur-2xl opacity-20 size-1/2 z-10"></div>
           <div className="flex flex-col gap-2 z-20">
             <div className="text-lg font-normal">
-              Go to <Link className="text-heart_pink-200 hover:underline" href="/generate">the generate page</Link> if you want to generate posts
+              Go to{" "}
+              <Link
+                className="text-heart_pink-200 hover:underline"
+                href="/generate"
+              >
+                the generate page
+              </Link>{" "}
+              if you want to generate posts
             </div>
           </div>
         </QuickAccessCard>
