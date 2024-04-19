@@ -54,7 +54,7 @@ export function Button({
     <>
       <button
       title={others.disabled && "a repost cannot be reposted"}
-        
+        disabled={others.disabled || pending}
         {...others}
         onClick={others.onClick || handleUpdate}
         className={`relative overflow-hidden w-full  rounded-lg  ${hover} ${
