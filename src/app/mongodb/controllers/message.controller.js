@@ -2,6 +2,7 @@ import { connectDatabase } from "@/app/utils/connectDatabase";
 import { Message } from "../models/message.model";
 import { addUserToMessaging, getUserMessaging } from "./user.controller";
 
+await connectDatabase();
 
 export async function getMessages(id1,id2){
     

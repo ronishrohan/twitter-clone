@@ -1,7 +1,7 @@
 import { connectDatabase } from "../../utils/connectDatabase";
 import { User } from "../models/user.model";
 
-
+await connectDatabase();
 
 export async function createUser(profile) {
   console.log(profile);

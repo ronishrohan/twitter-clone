@@ -5,6 +5,8 @@ import { User } from "../models/user.model";
 
 const n = 5;
 
+await connectDatabase();
+
 export async function createPost({
   createdBy,
   content,
