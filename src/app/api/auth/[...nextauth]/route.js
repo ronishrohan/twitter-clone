@@ -4,6 +4,7 @@ import {
   createUser,
   getUserDetails,
 } from "@/app/mongodb/controllers/user.controller";
+import { connectDatabase } from "@/app/utils/connectDatabase";
 
 export const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
@@ -13,6 +14,7 @@ export const handler = NextAuth({
       return true;
     },
     async session({ session }) {
+      
       const { id, username, savedPosts, following,  followers } = await getUserDetails(
         session.user.email
       );

@@ -61,23 +61,23 @@ const ExplorePosts = () => {
               );
             })}
             {stop == false && postsLoading && (
-              <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+              <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl scale-[0.8]">
                 <div className="size-full bg-loading animate-loading"></div>
               </div>
             )}
           </>
         ) : (
           <>
-            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl scale-[0.8]">
               <div className="size-full bg-loading animate-loading"></div>
             </div>
-            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl scale-[0.8]">
               <div className="size-full bg-loading animate-loading"></div>
             </div>
-            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl scale-[0.8]">
               <div className="size-full bg-loading animate-loading"></div>
             </div>
-            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl">
+            <div className="overflow-hidden w-full h-72 sm:h-96 rounded-2xl scale-[0.8]">
               <div className="size-full bg-loading animate-loading"></div>
             </div>
           </>

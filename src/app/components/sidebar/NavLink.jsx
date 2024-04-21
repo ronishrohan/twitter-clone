@@ -60,7 +60,7 @@ function NavLink({ children, icon, filled, onLoad, ...others }) {
         </AnimatePresence>
         <span
           className={
-            isActive ? "text-accent-900 transition-colors " : "text-text-900"
+            isActive ? "text-accent-900 transition-colors " : "text-text-900 transition-colors"
           }
         >
           {isActive ? filled : icon}

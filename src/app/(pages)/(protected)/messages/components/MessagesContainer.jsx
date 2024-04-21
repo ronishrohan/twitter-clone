@@ -12,7 +12,7 @@ import Message from "./Message";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 
 const MessagesContainer = ({ id }) => {
   const { data, status } = useSession();
@@ -54,6 +54,12 @@ const MessagesContainer = ({ id }) => {
           });
         });
         setMessages(transformedMessages);
+        // setTimeout(() => {
+        //   messagesContainer?.current?.scrollTo({
+        //     top: messagesContainer.current.scrollHeight,
+        //     behavior: "smooth"
+        //   });
+        // }, 200);
       });
     }
     if (id) {
@@ -75,11 +81,12 @@ const MessagesContainer = ({ id }) => {
     }
   }, [socket]);
   useEffect(() => {
-    
-    messagesContainer?.current?.scrollTo(
-      0,
-      messagesContainer.current.scrollHeight
-    );
+    setTimeout(() => {
+      messagesContainer?.current?.scrollTo(
+        0,
+        messagesContainer.current.scrollHeight
+      );
+    }, 200);
   }, [messages]);
 
   async function handleSendMessage() {
@@ -111,16 +118,23 @@ const MessagesContainer = ({ id }) => {
     <div className="w-full h-dvh flex flex-col transition-all pb-16 sm:pb-0">
       {id ? (
         <>
-          <Link href={`/user/${user?.username}`} className="border-b border-grays-200 h-16 p-4 transition-colors relative hover:bg-[rgb(8,8,8)] bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40">
+          <Link
+            href={`/user/${user?.username}`}
+            className="border-b border-grays-200 h-16 p-4 transition-colors relative hover:bg-[rgb(8,8,8)] bg-[rgba(0,0,0,0.8)] backdrop-blur-lg z-40"
+          >
             {userLoading ? (
               <div className="size-full flex items-center gap-2">
-                <div className="size-10 overflow-hidden rounded-full" ><div className="size-full bg-loading animate-loading" ></div></div>
-                <div className="w-44 h-8 overflow-hidden rounded-lg" ><div className="size-full bg-loading animate-loading" ></div></div>
+                <div className="size-10 overflow-hidden rounded-full">
+                  <div className="size-full bg-loading animate-loading"></div>
+                </div>
+                <div className="w-44 h-8 overflow-hidden rounded-lg">
+                  <div className="size-full bg-loading animate-loading"></div>
+                </div>
               </div>
             ) : (
               <>
                 {user && (
-                  <div  className="size-full  flex gap-2 items-center">
+                  <div className="size-full  flex gap-2 items-center">
                     <Image
                       className="size-10 rounded-full overflow-hidden"
                       width={50}
@@ -143,7 +157,6 @@ const MessagesContainer = ({ id }) => {
                 <>
                   <div
                     ref={messagesContainer}
-                   
                     className="size-full flex flex-col  p-2 gap-1 overflow-y-scroll overflow-x-hidden"
                   >
                     {messages.length > 0 &&
@@ -203,7 +216,9 @@ const MessagesContainer = ({ id }) => {
               disabled={disabled || userLoading || messagesLoading}
               onClick={handleSendMessage}
               className={`size-16 shrink-0 bg-black rotate-180 border-r border-grays-200 hover:bg-accent-200 transition-colors disabled:text-grays-300 ${
-                disabled || userLoading || messagesLoading && "pointer-events-none"
+                disabled ||
+                userLoading ||
+                (messagesLoading && "pointer-events-none")
               }`}
             >
               {icons.arrow}
@@ -212,10 +227,9 @@ const MessagesContainer = ({ id }) => {
         </>
       ) : (
         <div className="h-full w-full flex items-center justify-center text-lg font-medium text-grays-300">
-          No messages sent or received
+          Open a chat or create a new one
         </div>
       )}
-      
     </div>
   );
 };
