@@ -5,7 +5,7 @@ import { User } from "../models/user.model";
 
 const n = 5;
 
-await connectDatabase();
+
 
 export async function createPost({
   createdBy,
@@ -14,7 +14,7 @@ export async function createPost({
   repost,
   replyingTo,
 }) {
-  
+  await connectDatabase();
   try {
     const post = await Post.create({
       createdBy: new mongoose.Types.ObjectId(createdBy),
@@ -31,7 +31,7 @@ export async function createPost({
 
 export async function getPosts(page, query, following) {
   console.log(query);
-  
+  await connectDatabase();
   
   let posts;
   if (query) {
@@ -80,7 +80,7 @@ export async function getPosts(page, query, following) {
 }
 
 export async function getImagePosts(page) {
-  
+  await connectDatabase();
   const posts = await Post.find({ image: { $ne: null } }, null, {
     skip: page * 5,
     limit: n,
@@ -96,7 +96,7 @@ export async function getImagePosts(page) {
 }
 
 export async function getUserPosts(page, id) {
-  
+  await connectDatabase();
   const posts = await Post.find({ createdBy: id }, null, {
     limit: n,
     skip: n * page,
@@ -112,7 +112,7 @@ export async function getUserPosts(page, id) {
 }
 
 export async function getLikedPosts(page, id) {
-  
+  await connectDatabase();
   const posts = await Post.find({ likedBy: { $in: [id] } }, null, {
     limit: n,
     skip: n * page,
@@ -128,7 +128,7 @@ export async function getLikedPosts(page, id) {
 }
 
 export async function getPost(id) {
-  
+  await connectDatabase();
   const existPost = await Post.findById(id).populate([
     { path: "createdBy" },
     { path: "repost", populate: "createdBy" },
@@ -139,7 +139,7 @@ export async function getPost(id) {
 }
 
 export async function getSavedPosts(id) {
-  
+  await connectDatabase();
   const user = await User.findById(id)
     .populate("savedPosts")
     .populate({
@@ -163,7 +163,7 @@ export async function getSavedPosts(id) {
 }
 
 export async function getComments(id) {
-  
+  await connectDatabase();
   const posts = await Post.find({ replyingTo: id })
     .populate({ path: "createdBy" })
     .sort({ createdAt: -1 });
@@ -172,7 +172,7 @@ export async function getComments(id) {
 
 export async function like(id, userId) {
   console.log("hi");
-  
+  await connectDatabase();
   const existPost = await Post.findByIdAndUpdate(
     id,
     {
@@ -186,7 +186,7 @@ export async function like(id, userId) {
 }
 
 export async function repost(id, userId) {
-  
+  await connectDatabase();
   const reposted = await Post.findById(id);
   
   if (reposted.repostedBy.includes(new mongoose.Types.ObjectId(userId)) == true) {
@@ -205,7 +205,7 @@ export async function repost(id, userId) {
 }
 
 export async function unlike(id, userId) {
-  
+  await connectDatabase();
   const existPost = await Post.findByIdAndUpdate(
     id,
     {
@@ -219,7 +219,7 @@ export async function unlike(id, userId) {
 }
 
 export async function comment(id) {
-  
+  await connectDatabase();
   const existPost = await Post.findByIdAndUpdate(
     id,
     {
